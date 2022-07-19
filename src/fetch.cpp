@@ -14,7 +14,7 @@ string gethostname(string path)
 	fstream fptr;
 	fptr.open(path,ios::in);
 	string hostname;
-	getline(fptr,hostname );
+	getline(fptr,hostname);
 	return hostname;
 }
 
