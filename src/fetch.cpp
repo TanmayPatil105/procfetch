@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 
-string user()
+string getuser()
 {
 	return getenv("USER");
 }
@@ -20,7 +20,7 @@ string gethostname(string path)
 
 int main()
 {
-	string user = getenv("USER");
+	string user = getuser();
 	string hostname = gethostname("/etc/hostname");
 	cout<<user<<"@"<<hostname<<endl;
 }
