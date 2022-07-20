@@ -12,15 +12,26 @@ string getuser()
 string gethostname(string path)
 {
 	fstream fptr;
-	fptr.open(path,ios::in);
+	fptr.open(path, ios::in);
 	string hostname;
-	getline(fptr,hostname);
+	getline(fptr, hostname);
 	return hostname;
+}
+
+string get_os_name()
+{
+	ifstream fin;
+	fin.open("/etc/os-release");
+	string os;
+	getline(fin, os);
+	return os.substr(13, os.length() - 14);
 }
 
 int main()
 {
 	string user = getuser();
 	string hostname = gethostname("/etc/hostname");
-	cout<<user<<"@"<<hostname<<endl;
+	cout << user << "@" << hostname << endl;
+	string os = get_os_name();
+	cout << os;
 }
