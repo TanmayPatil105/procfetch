@@ -115,11 +115,11 @@ int main()
 	string hostname = gethostname("/etc/hostname");
 	cout << user << "@" << hostname << endl;
 	string upTime = getUpTime("/proc/uptime");
-    cout<<upTime<<endl;
-    string cpu = getCpu("/proc/cpuinfo");
-    cout<<cpu<<endl;
-    string ram = getRAM("/proc/meminfo");
-    cout<<ram<<endl;
-    string kernel = getKernel("/proc/sys/kernel/osrelease");
-    cout<<kernel<<endl;
+    	cout<<upTime<<endl;
+   	string cpu = getCpu("/proc/cpuinfo");
+    	cout<<cpu<<endl;
+    	string ram = getRAM("/proc/meminfo");
+    	cout<<ram<<endl;
+    	string kernel = getKernel("/proc/sys/kernel/osrelease");
+    	cout<<kernel<<endl;
 }
