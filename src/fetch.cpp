@@ -44,7 +44,7 @@ string getUpTime(string path)
     {
         timeS = to_string(d) + " d, " + to_string(h%24) + " hours, " + to_string(m%60)+" mins";
     }
-    
+
     return timeS;
 }
 
@@ -68,6 +68,47 @@ string getCpu(string path)
     return cpu;
 }
 
+string getKernel(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string kernel;
+    getline(fptr,kernel);
+    return kernel;
+}
+
+string getRAM(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string line,sub;
+    string total,free;
+    while(fptr)
+    {
+        getline(fptr,line);
+        sub=line.substr(0,line.find(":"));
+        if(sub=="MemTotal")
+        {
+            total=line;
+        }
+        if(sub=="MemAvailable")
+        {
+            free=line;
+            break;
+        }
+    }
+    total = total.substr(17);
+    total = total.substr( 0 , total.find(" "));
+    free = free.substr(17);
+    free = free.substr(0,free.find(" "));
+
+    int memTotal = stoi(total);
+    int memFree = stoi(free);
+    int memAvail = (memTotal - memFree);
+
+    return to_string(memAvail/1024) + "MiB / " + to_string(memTotal/1024) + "MiB";
+}
+
 int main()
 {
 	string user = getuser();
@@ -77,4 +118,8 @@ int main()
     cout<<upTime<<endl;
     string cpu = getCpu("/proc/cpuinfo");
     cout<<cpu<<endl;
+    string ram = getRAM("/proc/meminfo");
+    cout<<ram<<endl;
+    string kernel = getKernel("/proc/sys/kernel/osrelease");
+    cout<<kernel<<endl;
 }
