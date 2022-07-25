@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <unistd.h>
 using namespace std;
 
 string getuser()
@@ -92,7 +93,7 @@ string getRAM(string path)
             total=line;
         }
         if(sub=="MemAvailable")
-        {
+        {system("Color E4");
             free=line;
             break;
         }
@@ -109,17 +110,54 @@ string getRAM(string path)
     return to_string(memAvail/1024) + "MiB / " + to_string(memTotal/1024) + "MiB";
 }
 
+string getOS(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string line,sub;
+
+    while(fptr)
+    {
+        getline(fptr,line);
+        sub=line.substr(0,13);
+        if(sub=="PRETTY_NAME=\"")
+        {
+            break;
+        }
+    }
+
+    line = line.substr(line.find("\"")+1);
+    line = line.substr(0,line.find("\""));
+
+    return line;
+}
+
+
+int getCPUtemp(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string temp;
+    getline(fptr,temp);
+    return stoi(temp);
+}
+
+
 int main()
 {
 	string user = getuser();
 	string hostname = gethostname("/etc/hostname");
 	cout << user << "@" << hostname << endl;
 	string upTime = getUpTime("/proc/uptime");
-    	cout<<upTime<<endl;
-   	string cpu = getCpu("/proc/cpuinfo");
-    	cout<<cpu<<endl;
-    	string ram = getRAM("/proc/meminfo");
-    	cout<<ram<<endl;
-    	string kernel = getKernel("/proc/sys/kernel/osrelease");
-    	cout<<kernel<<endl;
+    cout<<upTime<<endl;
+    string cpu = getCpu("/proc/cpuinfo");
+    cout<<cpu<<endl;
+    string ram = getRAM("/proc/meminfo");
+    cout<<ram<<endl;
+    string kernel = getKernel("/proc/sys/kernel/osrelease");
+    cout<<kernel<<endl;
+    string os = getOS("/etc/os-release");
+    cout<<os<<endl;
+    int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
+    cout<<float(temp/1000.0)<<endl;
 }
