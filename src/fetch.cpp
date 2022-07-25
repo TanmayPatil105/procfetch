@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 string getuser()
@@ -132,6 +133,24 @@ string getOS(string path)
     return line;
 }
 
+string getSHELL(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string line,sub;
+    while(fptr)
+    {
+        getline(fptr,line);
+        sub=line.substr(0,line.find(":"));
+        if(sub==getuser()){
+            break;
+        }
+    }
+    reverse(line.begin(),line.end());
+    line=line.substr(0,line.find("/"));
+    reverse(line.begin(),line.end());
+    return line;
+}
 
 int getCPUtemp(string path)
 {
@@ -159,5 +178,7 @@ int main()
     string os = getOS("/etc/os-release");
     cout<<os<<endl;
     int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-    cout<<float(temp/1000.0)<<endl;
+    cout<<float(temp/1000.0)<<" °C"<<endl;
+    string shell = getSHELL("/etc/passwd");
+    cout<<shell<<endl;
 }
