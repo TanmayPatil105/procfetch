@@ -161,6 +161,20 @@ int getCPUtemp(string path)
     return stoi(temp);
 }
 
+string getDE()
+{
+    return getenv("XDG_CURRENT_DESKTOP");
+}
+
+string getRES(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string res;
+    getline(fptr,res);
+    res=res.substr(2);
+    return res.substr(0,res.find("p"));
+}
 
 int main()
 {
@@ -181,4 +195,9 @@ int main()
     cout<<float(temp/1000.0)<<" °C"<<endl;
     string shell = getSHELL("/etc/passwd");
     cout<<shell<<endl;
+    string DE = getDE();
+    cout<<DE<<endl;
+    string res = getRES("/sys/class/graphics/fb0/modes");
+    cout<<res<<endl;
 }
+
