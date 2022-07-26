@@ -176,6 +176,38 @@ string getRES(string path)
     return res.substr(0,res.find("p"));
 }
 
+string exec(string command) {
+   char buffer[128];
+   string result = "";
+   FILE* pipe = popen(command.c_str(), "r");
+   if (!pipe) {
+      return "popen failed!";
+   }
+   while (!feof(pipe)) {
+      if (fgets(buffer, 128, pipe) != NULL)
+         result += buffer;
+   }
+
+   pclose(pipe);
+   return result;
+}
+
+
+string getTheme()
+{
+    string theme = exec("gsettings get org.gnome.desktop.interface gtk-theme");
+    theme=theme.substr(1);
+    return theme.substr(0,theme.find("\'"));
+}
+
+string getIcons()
+{
+    string icon = exec(" gsettings get org.gnome.desktop.interface icon-theme");
+    icon=icon.substr(1);
+    return icon.substr(0,icon.find("\'"));
+}
+
+
 int main()
 {
 	string user = getuser();
@@ -199,5 +231,9 @@ int main()
     cout<<DE<<endl;
     string res = getRES("/sys/class/graphics/fb0/modes");
     cout<<res<<endl;
+    string theme  = getTheme();
+    cout<<theme<<endl;
+    string icon = getIcons();
+    cout<<icon<<endl;
 }
 
