@@ -211,6 +211,42 @@ string getIcons()
     return icon.substr(0, icon.find("\'"));
 }
 
+string getDPKG()
+{
+    string pkg = exec("dpkg --get-selections | wc --lines");
+    return pkg;
+}
+
+string getSnap()
+{
+    string pkg = exec("snap list | wc -l");
+    return pkg;
+}
+
+string getNPM()
+{
+    string pkg = exec("npm ls --parseable | wc -l");
+    return pkg;
+}
+
+string combine_pkgs()
+{
+    string os = getOS("/etc/os-release");
+    size_t found;
+
+    cout << endl
+         << "List of packages:" << endl;
+    if (os.find("Ubuntu") != string::npos)
+    {
+        string snap = getSnap();
+        string dpkg = getDPKG();
+        string npm = getNPM();
+        string pkg = "dpkg: " + dpkg + "npm: " + npm + "snap: " + snap;
+        return pkg;
+    }
+    return " ";
+}
+
 int main()
 {
     string user = getuser();
@@ -241,4 +277,6 @@ int main()
     cout << theme << endl;
     string icon = getIcons();
     cout << icon << endl;
+    string pkg = combine_pkgs();
+    cout << pkg;
 }
