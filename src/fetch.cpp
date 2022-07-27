@@ -244,7 +244,7 @@ string combine_pkgs()
     size_t found;
 
     cout << endl
-         << "List of packages:" << endl;
+         << "List of packages : " << endl;
     if (os.find("Ubuntu") != string::npos)
     {
         string snap = getSnap();
@@ -288,6 +288,7 @@ int main()
     cout << theme << endl;
     string icon = getIcons();
     cout << icon << endl;
+    cout << "\x1b[A";	
     string pkg = combine_pkgs();
     cout << pkg;
 }
