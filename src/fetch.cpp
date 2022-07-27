@@ -11,6 +11,27 @@ string getuser()
     return getenv("USER");
 }
 
+
+string exec(string command)
+{
+    char buffer[128];
+    string result = "";
+    FILE *pipe = popen(command.c_str(), "r");
+    if (!pipe)
+    {
+        return "popen failed!";
+    }
+    while (!feof(pipe))
+    {
+        if (fgets(buffer, 128, pipe) != NULL)
+            result += buffer;
+    }
+
+    pclose(pipe);
+    return result;
+}
+
+
 string gethostname(string path)
 {
     fstream fptr;
@@ -134,6 +155,12 @@ string getOS(string path)
     return line;
 }
 
+string getHardwarePlatform()
+{
+	string s = exec("uname -i");
+	return s;
+}
+
 string getSHELL(string path)
 {
     fstream fptr;
@@ -178,24 +205,6 @@ string getRES(string path)
     return res.substr(0, res.find("p"));
 }
 
-string exec(string command)
-{
-    char buffer[128];
-    string result = "";
-    FILE *pipe = popen(command.c_str(), "r");
-    if (!pipe)
-    {
-        return "popen failed!";
-    }
-    while (!feof(pipe))
-    {
-        if (fgets(buffer, 128, pipe) != NULL)
-            result += buffer;
-    }
-
-    pclose(pipe);
-    return result;
-}
 
 string getTheme()
 {
@@ -228,7 +237,9 @@ int main()
     string kernel = getKernel("/proc/sys/kernel/osrelease");
     cout << kernel << endl;
     string os = getOS("/etc/os-release");
-    cout << os << endl;
+    string hdp = getHardwarePlatform();
+    cout << os << " " << hdp << endl;
+    cout << "\x1b[A";
     int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
     cout << float(temp / 1000.0) << " °C" << endl;
     string shell = getSHELL("/etc/passwd");
