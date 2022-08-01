@@ -233,7 +233,7 @@ string getIcons()
     string icon = exec(" gsettings get org.gnome.desktop.interface icon-theme");
     icon = icon.substr(1);
     return icon.substr(0, icon.find("\'"));
-}   
+}
 
 string getTerminal()
 {
@@ -242,16 +242,23 @@ string getTerminal()
 
 string getIgpu()
 {
-    string igpu = exec("lspci | grep \"VGA\"");
-    igpu = igpu.substr(igpu.find(": ") + 2);
-    return igpu;
+    // yet to be fixed
+    string igpu = exec("lspci | grep VGA");
+    int pos = igpu.find(": ");
+    int pos2 = igpu.find("\n");
+    string sub = igpu.substr(pos + 1, pos2-pos);
+    return sub;
 }
 
 string getEgpu()
 {
-    string egpu = exec("lspci | grep \"3D\"");
-    egpu = egpu.substr(egpu.find(": ") + 2);
-    return egpu;
+    // yet to be fixed
+    string egpu = exec("lspci | grep VGA");
+    int pos = egpu.find("\n");
+    string egpu2 = egpu.substr(pos + 1);
+    int pos2 = egpu2.find(": ");
+    string sub = egpu2.substr(pos2 + 1);
+    return sub;
 }
 
 void print()
@@ -278,9 +285,10 @@ int main()
     string user = getuser();
     string hostname = gethostname("/etc/hostname");
     cout << RED << user << RESET << "@" << RED << hostname << endl;
-    for(int i = 0; i < hostname.size()*2; i++)
+    for (int i = 0; i < hostname.size() * 2; i++)
         cout << "_";
-    cout <<  endl << endl;
+    cout << endl
+         << endl;
     string host = getHost("/sys/devices/virtual/dmi/id/");
     cout << CYAN << "Host : " << RESET << host << endl;
     string upTime = getUpTime("/proc/uptime");
@@ -306,8 +314,8 @@ int main()
     string icon = getIcons();
     cout << CYAN << "Icons : " << RESET << icon << endl;
     // string igpu = getIgpu();
-    // cout<<CYAN<<"GPU : "<<RESET<<igpu;
+    // cout << CYAN << "GPU : " << RESET << igpu;
     // string egpu = getEgpu();
-    // cout<<CYAN<<"GPU : "<<RESET<<egpu;
+    // cout << CYAN << "GPU : " << RESET << egpu;
     cout << CYAN << endl;
 }
