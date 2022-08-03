@@ -3,69 +3,86 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#include "color.h"
 using namespace std;
+
+string exec(string command) 
+{
+   char buffer[128];
+   string result = "";
+   FILE* pipe = popen(command.c_str(), "r");
+   if (!pipe) {
+      return "popen failed!";
+   }
+   while (!feof(pipe)) {
+      if (fgets(buffer, 128, pipe) != NULL)
+         result += buffer;
+   }
+
+   pclose(pipe);
+   return result;
+}
 
 string getuser()
 {
-    return getenv("USER");
+	return getenv("USER");
 }
-
-
-string exec(string command)
-{
-    char buffer[128];
-    string result = "";
-    FILE *pipe = popen(command.c_str(), "r");
-    if (!pipe)
-    {
-        return "popen failed!";
-    }
-    while (!feof(pipe))
-    {
-        if (fgets(buffer, 128, pipe) != NULL)
-            result += buffer;
-    }
-
-    pclose(pipe);
-    return result;
-}
-
 
 string gethostname(string path)
 {
-    fstream fptr;
-    fptr.open(path, ios::in);
-    string hostname;
-    getline(fptr, hostname);
-    return hostname;
+	fstream fptr;
+	fptr.open(path, ios::in);
+	string hostname;
+	getline(fptr, hostname);
+	return hostname;
+}
+
+string getHost(string path)
+{
+    fstream f1, f2;
+    string p1, p2, n1, n2;
+    p1 = path + "product_name";
+    p2 = path + "product_version";
+
+    f1.open(p1, ios::in);
+    getline(f1, n1);
+    f1.close();
+
+    f2.open(p2, ios::in);
+    getline(f2, n2);
+    f2.close();
+
+    string host = n1 + " " + n2;
+
+    return host;
 }
 
 string getUpTime(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
-    string time;
+	fptr.open(path, ios::in);
+	string time;
 
-    getline(fptr, time);
-    time = time.substr(0, time.find(" "));
+	getline(fptr, time);
+    time=time.substr(0, time.find(" "));
 
-    int m = stoi(time) / 60;
-    int h = m / 60;
-    int d = h / 24;
+    int m = stoi(time)/60;
+    int h = m/60;
+    int d=h/24;
 
     string timeS;
-    if (h == 0)
+    if(h==0)
     {
-        timeS = to_string(m % 60) + " mins";
+        timeS = to_string(m%60)+" mins";
     }
-    else if (d == 0)
+    else if(d==0)
     {
-        timeS = to_string(h % 24) + " hours, " + to_string(m % 60) + " mins";
+        timeS = to_string(h%24) + " hours, " + to_string(m%60)+" mins";
     }
     else
     {
-        timeS = to_string(d) + " d, " + to_string(h % 24) + " hours, " + to_string(m % 60) + " mins";
+        timeS = to_string(d) + " d, " + to_string(h%24) + " hours, " + to_string(m%60)+" mins";
     }
 
     return timeS;
@@ -74,19 +91,19 @@ string getUpTime(string path)
 string getCpu(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
-    string cpu, line, sub;
+	fptr.open(path, ios::in);
+    string cpu,line,sub;
 
-    while (fptr)
+    while(fptr)
     {
-        getline(fptr, line);
-        sub = line.substr(0, 10);
-        if (sub == "model name")
+        getline(fptr,line);
+        sub=line.substr(0,10);
+        if(sub=="model name")
         {
             break;
         }
     }
-    cpu = line.substr(line.find(":") + 2);
+    cpu=line.substr(line.find(":")+2);
 
     return cpu;
 }
@@ -94,99 +111,98 @@ string getCpu(string path)
 string getKernel(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
+	fptr.open(path, ios::in);
     string kernel;
-    getline(fptr, kernel);
+    getline(fptr,kernel);
     return kernel;
 }
 
 string getRAM(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
-    string line, sub;
-    string total, free;
-    while (fptr)
+	fptr.open(path, ios::in);
+    string line,sub;
+    string total,free;
+    while(fptr)
     {
-        getline(fptr, line);
-        sub = line.substr(0, line.find(":"));
-        if (sub == "MemTotal")
+        getline(fptr,line);
+        sub=line.substr(0,line.find(":"));
+        if(sub=="MemTotal")
         {
-            total = line;
+            total=line;
         }
-        if (sub == "MemAvailable")
+        if(sub=="MemAvailable")
         {
-            system("Color E4");
-            free = line;
+            free=line;
             break;
         }
     }
     total = total.substr(17);
-    total = total.substr(0, total.find(" "));
+    total = total.substr( 0 , total.find(" "));
     free = free.substr(17);
-    free = free.substr(0, free.find(" "));
+    free = free.substr(0,free.find(" "));
 
     int memTotal = stoi(total);
     int memFree = stoi(free);
     int memAvail = (memTotal - memFree);
 
-    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) + "MiB";
+    return to_string(memAvail/1024) + "MiB / " + to_string(memTotal/1024) + "MiB";
 }
 
 string getOS(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
-    string line, sub;
+	fptr.open(path, ios::in);
+    string line,sub;
 
-    while (fptr)
+    while(fptr)
     {
-        getline(fptr, line);
-        sub = line.substr(0, 13);
-        if (sub == "PRETTY_NAME=\"")
+        getline(fptr,line);
+        sub=line.substr(0,13);
+        if(sub=="PRETTY_NAME=\"")
         {
             break;
         }
     }
 
-    line = line.substr(line.find("\"") + 1);
-    line = line.substr(0, line.find("\""));
+    line = line.substr(line.find("\"")+1);
+    line = line.substr(0,line.find("\""));
 
     return line;
 }
 
 string getHardwarePlatform()
 {
-	string s = exec("uname -i");
-	return s;
+    string s = exec("uname -i");
+    s = s.substr(0,s.find("\n"));
+    return " "+s;
 }
 
 string getSHELL(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
-    string line, sub;
-    while (fptr)
+	fptr.open(path, ios::in);
+    string line,sub;
+    while(fptr)
     {
-        getline(fptr, line);
-        sub = line.substr(0, line.find(":"));
-        if (sub == getuser())
-        {
+        getline(fptr,line);
+        sub=line.substr(0,line.find(":"));
+        if(sub==getuser()){
             break;
         }
     }
-    reverse(line.begin(), line.end());
-    line = line.substr(0, line.find("/"));
-    reverse(line.begin(), line.end());
+    reverse(line.begin(),line.end());
+    line=line.substr(0,line.find("/"));
+    reverse(line.begin(),line.end());
     return line;
 }
 
 int getCPUtemp(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
+	fptr.open(path, ios::in);
     string temp;
-    getline(fptr, temp);
+    getline(fptr,temp);
     return stoi(temp);
 }
 
@@ -198,97 +214,108 @@ string getDE()
 string getRES(string path)
 {
     fstream fptr;
-    fptr.open(path, ios::in);
+	fptr.open(path, ios::in);
     string res;
-    getline(fptr, res);
-    res = res.substr(2);
-    return res.substr(0, res.find("p"));
+    getline(fptr,res);
+    res=res.substr(2);
+    return res.substr(0,res.find("p"));
 }
 
 
 string getTheme()
 {
     string theme = exec("gsettings get org.gnome.desktop.interface gtk-theme");
-    theme = theme.substr(1);
-    return theme.substr(0, theme.find("\'"));
+    theme=theme.substr(1);
+    return theme.substr(0,theme.find("\'"));
 }
 
 string getIcons()
 {
     string icon = exec(" gsettings get org.gnome.desktop.interface icon-theme");
-    icon = icon.substr(1);
-    return icon.substr(0, icon.find("\'"));
+    icon=icon.substr(1);
+    return icon.substr(0,icon.find("\'"));
 }
 
-string getDPKG()
+string getTerminal()
 {
-    string pkg = exec("dpkg --get-selections | wc --lines");
-    return pkg;
+    return getenv("PATH");
 }
 
-string getSnap()
-{
-    string pkg = exec("snap list | wc -l");
-    return pkg;
-}
+vector<string> getGPU()
+{   vector<string> gpu;
+    string igpu = exec("lspci | grep -E  \"VGA|3D|Display\"");
+    int temp=0,k=0;
 
-string getNPM()
-{
-    string pkg = exec("npm ls --parseable | wc -l");
-    return pkg;
-}
+    for(int i=0;i<igpu.size();i++){
+        if(igpu[i]=='\n'){
+            gpu.push_back(igpu.substr(temp,i-temp));
+            gpu[k] = gpu[k].substr(gpu[k].find(": ")+2);
+            gpu[k] = gpu[k].substr(0,gpu[k].find(" ("));
+            temp=i+1;
+            k++;
+        }
+    }
+    return gpu;
+} 
 
-string combine_pkgs()
+
+void print()
 {
     string os = getOS("/etc/os-release");
-    size_t found;
 
-    cout << endl
-         << "List of packages : " << endl;
-    if (os.find("Ubuntu") != string::npos)
-    {
-        string snap = getSnap();
-        string dpkg = getDPKG();
-        string npm = getNPM();
-        string pkg = "dpkg: " + dpkg + "npm: " + npm + "snap: " + snap;
-        return pkg;
+    if(os.find("Ubuntu")!= string::npos){
+        string path="../ascii/ubuntu.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BITAL<<txt<<endl;
+        }
     }
-    return " ";
 }
+
 
 int main()
 {
-    string user = getuser();
-    string hostname = gethostname("/etc/hostname");
-    cout << user << "@" << hostname << endl;
-    string host = exec("cat /sys/devices/virtual/dmi/id/product_name");
-    cout << "Host : " << host << endl;
-    cout << "\x1b[A";
-    string upTime = getUpTime("/proc/uptime");
-    cout << upTime << endl;
+    print();
+	string user = getuser();
+	string hostname = gethostname("/etc/hostname");
+    string username = YELLOW+user+RESET +"@"+YELLOW+hostname;
+	cout <<username<<endl;
+    for(int i=0;i<(user+hostname).size();i++){
+        cout<<".";
+    }
+    cout<<endl;
+    string HOST = getHost("/sys/devices/virtual/dmi/id/");
+    cout<<GREEN<<"Host : "<<RESET<<HOST<<endl;
+	string upTime = getUpTime("/proc/uptime");
+    cout<<UNDERLINE<<GREEN<<"UpTime : "<<RESET<< upTime<<endl;
     string cpu = getCpu("/proc/cpuinfo");
-    cout << cpu << endl;
+    cout<<GREEN<<"CPU : "<<RESET<<cpu<< endl;
     string ram = getRAM("/proc/meminfo");
-    cout << ram << endl;
+    cout<<GREEN<<"RAM : "<<RESET<<ram<< endl;
     string kernel = getKernel("/proc/sys/kernel/osrelease");
-    cout << kernel << endl;
+    cout<<GREEN<<"Kernel : "<<RESET<<kernel<< endl;
     string os = getOS("/etc/os-release");
-    string hdp = getHardwarePlatform();
-    cout << os << " " << hdp << endl;
-    cout << "\x1b[A";
+    cout<<GREEN<<"OS : "<<RESET<<os<<getHardwarePlatform()<<endl;
     int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-    cout << float(temp / 1000.0) << " °C" << endl;
+    cout<<GREEN<<"CPU Temperature : "<<RESET<<float(temp/1000.0)<<" °C"<< endl;
     string shell = getSHELL("/etc/passwd");
-    cout << shell << endl;
+    cout<<GREEN<<"shell : "<<RESET<<shell<< endl;
     string DE = getDE();
-    cout << DE << endl;
+    cout<<GREEN<<"DE : "<<RESET<<DE<< endl;
     string res = getRES("/sys/class/graphics/fb0/modes");
-    cout << res << endl;
-    string theme = getTheme();
-    cout << theme << endl;
+    cout<<GREEN<<"Resolution : "<<RESET<<res<< endl;
+    string theme  = getTheme();
+    cout<<GREEN<<"Theme : "<<RESET<<theme<<endl;
     string icon = getIcons();
-    cout << icon << endl;
-    cout << "\x1b[A";	
-    string pkg = combine_pkgs();
-    cout << pkg;
+    cout<<GREEN<<"Icons : "<<RESET<<icon<< endl;
+    vector<string> gpu = getGPU();
+    for(auto it:gpu){
+        cout<<GREEN"GPU : "<<RESET<<it<<endl;
+    }
+    return 0;
 }
+
