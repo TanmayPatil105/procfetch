@@ -137,9 +137,20 @@ string getRAM(string path)
             break;
         }
     }
-    total = total.substr(17);
+    int i;
+    for(i=0;i<total.size();i++){
+        if(isdigit(total[i])){
+            break;
+        }
+    }
+    total = total.substr(i);
     total = total.substr( 0 , total.find(" "));
-    free = free.substr(17);
+    for(i=0;i<free.size();i++){
+        if(isdigit(free[i])){
+            break;
+        }
+    }
+    free = free.substr(i);
     free = free.substr(0,free.find(" "));
 
     int memTotal = stoi(total);
