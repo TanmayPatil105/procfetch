@@ -7,6 +7,23 @@
 #include "color.h"
 using namespace std;
 
+string exec(string command) 
+{
+   char buffer[128];
+   string result = "";
+   FILE* pipe = popen(command.c_str(), "r");
+   if (!pipe) {
+      return "popen failed!";
+   }
+   while (!feof(pipe)) {
+      if (fgets(buffer, 128, pipe) != NULL)
+         result += buffer;
+   }
+
+   pclose(pipe);
+   return result;
+}
+
 string getuser()
 {
 	return getenv("USER");
@@ -154,6 +171,13 @@ string getOS(string path)
     return line;
 }
 
+string getHardwarePlatform()
+{
+    string s = exec("uname -i");
+    s = s.substr(0,s.find("\n"));
+    return " "+s;
+}
+
 string getSHELL(string path)
 {
     fstream fptr;
@@ -197,22 +221,6 @@ string getRES(string path)
     return res.substr(0,res.find("p"));
 }
 
-string exec(string command) {
-   char buffer[128];
-   string result = "";
-   FILE* pipe = popen(command.c_str(), "r");
-   if (!pipe) {
-      return "popen failed!";
-   }
-   while (!feof(pipe)) {
-      if (fgets(buffer, 128, pipe) != NULL)
-         result += buffer;
-   }
-
-   pclose(pipe);
-   return result;
-}
-
 
 string getTheme()
 {
@@ -250,22 +258,6 @@ vector<string> getGPU()
     return gpu;
 } 
 
-// string getIgpu()
-// {
-//     string igpu = exec("lspci | grep VGA");
-//     igpu = igpu.substr(igpu.find(": ")+2);
-//     igpu = igpu.substr(0,igpu.find(" ("));
-//     return igpu;
-// }
-
-// string getEgpu()
-// {
-//     string egpu = exec("lspci | grep 3D");
-//     egpu = egpu.substr(egpu.find(": ")+2);
-//     egpu = egpu.substr(0,egpu.find(" ("));
-//     return egpu;
-// }
-
 
 void print()
 {
@@ -279,7 +271,7 @@ void print()
         while(fptr)
         {
             getline(fptr,txt);
-            cout<<BITAL<<YELLOW<<txt<<endl;
+            cout<<BITAL<<txt<<endl;
         }
     }
 }
@@ -287,11 +279,15 @@ void print()
 
 int main()
 {
-    // print();
+    print();
 	string user = getuser();
 	string hostname = gethostname("/etc/hostname");
     string username = YELLOW+user+RESET +"@"+YELLOW+hostname;
 	cout <<username<<endl;
+    for(int i=0;i<(user+hostname).size();i++){
+        cout<<".";
+    }
+    cout<<endl;
     string HOST = getHost("/sys/devices/virtual/dmi/id/");
     cout<<GREEN<<"Host : "<<RESET<<HOST<<endl;
 	string upTime = getUpTime("/proc/uptime");
@@ -303,7 +299,7 @@ int main()
     string kernel = getKernel("/proc/sys/kernel/osrelease");
     cout<<GREEN<<"Kernel : "<<RESET<<kernel<< endl;
     string os = getOS("/etc/os-release");
-    cout<<GREEN<<"OS : "<<RESET<<os<<endl;
+    cout<<GREEN<<"OS : "<<RESET<<os<<getHardwarePlatform()<<endl;
     int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
     cout<<GREEN<<"CPU Temperature : "<<RESET<<float(temp/1000.0)<<" °C"<< endl;
     string shell = getSHELL("/etc/passwd");
@@ -320,10 +316,6 @@ int main()
     for(auto it:gpu){
         cout<<GREEN"GPU : "<<RESET<<it<<endl;
     }
-    // string igpu = getGPU();
-    // cout<<GREEN<<"GPU : "<<RESET<<igpu<<endl;
-    // string egpu = getEgpu();
-    // cout<<GREEN<<"GPU : "<<RESET<<egpu;
-    // cout<<GREEN<<endl;
+    return 0;
 }
 
