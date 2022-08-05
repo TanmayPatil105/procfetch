@@ -6,6 +6,7 @@
 #define MAGENTA "\033[0;35m"
 #define CYAN    "\033[0;36m"
 #define WHITE   "\033[0;37m"
+
 #define BBLACK   "\033[1;30m"
 #define BGRAY    "\033[1;90m"
 #define BRED     "\033[1;31m"
@@ -18,4 +19,6 @@
 
 #define RESET "\033[0;m"
 #define BITAL "\033[1;3m" 
-#define UNDERLINE "\033[4m"
+#define BRIGHT "\033[1m"
+#define BLINK "\033[5m"
+#define UNDERSCORE "\033[4m"

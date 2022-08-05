@@ -285,22 +285,24 @@ vector<string> getGPU()
 } 
 
 
+
 void print()
 {
     string os = getOS("/etc/os-release");
 
     if(os.find("Ubuntu")!= string::npos){
-        string path="../ascii/ubuntu.ascii";
+        string path="../ascii/manjaro.ascii";
         fstream fptr;
         fptr.open(path, ios::in);
         string txt;
         while(fptr)
         {
             getline(fptr,txt);
-            cout<<BITAL<<txt<<endl;
+            cout<<BRIGHT<<BRED<<txt<<endl;
         }
     }
 }
+
 
 
 string getPackages()
@@ -327,46 +329,46 @@ string getPackages()
     return pkg;
 }
 
+
+
 int main()
 {
     print();
 	string user = getuser();
 	string hostname = gethostname("/etc/hostname");
     string username = YELLOW+user+RESET +"@"+YELLOW+hostname;
-	cout <<username<<endl;
-    for(int i=0;i<(user+hostname).size();i++){
-        cout<<".";
-    }
+	cout <<UNDERSCORE<<username<<RESET<<endl;
     cout<<endl;
     string HOST = getHost("/sys/devices/virtual/dmi/id/");
-    cout<<GREEN<<"Host : "<<RESET<<HOST<<endl;
+    cout<<BRIGHT<<GREEN<<"Host : "<<RESET<<HOST<<endl;
 	string upTime = getUpTime("/proc/uptime");
-    cout<<UNDERLINE<<GREEN<<"UpTime : "<<RESET<< upTime<<endl;
+    cout<<BRIGHT<<GREEN<<"UpTime : "<<RESET<< upTime<<endl;
     string cpu = getCpu("/proc/cpuinfo");
-    cout<<GREEN<<"CPU : "<<RESET<<cpu<< endl;
+    cout<<BRIGHT<<GREEN<<"CPU : "<<RESET<<cpu<< endl;
     string ram = getRAM("/proc/meminfo");
-    cout<<GREEN<<"RAM : "<<RESET<<ram<< endl;
+    cout<<BRIGHT<<GREEN<<"RAM : "<<RESET<<ram<< endl;
     string kernel = getKernel("/proc/sys/kernel/osrelease");
-    cout<<GREEN<<"Kernel : "<<RESET<<kernel<< endl;
+    cout<<BRIGHT<<GREEN<<"Kernel : "<<RESET<<kernel<< endl;
     string os = getOS("/etc/os-release");
-    cout<<GREEN<<"OS : "<<RESET<<os<<getHardwarePlatform()<<endl;
+    cout<<BRIGHT<<GREEN<<"OS : "<<RESET<<os<<getHardwarePlatform()<<endl;
     int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-    cout<<GREEN<<"CPU Temperature : "<<RESET<<float(temp/1000.0)<<" °C"<< endl;
+    cout<<BRIGHT<<GREEN<<"CPU Temperature : "<<RESET<<float(temp/1000.0)<<" °C"<< endl;
     string shell = getSHELL("/etc/passwd");
-    cout<<GREEN<<"shell : "<<RESET<<shell<< endl;
+    cout<<BRIGHT<<GREEN<<"shell : "<<RESET<<shell<< endl;
     string DE = getDE();
-    cout<<GREEN<<"DE : "<<RESET<<DE<< endl;
+    cout<<BRIGHT<<GREEN<<"DE : "<<RESET<<DE<< endl;
     string res = getRES("/sys/class/graphics/fb0/modes");
-    cout<<GREEN<<"Resolution : "<<RESET<<res<< endl;
+    cout<<BRIGHT<<GREEN<<"Resolution : "<<RESET<<res<< endl;
     string theme  = getTheme();
-    cout<<GREEN<<"Theme : "<<RESET<<theme<<endl;
+    cout<<BRIGHT<<GREEN<<"Theme : "<<RESET<<theme<<endl;
     string icon = getIcons();
-    cout<<GREEN<<"Icons : "<<RESET<<icon<< endl;
+    cout<<BRIGHT<<GREEN<<"Icons : "<<RESET<<icon<< endl;
     vector<string> gpu = getGPU();
     for(auto it:gpu){
-        cout<<GREEN"GPU : "<<RESET<<it<<endl;
+        cout<<BRIGHT<<GREEN"GPU : "<<RESET<<it<<endl;
     }
     string pkg  = getPackages();
-    cout<<GREEN<<"Packages : "<<RESET<<pkg<<endl;
+    cout<<BRIGHT<<GREEN<<"Packages : "<<RESET<<pkg<<endl;
+    cout<<endl;
     return 0;
 }
