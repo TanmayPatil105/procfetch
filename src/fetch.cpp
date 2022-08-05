@@ -121,7 +121,7 @@ string getRAM(string path)
 {
     fstream fptr;
 	fptr.open(path, ios::in);
-    string line,sub;
+    string line,sub,shmem;
     string total,free;
     while(fptr)
     {
@@ -134,6 +134,10 @@ string getRAM(string path)
         if(sub=="MemAvailable")
         {
             free=line;
+        }
+        if(sub=="Buffers")
+        {
+            shmem=line;
             break;
         }
     }
@@ -153,9 +157,18 @@ string getRAM(string path)
     free = free.substr(i);
     free = free.substr(0,free.find(" "));
 
+    for(i=0;i<shmem.size();i++){
+        if(isdigit(shmem[i])){
+            break;
+        }
+    }
+
+    shmem = shmem.substr(i);
+    shmem = shmem.substr(0,shmem.find(" "));
+
     int memTotal = stoi(total);
     int memFree = stoi(free);
-    int memAvail = (memTotal - memFree);
+    int memAvail = (memTotal - memFree) - stoi(shmem);
 
     return to_string(memAvail/1024) + "MiB / " + to_string(memTotal/1024) + "MiB";
 }
@@ -184,7 +197,7 @@ string getOS(string path)
 
 string getHardwarePlatform()
 {
-    string s = exec("uname -i");
+    string s = exec("uname -m");
     s = s.substr(0,s.find("\n"));
     return " "+s;
 }
@@ -252,6 +265,8 @@ string getTerminal()
     return getenv("PATH");
 }
 
+
+
 vector<string> getGPU()
 {   vector<string> gpu;
     string igpu = exec("lspci | grep -E  \"VGA|3D|Display\"");
@@ -287,6 +302,30 @@ void print()
     }
 }
 
+
+string getPackages()
+{
+    string pkg="";
+    int count=0;
+    if(exec(" [ -f \"/bin/dpkg\" ] && echo \"1\"|wc -l  ").size() > 1){
+        string dpkg = exec(" dpkg -l | wc -l ");
+        pkg+= dpkg.substr(0,dpkg.size()-1) + RED+" dpkg, "+RESET;
+    }
+    if(exec(" [ -f \"/bin/snap\" ] && echo \"1\"|wc -l  ").size() > 1){
+        string snap = exec(" snap list | wc -l ");
+        pkg+= snap.substr(0,snap.size()-1) + RED+" snap, "+RESET;
+    }
+    if(exec(" [ -f \"/bin/pacman\" ] && echo \"1\"|wc -l  ").size() > 1){
+        string pacman = exec(" pacman -Q | wc -l  ");
+        pkg+= pacman.substr(0,pacman.size()-1) + RED+" pacman, "+RESET;
+    }
+    if(exec(" [ -f \"/bin/flatpak\" ] && echo \"1\"|wc -l  ").size() > 1){
+        string flatpak = exec(" flatpak list | wc-l ");
+        pkg+= flatpak.substr(0,flatpak.size()-1) + RED + " flatpak, "+RESET;
+    }
+    
+    return pkg;
+}
 
 int main()
 {
@@ -327,6 +366,7 @@ int main()
     for(auto it:gpu){
         cout<<GREEN"GPU : "<<RESET<<it<<endl;
     }
+    string pkg  = getPackages();
+    cout<<GREEN<<"Packages : "<<RESET<<pkg<<endl;
     return 0;
 }
-
