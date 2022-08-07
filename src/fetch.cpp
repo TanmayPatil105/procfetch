@@ -307,25 +307,65 @@ void print()
 
 string getPackages()
 {
-    string pkg="";
-    int count=0;
-    if(exec(" [ -f \"/bin/dpkg\" ] && echo \"1\"|wc -l  ").size() > 1){
+    string pkg = "";
+    int count = 0;
+    if (exec(" [ -f \"/bin/dpkg\" ] && echo \"1\"|wc -l  ").size() > 1)
+    {
         string dpkg = exec(" dpkg -l | wc -l ");
-        pkg+= dpkg.substr(0,dpkg.size()-1) + RED+" dpkg, "+RESET;
+        pkg += dpkg.substr(0, dpkg.size() - 1) + RED + " dpkg, " + RESET;
     }
-    if(exec(" [ -f \"/bin/snap\" ] && echo \"1\"|wc -l  ").size() > 1){
+    if (exec(" [ -f \"/bin/snap\" ] && echo \"1\"|wc -l  ").size() > 1)
+    {
         string snap = exec(" snap list | wc -l ");
-        pkg+= snap.substr(0,snap.size()-1) + RED+" snap, "+RESET;
+        pkg += snap.substr(0, snap.size() - 1) + RED + " snap, " + RESET;
     }
-    if(exec(" [ -f \"/bin/pacman\" ] && echo \"1\"|wc -l  ").size() > 1){
+    if (exec(" [ -f \"/bin/pacman\" ] && echo \"1\"|wc -l  ").size() > 1)
+    {
         string pacman = exec(" pacman -Q | wc -l  ");
-        pkg+= pacman.substr(0,pacman.size()-1) + RED+" pacman, "+RESET;
+        pkg += pacman.substr(0, pacman.size() - 1) + RED + " pacman, " + RESET;
     }
-    if(exec(" [ -f \"/bin/flatpak\" ] && echo \"1\"|wc -l  ").size() > 1){
-        string flatpak = exec(" flatpak list | wc-l ");
-        pkg+= flatpak.substr(0,flatpak.size()-1) + RED + " flatpak, "+RESET;
+    if (exec(" [ -f \"/bin/flatpak\" ] && echo \"1\"|wc -l  ").size() > 1)
+    {
+        string flatpak = exec(" flatpak list | wc -l ");
+        pkg += flatpak.substr(0, flatpak.size() - 1) + RED + " flatpak, " + RESET;
     }
-    
+    if (exec(" [ -f \"/var/lib/rpm\" ] && echo \"1\"|wc -l  ").size() > 1)
+    {
+        string rpm = exec(" rpm -qa | wc -l ");
+        pkg += rpm.substr(0, rpm.size() - 1) + RED + " rpm, " + RESET;
+    }
+    if (exec(" [ -f \"/bin/npm\" ] && echo \"1\"|wc -l  ").size() > 1)
+    {
+        string npm = exec(" npm list | wc -l ");
+        pkg += npm.substr(0, npm.size() - 1) + RED + " npm, " + RESET;
+    }
+    if (exec(" [ -f \"/bin/emerge\" ] && echo \"1\"|wc -l  ").size() > 1)      //gentoo
+    {
+        string portage = exec("echo -n $(cd /var/db/pkg && ls -d */* | wc -l");
+        pkg += portage.substr(0, portage.size() - 1) + RED + " portage, " + RESET;
+    }
+    if (exec(" [ -f \"/bin/xbps-install\" ] && echo \"1\"|wc -l  ").size() > 1)    //void linux
+    {
+        string xbps = exec(" flatpak list | wc -l ");
+        pkg += xbps.substr(0, xbps.size() - 1) + RED + " xbps, " + RESET;
+    }
+    if (exec(" [ -f \"/bin/dnf\" ] && echo \"1\"|wc -l  ").size() > 1)         //fedora
+    {
+        string dnf = exec(" dnf list installed| wc -l ");
+        pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf, " + RESET;
+    }
+    if (exec(" [ -f \"/bin/yum\" ] && echo \"1\"|wc -l  ").size() > 1)         //redhat
+    {
+        string yum = exec(" yum list installed | wc -l ");
+        pkg += yum.substr(0, yum.size() - 1) + RED + " yum, " + RESET;
+    }
+    if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1)         //opensuse
+    {
+        string zypper = exec(" zypper se --installed-only | wc -l ");
+        pkg += zypper.substr(0, zypper.size() - 1) + RED + " zypper, " + RESET;
+    }
+
+
     return pkg;
 }
 
