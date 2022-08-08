@@ -1,5 +1,5 @@
 #include <iostream>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -7,55 +7,57 @@
 #include "color.h"
 using namespace std;
 
-string exec(string command) 
+string exec(string command)
 {
-   char buffer[128];
-   string result = "";
-   FILE* pipe = popen(command.c_str(), "r");
-   if (!pipe) {
-      return "popen failed!";
-   }
-   while (!feof(pipe)) {
-      if (fgets(buffer, 128, pipe) != NULL)
-         result += buffer;
-   }
+    char buffer[128];
+    string result = "";
+    FILE *pipe = popen(command.c_str(), "r");
+    if (!pipe)
+    {
+        return "popen failed!";
+    }
+    while (!feof(pipe))
+    {
+        if (fgets(buffer, 128, pipe) != NULL)
+            result += buffer;
+    }
 
-   pclose(pipe);
-   return result;
+    pclose(pipe);
+    return result;
 }
 
 string getuser()
 {
-	return getenv("USER");
+    return getenv("USER");
 }
 
 string gethostname(string path)
 {
-	fstream fptr;
-	fptr.open(path, ios::in);
-	string hostname;
-	getline(fptr, hostname);
-	return hostname;
+    fstream fptr;
+    fptr.open(path, ios::in);
+    string hostname;
+    getline(fptr, hostname);
+    return hostname;
 }
 
 string getOS(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
-    string line,sub;
+    fptr.open(path, ios::in);
+    string line, sub;
 
-    while(fptr)
+    while (fptr)
     {
-        getline(fptr,line);
-        sub=line.substr(0,13);
-        if(sub=="PRETTY_NAME=\"")
+        getline(fptr, line);
+        sub = line.substr(0, 13);
+        if (sub == "PRETTY_NAME=\"")
         {
             break;
         }
     }
 
-    line = line.substr(line.find("\"")+1);
-    line = line.substr(0,line.find("\""));
+    line = line.substr(line.find("\"") + 1);
+    line = line.substr(0, line.find("\""));
 
     return line;
 }
@@ -63,8 +65,8 @@ string getOS(string path)
 string getHardwarePlatform()
 {
     string s = exec("uname -m");
-    s = s.substr(0,s.find("\n"));
-    return " "+s;
+    s = s.substr(0, s.find("\n"));
+    return " " + s;
 }
 
 string getHost(string path)
@@ -90,37 +92,37 @@ string getHost(string path)
 string getKernel(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
+    fptr.open(path, ios::in);
     string kernel;
-    getline(fptr,kernel);
+    getline(fptr, kernel);
     return kernel;
 }
 
 string getUpTime(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
-	string time;
+    fptr.open(path, ios::in);
+    string time;
 
-	getline(fptr, time);
-    time=time.substr(0, time.find(" "));
+    getline(fptr, time);
+    time = time.substr(0, time.find(" "));
 
-    int m = stoi(time)/60;
-    int h = m/60;
-    int d=h/24;
+    int m = stoi(time) / 60;
+    int h = m / 60;
+    int d = h / 24;
 
     string timeS;
-    if(h==0)
+    if (h == 0)
     {
-        timeS = to_string(m%60)+" mins";
+        timeS = to_string(m % 60) + " mins";
     }
-    else if(d==0)
+    else if (d == 0)
     {
-        timeS = to_string(h%24) + " hours, " + to_string(m%60)+" mins";
+        timeS = to_string(h % 24) + " hours, " + to_string(m % 60) + " mins";
     }
     else
     {
-        timeS = to_string(d) + " d, " + to_string(h%24) + " hours, " + to_string(m%60)+" mins";
+        timeS = to_string(d) + " d, " + to_string(h % 24) + " hours, " + to_string(m % 60) + " mins";
     }
 
     return timeS;
@@ -129,123 +131,130 @@ string getUpTime(string path)
 string getRAM(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
-    string line,sub,shmem;
-    string total,free;
-    while(fptr)
+    fptr.open(path, ios::in);
+    string line, sub, shmem;
+    string total, free;
+    while (fptr)
     {
-        getline(fptr,line);
-        sub=line.substr(0,line.find(":"));
-        if(sub=="MemTotal")
+        getline(fptr, line);
+        sub = line.substr(0, line.find(":"));
+        if (sub == "MemTotal")
         {
-            total=line;
+            total = line;
         }
-        if(sub=="MemAvailable")
+        if (sub == "MemAvailable")
         {
-            free=line;
+            free = line;
         }
-        if(sub=="Buffers")
+        if (sub == "Buffers")
         {
-            shmem=line;
+            shmem = line;
             break;
         }
     }
     int i;
-    for(i=0;i<total.size();i++){
-        if(isdigit(total[i])){
+    for (i = 0; i < total.size(); i++)
+    {
+        if (isdigit(total[i]))
+        {
             break;
         }
     }
     total = total.substr(i);
-    total = total.substr( 0 , total.find(" "));
-    for(i=0;i<free.size();i++){
-        if(isdigit(free[i])){
+    total = total.substr(0, total.find(" "));
+    for (i = 0; i < free.size(); i++)
+    {
+        if (isdigit(free[i]))
+        {
             break;
         }
     }
     free = free.substr(i);
-    free = free.substr(0,free.find(" "));
+    free = free.substr(0, free.find(" "));
 
-    for(i=0;i<shmem.size();i++){
-        if(isdigit(shmem[i])){
+    for (i = 0; i < shmem.size(); i++)
+    {
+        if (isdigit(shmem[i]))
+        {
             break;
         }
     }
 
     shmem = shmem.substr(i);
-    shmem = shmem.substr(0,shmem.find(" "));
+    shmem = shmem.substr(0, shmem.find(" "));
 
     int memTotal = stoi(total);
     int memFree = stoi(free);
     int memAvail = (memTotal - memFree) - stoi(shmem);
 
-    return to_string(memAvail/1024) + "MiB / " + to_string(memTotal/1024) + "MiB";
+    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) + "MiB";
 }
 
 string getSHELL(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
-    string line,sub;
-    while(fptr)
+    fptr.open(path, ios::in);
+    string line, sub;
+    while (fptr)
     {
-        getline(fptr,line);
-        sub=line.substr(0,line.find(":"));
-        if(sub==getuser()){
+        getline(fptr, line);
+        sub = line.substr(0, line.find(":"));
+        if (sub == getuser())
+        {
             break;
         }
     }
-    reverse(line.begin(),line.end());
-    line=line.substr(0,line.find("/"));
-    reverse(line.begin(),line.end());
+    reverse(line.begin(), line.end());
+    line = line.substr(0, line.find("/"));
+    reverse(line.begin(), line.end());
     return line;
 }
 
 string getDE()
 {
-    return getenv("XDG_CURRENT_DESKTOP") ;
+    return getenv("XDG_CURRENT_DESKTOP");
 }
 
 string getRES(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
+    fptr.open(path, ios::in);
     string res;
-    getline(fptr,res);
-    res=res.substr(2);
-    return res.substr(0,res.find("p"));
+    getline(fptr, res);
+    res = res.substr(2);
+    return res.substr(0, res.find("p"));
 }
 
 string getTheme()
 {
     string theme = exec("gsettings get org.gnome.desktop.interface gtk-theme");
-    theme=theme.substr(1);
-    return theme.substr(0,theme.find("\'"));
+    theme = theme.substr(1);
+    return theme.substr(0, theme.find("\'"));
 }
 
 string getIcons()
 {
     string icon = exec(" gsettings get org.gnome.desktop.interface icon-theme");
-    icon=icon.substr(1);
-    return icon.substr(0,icon.find("\'"));
+    icon = icon.substr(1);
+    return icon.substr(0, icon.find("\'"));
 }
 
 string getCpu(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
-    string cpu,line,sub;
+    fptr.open(path, ios::in);
+    string cpu, line, sub;
 
-    while(fptr)
+    while (fptr)
     {
-        getline(fptr,line);
-        sub=line.substr(0,10);
-        if(sub=="model name")
+        getline(fptr, line);
+        sub = line.substr(0, 10);
+        if (sub == "model name")
         {
             break;
         }
     }
-    cpu=line.substr(line.find(":")+2);
+    cpu = line.substr(line.find(":") + 2);
 
     return cpu;
 }
@@ -253,28 +262,31 @@ string getCpu(string path)
 int getCPUtemp(string path)
 {
     fstream fptr;
-	fptr.open(path, ios::in);
+    fptr.open(path, ios::in);
     string temp;
-    getline(fptr,temp);
+    getline(fptr, temp);
     return stoi(temp);
 }
 
 vector<string> getGPU()
-{   vector<string> gpu;
+{
+    vector<string> gpu;
     string igpu = exec("lspci | grep -E  \"VGA|3D|Display\"");
-    int temp=0,k=0;
+    int temp = 0, k = 0;
 
-    for(int i=0;i<igpu.size();i++){
-        if(igpu[i]=='\n'){
-            gpu.push_back(igpu.substr(temp,i-temp));
-            gpu[k] = gpu[k].substr(gpu[k].find(": ")+2);
-            gpu[k] = gpu[k].substr(0,gpu[k].find(" ("));
-            temp=i+1;
+    for (int i = 0; i < igpu.size(); i++)
+    {
+        if (igpu[i] == '\n')
+        {
+            gpu.push_back(igpu.substr(temp, i - temp));
+            gpu[k] = gpu[k].substr(gpu[k].find(": ") + 2);
+            gpu[k] = gpu[k].substr(0, gpu[k].find(" ("));
+            temp = i + 1;
             k++;
         }
     }
     return gpu;
-} 
+}
 
 string getPackages()
 {
@@ -310,32 +322,31 @@ string getPackages()
         string npm = exec(" npm list | wc -l ");
         pkg += npm.substr(0, npm.size() - 1) + RED + " npm, " + RESET;
     }
-    if (exec(" [ -f \"/bin/emerge\" ] && echo \"1\"|wc -l  ").size() > 1)      //gentoo
+    if (exec(" [ -f \"/bin/emerge\" ] && echo \"1\"|wc -l  ").size() > 1) // gentoo
     {
         string portage = exec("echo -n $(cd /var/db/pkg && ls -d */* | wc -l");
         pkg += portage.substr(0, portage.size() - 1) + RED + " portage, " + RESET;
     }
-    if (exec(" [ -f \"/bin/xbps-install\" ] && echo \"1\"|wc -l  ").size() > 1)    //void linux
+    if (exec(" [ -f \"/bin/xbps-install\" ] && echo \"1\"|wc -l  ").size() > 1) // void linux
     {
         string xbps = exec(" flatpak list | wc -l ");
         pkg += xbps.substr(0, xbps.size() - 1) + RED + " xbps, " + RESET;
     }
-    if (exec(" [ -f \"/bin/dnf\" ] && echo \"1\"|wc -l  ").size() > 1)         //fedora
+    if (exec(" [ -f \"/bin/dnf\" ] && echo \"1\"|wc -l  ").size() > 1) // fedora
     {
         string dnf = exec(" dnf list installed| wc -l ");
         pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf, " + RESET;
     }
-    if (exec(" [ -f \"/bin/yum\" ] && echo \"1\"|wc -l  ").size() > 1)         //redhat
+    if (exec(" [ -f \"/bin/yum\" ] && echo \"1\"|wc -l  ").size() > 1) // redhat
     {
         string yum = exec(" yum list installed | wc -l ");
         pkg += yum.substr(0, yum.size() - 1) + RED + " yum, " + RESET;
     }
-    if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1)         //opensuse
+    if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1) // opensuse
     {
         string zypper = exec(" zypper se --installed-only | wc -l ");
         pkg += zypper.substr(0, zypper.size() - 1) + RED + " zypper, " + RESET;
     }
-
 
     return pkg;
 }
@@ -343,279 +354,163 @@ string getPackages()
 string getColor(string line)
 {
     string color;
-    if(line.substr(0,line.find(" ")) == "RED" ){
-        color=RED;
+    if (line.substr(0, line.find(" ")) == "RED")
+    {
+        color = RED;
     }
-    else if(line.substr(0,line.find(" ")) == "BLACK" ){
-        color=BLACK;
+    else if (line.substr(0, line.find(" ")) == "BLACK")
+    {
+        color = BLACK;
     }
-    else if(line.substr(0,line.find(" ")) == "GREEN" ){
-        color=GREEN;
+    else if (line.substr(0, line.find(" ")) == "GREEN")
+    {
+        color = GREEN;
     }
-    else if(line.substr(0,line.find(" ")) == "YELLOW" ){
-        color=YELLOW;
+    else if (line.substr(0, line.find(" ")) == "YELLOW")
+    {
+        color = YELLOW;
     }
-    else if(line.substr(0,line.find(" ")) == "BLUE" ){
-        color=BLUE;
+    else if (line.substr(0, line.find(" ")) == "BLUE")
+    {
+        color = BLUE;
     }
-    else if(line.substr(0,line.find(" ")) == "MAGENTA" ){
-        color=MAGENTA;
+    else if (line.substr(0, line.find(" ")) == "MAGENTA")
+    {
+        color = MAGENTA;
     }
-    else if(line.substr(0,line.find(" ")) == "CYAN" ){
-        color=CYAN;
+    else if (line.substr(0, line.find(" ")) == "CYAN")
+    {
+        color = CYAN;
     }
-    else if(line.substr(0,line.find(" ")) == "WHITE" ){
-        color=WHITE;
+    else if (line.substr(0, line.find(" ")) == "WHITE")
+    {
+        color = WHITE;
     }
-    else if(line.substr(0,line.find(" ")) == "BBLACK" ){
-        color=BBLACK;
+    else if (line.substr(0, line.find(" ")) == "BBLACK")
+    {
+        color = BBLACK;
     }
-    else if(line.substr(0,line.find(" ")) == "BGRAY" ){
-        color=BGRAY;
+    else if (line.substr(0, line.find(" ")) == "BGRAY")
+    {
+        color = BGRAY;
     }
-    else if(line.substr(0,line.find(" ")) == "BRED" ){
-        color=BRED;
+    else if (line.substr(0, line.find(" ")) == "BRED")
+    {
+        color = BRED;
     }
-    else if(line.substr(0,line.find(" ")) == "BGREEN" ){
-        color=BGREEN;
+    else if (line.substr(0, line.find(" ")) == "BGREEN")
+    {
+        color = BGREEN;
     }
-    else if(line.substr(0,line.find(" ")) == "BYELLOW" ){
-        color=BYELLOW;
+    else if (line.substr(0, line.find(" ")) == "BYELLOW")
+    {
+        color = BYELLOW;
     }
-    else if(line.substr(0,line.find(" ")) == "BBLUE" ){
-        color=BBLUE;
+    else if (line.substr(0, line.find(" ")) == "BBLUE")
+    {
+        color = BBLUE;
     }
-    else if(line.substr(0,line.find(" ")) == "BMAGENTA" ){
-        color=BMAGENTA;
+    else if (line.substr(0, line.find(" ")) == "BMAGENTA")
+    {
+        color = BMAGENTA;
     }
-    else if(line.substr(0,line.find(" ")) == "BCYAN" ){
-        color=BCYAN;
+    else if (line.substr(0, line.find(" ")) == "BCYAN")
+    {
+        color = BCYAN;
     }
-    else if(line.substr(0,line.find(" ")) == "BWHITE" ){
-        color=BWHITE;
+    else if (line.substr(0, line.find(" ")) == "BWHITE")
+    {
+        color = BWHITE;
     }
-    
+
     return color;
+}
+
+vector<string> print_helper(string os)
+{
+    string path = "../ascii/";
+    path += os;
+    path += ".ascii";
+
+    fstream fptr;
+    fptr.open(path, ios::in);
+
+    string txt;
+
+    vector<string> logo;
+
+    getline(fptr, txt);
+    logo.push_back(getColor(txt));
+
+    while (fptr)
+    {
+        getline(fptr, txt);
+        logo.push_back(txt);
+    }
+
+    return logo;
 }
 
 void print()
 {
     string os = getOS("/etc/os-release");
-    string color;
 
-    if(os.find("Ubuntu")!= string::npos)
+    string str = os.substr(0, os.find(" "));
+
+    vector<string>
+        logo = print_helper(str);
+
+    string color = logo[0];
+
+    for (int i = 0; i < logo.size(); i++)
     {
-        string path="/home/tanmay/Desktop/projects/fetch/ascii/ubuntu.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        cout<<color<<endl;
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("Manjaro")!= string::npos)
-    {
-        string path="../ascii/manjaro.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("Fedora")!= string::npos)
-    {
-        string path="../ascii/fedora.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("parrot")!= string::npos)
-    {
-        string path="../ascii/parrot.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("debian")!= string::npos)
-    {
-        string path="../ascii/debian.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("kali")!= string::npos)
-    {
-        string path="../ascii/kali.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else  if(os.find("linuxmint")!= string::npos)
-    {
-        string path="../ascii/linuxmint.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else  if(os.find("linuxmint")!= string::npos)
-    {
-        string path="../ascii/endeavour.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else  if(os.find("arch")!= string::npos)
-    {
-        string path="../ascii/arch.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("archcraft")!= string::npos)
-    {
-        string path="../ascii/archcraft.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("redhat")!= string::npos)
-    {
-        string path="../ascii/redhat.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
-    }
-    else if(os.find("opensuse")!= string::npos)
-    {
-        string path="../ascii/opensuse.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        getline(fptr,txt);
-        color=getColor(txt);
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<color<<txt<<endl;
-        }
+        cout << BRIGHT << color << logo[i] << endl;
     }
 }
 
 int main()
 {
     print();
-	string user = getuser();
-	string hostname = gethostname("/etc/hostname");
-    string username = YELLOW+user+RESET +"@"+YELLOW+hostname;
-	cout <<UNDERSCORE<<username<<RESET<<endl;
-    cout<<endl;
+    string user = getuser();
+    string hostname = gethostname("/etc/hostname");
+    string username = YELLOW + user + RESET + "@" + YELLOW + hostname;
+    cout << UNDERSCORE << username << RESET << endl;
+    cout << endl;
     string os = getOS("/etc/os-release");
-    cout<<BRIGHT<<GREEN<<"OS : "<<RESET<<os<<getHardwarePlatform()<<endl;
+    cout << BRIGHT << GREEN << "OS : " << RESET << os << getHardwarePlatform() << endl;
     string HOST = getHost("/sys/devices/virtual/dmi/id/");
-    cout<<BRIGHT<<GREEN<<"Host : "<<RESET<<HOST<<endl;
+    cout << BRIGHT << GREEN << "Host : " << RESET << HOST << endl;
     string kernel = getKernel("/proc/sys/kernel/osrelease");
-    cout<<BRIGHT<<GREEN<<"Kernel : "<<RESET<<kernel<< endl;
-	string upTime = getUpTime("/proc/uptime");
-    cout<<BRIGHT<<GREEN<<"UpTime : "<<RESET<< upTime<<endl;
+    cout << BRIGHT << GREEN << "Kernel : " << RESET << kernel << endl;
+    string upTime = getUpTime("/proc/uptime");
+    cout << BRIGHT << GREEN << "UpTime : " << RESET << upTime << endl;
     string ram = getRAM("/proc/meminfo");
-    cout<<BRIGHT<<GREEN<<"RAM : "<<RESET<<ram<< endl;
+    cout << BRIGHT << GREEN << "RAM : " << RESET << ram << endl;
     string shell = getSHELL("/etc/passwd");
-    cout<<BRIGHT<<GREEN<<"shell : "<<RESET<<shell<< endl;
+    cout << BRIGHT << GREEN << "shell : " << RESET << shell << endl;
     string DE = getDE();
-    cout<<BRIGHT<<GREEN<<"DE : "<<RESET<<DE<< endl;
+    cout << BRIGHT << GREEN << "DE : " << RESET << DE << endl;
     string res = getRES("/sys/class/graphics/fb0/modes");
-    cout<<BRIGHT<<GREEN<<"Resolution : "<<RESET<<res<< endl;
-    string theme  = getTheme();
-    cout<<BRIGHT<<GREEN<<"Theme : "<<RESET<<theme<<endl;
+    cout << BRIGHT << GREEN << "Resolution : " << RESET << res << endl;
+    string theme = getTheme();
+    cout << BRIGHT << GREEN << "Theme : " << RESET << theme << endl;
     string icon = getIcons();
-    cout<<BRIGHT<<GREEN<<"Icons : "<<RESET<<icon<< endl;
+    cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
     string cpu = getCpu("/proc/cpuinfo");
-    cout<<BRIGHT<<GREEN<<"CPU : "<<RESET<<cpu<< endl;
+    cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
     int temp;
-    if(HOST.find("VirtualBox") == string::npos )
+    if (HOST.find("VirtualBox") == string::npos)
     {
         int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-        cout<<BRIGHT<<GREEN<<"CPU Temperature : "<<RESET<<float(temp/1000.0)<<" °C"<< endl;
+        cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;
     }
     vector<string> gpu = getGPU();
-    for(auto it:gpu){
-        cout<<BRIGHT<<GREEN"GPU : "<<RESET<<it<<endl;
+    for (auto it : gpu)
+    {
+        cout << BRIGHT << GREEN "GPU : " << RESET << it << endl;
     }
-    string pkg  = getPackages();
-    cout<<BRIGHT<<GREEN<<"Packages : "<<RESET<<pkg<<endl;
-    cout<<endl;
+    string pkg = getPackages();
+    cout << BRIGHT << GREEN << "Packages : " << RESET << pkg << endl;
+    cout << endl;
     return 0;
 }
