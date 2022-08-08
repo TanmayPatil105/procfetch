@@ -1,9 +1,9 @@
 #include <iostream>
+#include<bits/stdc++.h>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <unistd.h>
-#include<bits/stdc++.h>
 #include "color.h"
 using namespace std;
 
@@ -38,6 +38,35 @@ string gethostname(string path)
 	return hostname;
 }
 
+string getOS(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string line,sub;
+
+    while(fptr)
+    {
+        getline(fptr,line);
+        sub=line.substr(0,13);
+        if(sub=="PRETTY_NAME=\"")
+        {
+            break;
+        }
+    }
+
+    line = line.substr(line.find("\"")+1);
+    line = line.substr(0,line.find("\""));
+
+    return line;
+}
+
+string getHardwarePlatform()
+{
+    string s = exec("uname -m");
+    s = s.substr(0,s.find("\n"));
+    return " "+s;
+}
+
 string getHost(string path)
 {
     fstream f1, f2;
@@ -56,6 +85,15 @@ string getHost(string path)
     string host = n1 + " " + n2;
 
     return host;
+}
+
+string getKernel(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string kernel;
+    getline(fptr,kernel);
+    return kernel;
 }
 
 string getUpTime(string path)
@@ -86,35 +124,6 @@ string getUpTime(string path)
     }
 
     return timeS;
-}
-
-string getCpu(string path)
-{
-    fstream fptr;
-	fptr.open(path, ios::in);
-    string cpu,line,sub;
-
-    while(fptr)
-    {
-        getline(fptr,line);
-        sub=line.substr(0,10);
-        if(sub=="model name")
-        {
-            break;
-        }
-    }
-    cpu=line.substr(line.find(":")+2);
-
-    return cpu;
-}
-
-string getKernel(string path)
-{
-    fstream fptr;
-	fptr.open(path, ios::in);
-    string kernel;
-    getline(fptr,kernel);
-    return kernel;
 }
 
 string getRAM(string path)
@@ -173,35 +182,6 @@ string getRAM(string path)
     return to_string(memAvail/1024) + "MiB / " + to_string(memTotal/1024) + "MiB";
 }
 
-string getOS(string path)
-{
-    fstream fptr;
-	fptr.open(path, ios::in);
-    string line,sub;
-
-    while(fptr)
-    {
-        getline(fptr,line);
-        sub=line.substr(0,13);
-        if(sub=="PRETTY_NAME=\"")
-        {
-            break;
-        }
-    }
-
-    line = line.substr(line.find("\"")+1);
-    line = line.substr(0,line.find("\""));
-
-    return line;
-}
-
-string getHardwarePlatform()
-{
-    string s = exec("uname -m");
-    s = s.substr(0,s.find("\n"));
-    return " "+s;
-}
-
 string getSHELL(string path)
 {
     fstream fptr;
@@ -221,18 +201,9 @@ string getSHELL(string path)
     return line;
 }
 
-int getCPUtemp(string path)
-{
-    fstream fptr;
-	fptr.open(path, ios::in);
-    string temp;
-    getline(fptr,temp);
-    return stoi(temp);
-}
-
 string getDE()
 {
-    return getenv("XDG_CURRENT_DESKTOP");
+    return getenv("XDG_CURRENT_DESKTOP") ;
 }
 
 string getRES(string path)
@@ -244,7 +215,6 @@ string getRES(string path)
     res=res.substr(2);
     return res.substr(0,res.find("p"));
 }
-
 
 string getTheme()
 {
@@ -260,12 +230,34 @@ string getIcons()
     return icon.substr(0,icon.find("\'"));
 }
 
-string getTerminal()
+string getCpu(string path)
 {
-    return getenv("PATH");
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string cpu,line,sub;
+
+    while(fptr)
+    {
+        getline(fptr,line);
+        sub=line.substr(0,10);
+        if(sub=="model name")
+        {
+            break;
+        }
+    }
+    cpu=line.substr(line.find(":")+2);
+
+    return cpu;
 }
 
-
+int getCPUtemp(string path)
+{
+    fstream fptr;
+	fptr.open(path, ios::in);
+    string temp;
+    getline(fptr,temp);
+    return stoi(temp);
+}
 
 vector<string> getGPU()
 {   vector<string> gpu;
@@ -283,27 +275,6 @@ vector<string> getGPU()
     }
     return gpu;
 } 
-
-
-
-void print()
-{
-    string os = getOS("/etc/os-release");
-
-    if(os.find("Ubuntu")!= string::npos){
-        string path="../ascii/manjaro.ascii";
-        fstream fptr;
-        fptr.open(path, ios::in);
-        string txt;
-        while(fptr)
-        {
-            getline(fptr,txt);
-            cout<<BRIGHT<<BRED<<txt<<endl;
-        }
-    }
-}
-
-
 
 string getPackages()
 {
@@ -369,7 +340,239 @@ string getPackages()
     return pkg;
 }
 
+string getColor(string line)
+{
+    string color;
+    if(line.substr(0,line.find(" ")) == "RED" ){
+        color=RED;
+    }
+    else if(line.substr(0,line.find(" ")) == "BLACK" ){
+        color=BLACK;
+    }
+    else if(line.substr(0,line.find(" ")) == "GREEN" ){
+        color=GREEN;
+    }
+    else if(line.substr(0,line.find(" ")) == "YELLOW" ){
+        color=YELLOW;
+    }
+    else if(line.substr(0,line.find(" ")) == "BLUE" ){
+        color=BLUE;
+    }
+    else if(line.substr(0,line.find(" ")) == "MAGENTA" ){
+        color=MAGENTA;
+    }
+    else if(line.substr(0,line.find(" ")) == "CYAN" ){
+        color=CYAN;
+    }
+    else if(line.substr(0,line.find(" ")) == "WHITE" ){
+        color=WHITE;
+    }
+    else if(line.substr(0,line.find(" ")) == "BBLACK" ){
+        color=BBLACK;
+    }
+    else if(line.substr(0,line.find(" ")) == "BGRAY" ){
+        color=BGRAY;
+    }
+    else if(line.substr(0,line.find(" ")) == "BRED" ){
+        color=BRED;
+    }
+    else if(line.substr(0,line.find(" ")) == "BGREEN" ){
+        color=BGREEN;
+    }
+    else if(line.substr(0,line.find(" ")) == "BYELLOW" ){
+        color=BYELLOW;
+    }
+    else if(line.substr(0,line.find(" ")) == "BBLUE" ){
+        color=BBLUE;
+    }
+    else if(line.substr(0,line.find(" ")) == "BMAGENTA" ){
+        color=BMAGENTA;
+    }
+    else if(line.substr(0,line.find(" ")) == "BCYAN" ){
+        color=BCYAN;
+    }
+    else if(line.substr(0,line.find(" ")) == "BWHITE" ){
+        color=BWHITE;
+    }
+    
+    return color;
+}
 
+void print()
+{
+    string os = getOS("/etc/os-release");
+    string color;
+
+    if(os.find("Ubuntu")!= string::npos)
+    {
+        string path="/home/tanmay/Desktop/projects/fetch/ascii/ubuntu.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        cout<<color<<endl;
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("Manjaro")!= string::npos)
+    {
+        string path="../ascii/manjaro.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("Fedora")!= string::npos)
+    {
+        string path="../ascii/fedora.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("parrot")!= string::npos)
+    {
+        string path="../ascii/parrot.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("debian")!= string::npos)
+    {
+        string path="../ascii/debian.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("kali")!= string::npos)
+    {
+        string path="../ascii/kali.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else  if(os.find("linuxmint")!= string::npos)
+    {
+        string path="../ascii/linuxmint.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else  if(os.find("linuxmint")!= string::npos)
+    {
+        string path="../ascii/endeavour.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else  if(os.find("arch")!= string::npos)
+    {
+        string path="../ascii/arch.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("archcraft")!= string::npos)
+    {
+        string path="../ascii/archcraft.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("redhat")!= string::npos)
+    {
+        string path="../ascii/redhat.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+    else if(os.find("opensuse")!= string::npos)
+    {
+        string path="../ascii/opensuse.ascii";
+        fstream fptr;
+        fptr.open(path, ios::in);
+        string txt;
+        getline(fptr,txt);
+        color=getColor(txt);
+        while(fptr)
+        {
+            getline(fptr,txt);
+            cout<<BRIGHT<<color<<txt<<endl;
+        }
+    }
+}
 
 int main()
 {
@@ -379,20 +582,16 @@ int main()
     string username = YELLOW+user+RESET +"@"+YELLOW+hostname;
 	cout <<UNDERSCORE<<username<<RESET<<endl;
     cout<<endl;
-    string HOST = getHost("/sys/devices/virtual/dmi/id/");
-    cout<<BRIGHT<<GREEN<<"Host : "<<RESET<<HOST<<endl;
-	string upTime = getUpTime("/proc/uptime");
-    cout<<BRIGHT<<GREEN<<"UpTime : "<<RESET<< upTime<<endl;
-    string cpu = getCpu("/proc/cpuinfo");
-    cout<<BRIGHT<<GREEN<<"CPU : "<<RESET<<cpu<< endl;
-    string ram = getRAM("/proc/meminfo");
-    cout<<BRIGHT<<GREEN<<"RAM : "<<RESET<<ram<< endl;
-    string kernel = getKernel("/proc/sys/kernel/osrelease");
-    cout<<BRIGHT<<GREEN<<"Kernel : "<<RESET<<kernel<< endl;
     string os = getOS("/etc/os-release");
     cout<<BRIGHT<<GREEN<<"OS : "<<RESET<<os<<getHardwarePlatform()<<endl;
-    int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-    cout<<BRIGHT<<GREEN<<"CPU Temperature : "<<RESET<<float(temp/1000.0)<<" °C"<< endl;
+    string HOST = getHost("/sys/devices/virtual/dmi/id/");
+    cout<<BRIGHT<<GREEN<<"Host : "<<RESET<<HOST<<endl;
+    string kernel = getKernel("/proc/sys/kernel/osrelease");
+    cout<<BRIGHT<<GREEN<<"Kernel : "<<RESET<<kernel<< endl;
+	string upTime = getUpTime("/proc/uptime");
+    cout<<BRIGHT<<GREEN<<"UpTime : "<<RESET<< upTime<<endl;
+    string ram = getRAM("/proc/meminfo");
+    cout<<BRIGHT<<GREEN<<"RAM : "<<RESET<<ram<< endl;
     string shell = getSHELL("/etc/passwd");
     cout<<BRIGHT<<GREEN<<"shell : "<<RESET<<shell<< endl;
     string DE = getDE();
@@ -403,6 +602,14 @@ int main()
     cout<<BRIGHT<<GREEN<<"Theme : "<<RESET<<theme<<endl;
     string icon = getIcons();
     cout<<BRIGHT<<GREEN<<"Icons : "<<RESET<<icon<< endl;
+    string cpu = getCpu("/proc/cpuinfo");
+    cout<<BRIGHT<<GREEN<<"CPU : "<<RESET<<cpu<< endl;
+    int temp;
+    if(HOST.find("VirtualBox") == string::npos )
+    {
+        int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
+        cout<<BRIGHT<<GREEN<<"CPU Temperature : "<<RESET<<float(temp/1000.0)<<" °C"<< endl;
+    }
     vector<string> gpu = getGPU();
     for(auto it:gpu){
         cout<<BRIGHT<<GREEN"GPU : "<<RESET<<it<<endl;
