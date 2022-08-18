@@ -295,57 +295,57 @@ string getPackages()
     if (exec(" [ -f \"/bin/dpkg\" ] && echo \"1\"|wc -l  ").size() > 1)
     {
         string dpkg = exec(" dpkg -l | wc -l ");
-        pkg += dpkg.substr(0, dpkg.size() - 1) + RED + " dpkg, " + RESET;
+        pkg += dpkg.substr(0, dpkg.size() - 1) + RED + " dpkg; " + RESET;
     }
     if (exec(" [ -f \"/bin/snap\" ] && echo \"1\"|wc -l  ").size() > 1)
     {
         string snap = exec(" snap list | wc -l ");
-        pkg += snap.substr(0, snap.size() - 1) + RED + " snap, " + RESET;
+        pkg += snap.substr(0, snap.size() - 1) + RED + " snap; " + RESET;
     }
     if (exec(" [ -f \"/bin/pacman\" ] && echo \"1\"|wc -l  ").size() > 1)
     {
         string pacman = exec(" pacman -Q | wc -l  ");
-        pkg += pacman.substr(0, pacman.size() - 1) + RED + " pacman, " + RESET;
+        pkg += pacman.substr(0, pacman.size() - 1) + RED + " pacman; " + RESET;
     }
     if (exec(" [ -f \"/bin/flatpak\" ] && echo \"1\"|wc -l  ").size() > 1)
     {
         string flatpak = exec(" flatpak list | wc -l ");
-        pkg += flatpak.substr(0, flatpak.size() - 1) + RED + " flatpak, " + RESET;
+        pkg += flatpak.substr(0, flatpak.size() - 1) + RED + " flatpak; " + RESET;
     }
     if (exec(" [ -f \"/var/lib/rpm\" ] && echo \"1\"|wc -l  ").size() > 1)
     {
         string rpm = exec(" rpm -qa | wc -l ");
-        pkg += rpm.substr(0, rpm.size() - 1) + RED + " rpm, " + RESET;
+        pkg += rpm.substr(0, rpm.size() - 1) + RED + " rpm; " + RESET;
     }
     if (exec(" [ -f \"/bin/npm\" ] && echo \"1\"|wc -l  ").size() > 1)
     {
         string npm = exec(" npm list | wc -l ");
-        pkg += npm.substr(0, npm.size() - 1) + RED + " npm, " + RESET;
+        pkg += npm.substr(0, npm.size() - 1) + RED + " npm; " + RESET;
     }
     if (exec(" [ -f \"/bin/emerge\" ] && echo \"1\"|wc -l  ").size() > 1) // gentoo
     {
         string portage = exec("echo -n $(cd /var/db/pkg && ls -d */* | wc -l");
-        pkg += portage.substr(0, portage.size() - 1) + RED + " portage, " + RESET;
+        pkg += portage.substr(0, portage.size() - 1) + RED + " portage; " + RESET;
     }
     if (exec(" [ -f \"/bin/xbps-install\" ] && echo \"1\"|wc -l  ").size() > 1) // void linux
     {
         string xbps = exec(" flatpak list | wc -l ");
-        pkg += xbps.substr(0, xbps.size() - 1) + RED + " xbps, " + RESET;
+        pkg += xbps.substr(0, xbps.size() - 1) + RED + " xbps; " + RESET;
     }
     if (exec(" [ -f \"/bin/dnf\" ] && echo \"1\"|wc -l  ").size() > 1) // fedora
     {
         string dnf = exec(" dnf list installed| wc -l ");
-        pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf, " + RESET;
+        pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf; " + RESET;
     }
     if (exec(" [ -f \"/bin/yum\" ] && echo \"1\"|wc -l  ").size() > 1) // redhat
     {
         string yum = exec(" yum list installed | wc -l ");
-        pkg += yum.substr(0, yum.size() - 1) + RED + " yum, " + RESET;
+        pkg += yum.substr(0, yum.size() - 1) + RED + " yum; " + RESET;
     }
     if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1) // opensuse
     {
         string zypper = exec(" zypper se --installed-only | wc -l ");
-        pkg += zypper.substr(0, zypper.size() - 1) + RED + " zypper, " + RESET;
+        pkg += zypper.substr(0, zypper.size() - 1) + RED + " zypper; " + RESET;
     }
 
     return pkg;
@@ -426,45 +426,50 @@ string getColor(string line)
     return color;
 }
 
-vector<string> print_helper(string os)
+void print_process(string art)
 {
-    string path = "../ascii/";
-    path += os;
-    path += ".ascii";
-
+    string color;
+    string path="/usr/share/procfetch/ascii/" + art;
     fstream fptr;
     fptr.open(path, ios::in);
-
     string txt;
-
-    vector<string> logo;
-
-    getline(fptr, txt);
-    logo.push_back(getColor(txt));
-
-    while (fptr)
+    getline(fptr,txt);
+    color=getColor(txt);
+    cout<<color<<endl;
+    while(fptr)
     {
-        getline(fptr, txt);
-        logo.push_back(txt);
+        getline(fptr,txt);
+        cout<<BRIGHT<<color<<txt<<endl;
     }
-
-    return logo;
+    fptr.close();
 }
 
 void print()
 {
     string os = getOS("/etc/os-release");
 
-    string str = os.substr(0, os.find(" "));
+    map<string, string> ascii_arts;
 
-    vector<string>
-        logo = print_helper(str);
+    ascii_arts["Ubuntu"] = {"ubuntu.ascii"};
+    ascii_arts["Debian"] = {"debian.ascii"};
+    ascii_arts["Fedora"] = {"fedora.ascii"};
+    ascii_arts["Red Hat"] = {"redhat.ascii"};
+    ascii_arts["Arch Linux"] = {"arch.ascii"};
+    ascii_arts["Manjaro"] = {"manjaro.ascii"};
+    ascii_arts["Archcraft"] = {"archcraft.ascii"};
+    ascii_arts["Kali"] = {"kali.ascii"};
+    ascii_arts["Parrot"] = {"parrot.ascii"};
+    ascii_arts["OpenSuse"] = {"opensuse.ascii"};
+    ascii_arts["Linux Mint"] = {"linuxmint.ascii"};
+    ascii_arts["EndeavourOS"] = {"endeavouros.ascii"};
 
-    string color = logo[0];
-
-    for (int i = 0; i < logo.size(); i++)
+    for(auto it=ascii_arts.begin(); it!=ascii_arts.end(); it++)
     {
-        cout << BRIGHT << color << logo[i] << endl;
+        if(os.find(it->first) != string::npos)
+        {
+            print_process(it->second);
+            return;
+        }
     }
 }
 
