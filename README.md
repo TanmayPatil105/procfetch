@@ -27,7 +27,7 @@
 ## Installation
 
 ```
-git clone https://gitlab.com/aurum4/procfetch.git
+git clone https://github.com/TanmayPatil105/procfetch.git
  ```
 
 ```
