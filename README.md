@@ -44,6 +44,11 @@ sudo chmod +x /usr/bin/procfetch
 
 ![](./images/tty.gif)
 
+<hr/>
+
+### Contributing
+
+Make sure reading [Contributing.md](https://github.com/TanmayPatil105/procfetch/blob/main/CONTRIBUTING.md) before Contributing
 
 #### Disclamer :
 Tried and tested on Debian, Ubuntu and ParrotOS.
