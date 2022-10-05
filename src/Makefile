@@ -1,2 +1,2 @@
 all:
-		g++ -o xfetch fetch.cpp
+		g++ -o procfetch fetch.cpp
