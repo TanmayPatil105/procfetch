@@ -34,13 +34,22 @@ git clone https://github.com/TanmayPatil105/procfetch.git
 cd procfetch
 ```
 
- ```
-sudo apt install ./procfetch_1.0_all.deb
+```
+chmod +x install.sh
+```
+```
+./install.sh
 ```
 ```
 sudo chmod +x /usr/bin/procfetch
 ```
-
+## Uninstallation
+```
+chmod +x uninstall.sh
+```
+```
+./uninstall.sh
+```
 
 ![](./images/tty.gif)
 
