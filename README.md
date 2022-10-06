@@ -61,3 +61,4 @@ Make sure reading [Contributing.md](https://github.com/TanmayPatil105/procfetch/
 
 #### Disclamer :
 Tried and tested on Debian, Ubuntu and ParrotOS.
+
