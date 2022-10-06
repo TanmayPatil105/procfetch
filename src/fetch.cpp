@@ -551,6 +551,8 @@ void print()
     ascii_arts["Linux Mint"] = {"linuxmint.ascii"};
     ascii_arts["EndeavourOS"] = {"endeavouros.ascii"};
     ascii_arts["Pop!_OS"] = {"pop!_os.ascii"};
+    ascii_arts["Gentoo"] = {"gentoo.ascii"};
+    
 
     for(auto it=ascii_arts.begin(); it!=ascii_arts.end(); it++)
     {
