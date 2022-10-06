@@ -550,6 +550,7 @@ void print()
     ascii_arts["OpenSuse"] = {"opensuse.ascii"};
     ascii_arts["Linux Mint"] = {"linuxmint.ascii"};
     ascii_arts["EndeavourOS"] = {"endeavouros.ascii"};
+    ascii_arts["Pop!_OS"] = {"pop!_os.ascii"};
 
     for(auto it=ascii_arts.begin(); it!=ascii_arts.end(); it++)
     {
