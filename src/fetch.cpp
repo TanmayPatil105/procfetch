@@ -215,6 +215,12 @@ string getUpTime(string path)
     return timeS;
 }
 
+static string getsize(string s) {
+    size_t b = s.find_first_of("0123456789");
+    size_t e = s.find(" ", b);
+    return s.substr(b, e - b);
+}
+
 string getRAM(string path)
 {
     fstream fptr;
@@ -227,48 +233,18 @@ string getRAM(string path)
         sub = line.substr(0, line.find(":"));
         if (sub == "MemTotal")
         {
-            total = line;
+            total = getsize(line);
         }
         if (sub == "MemAvailable")
         {
-            free = line;
+            free = getsize(line);
         }
         if (sub == "Buffers")
         {
-            shmem = line;
+            shmem = getsize(line);
             break;
         }
     }
-    size_t i;
-    for (i = 0; i < total.size(); i++)
-    {
-        if (isdigit(total[i]))
-        {
-            break;
-        }
-    }
-    total = total.substr(i);
-    total = total.substr(0, total.find(" "));
-    for (i = 0; i < free.size(); i++)
-    {
-        if (isdigit(free[i]))
-        {
-            break;
-        }
-    }
-    free = free.substr(i);
-    free = free.substr(0, free.find(" "));
-
-    for (i = 0; i < shmem.size(); i++)
-    {
-        if (isdigit(shmem[i]))
-        {
-            break;
-        }
-    }
-
-    shmem = shmem.substr(i);
-    shmem = shmem.substr(0, shmem.find(" "));
 
     int memTotal = stoi(total);
     int memFree = stoi(free);
