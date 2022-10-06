@@ -27,28 +27,28 @@
 ## Installation
 
 ```
-git clone https://github.com/TanmayPatil105/procfetch.git
+$ git clone https://github.com/TanmayPatil105/procfetch.git
  ```
 
 ```
-cd procfetch
+$ cd procfetch
 ```
 
 ```
-chmod +x install.sh
+$ chmod +x install.sh
 ```
 ```
-./install.sh
+$ ./install.sh
 ```
 ```
-sudo chmod +x /usr/bin/procfetch
+$ sudo chmod +x /usr/bin/procfetch
 ```
 ## Uninstallation
 ```
-chmod +x uninstall.sh
+$ chmod +x uninstall.sh
 ```
 ```
-./uninstall.sh
+$ ./uninstall.sh
 ```
 
 ![](./images/tty.gif)
