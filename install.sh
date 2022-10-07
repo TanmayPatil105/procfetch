@@ -21,9 +21,6 @@ if [ -d "$DIR" ]
 then
 	sudo rm -rf "$DIR"
 fi
-echo "Creating /bin/procfetch ..."
-sudo cp ./src/procfetch /bin
-echo "Creating /usr/share/procfetch ..."
-sudo mkdir /usr/share/procfetch
-sudo cp -r ./ascii /usr/share/procfetch
+
+make install || exit $?
 echo "Installed succesfully"
