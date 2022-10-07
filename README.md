@@ -24,6 +24,10 @@
 * Uptime
 * Temperature
 
+## Prerequisites
+
+* GNU Make
+
 ## Installation
 
 ```

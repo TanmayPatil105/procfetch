@@ -1,6 +1,5 @@
-# For GNU Make
-TOPTARGETS := all clean
-SUBDIRS := src
+TOPTARGETS := all clean install
+SUBDIRS := src ascii
 
 $(TOPTARGETS): $(SUBDIRS)
 $(SUBDIRS):
