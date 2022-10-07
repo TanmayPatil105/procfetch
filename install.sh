@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BIN="/bin/procfetch"
-DIR="/usr/share/procfetch"
+DATADIR="/usr/share/procfetch"
 
 # check args
 if [  $# != 0 ]
@@ -17,10 +17,10 @@ then
     echo "Removed old version"
     sudo rm "$BIN"
 fi
-if [ -d "$DIR" ]
+if [ -d "$DATADIR" ]
 then
-	sudo rm -rf "$DIR"
+	sudo rm -rf "$DATADIR"
 fi
 
-make install || exit $?
+sudo make install || exit $?
 echo "Installed succesfully"
