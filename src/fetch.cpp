@@ -548,6 +548,17 @@ void print()
     ascii_arts["OpenSuse"] = {"opensuse.ascii"};
     ascii_arts["Linux Mint"] = {"linuxmint.ascii"};
     ascii_arts["EndeavourOS"] = {"endeavouros.ascii"};
+    ascii_arts["Pop!_OS"] = {"pop!_os.ascii"};
+    ascii_arts["Gentoo"] = {"gentoo.ascii"};
+    ascii_arts["elementary OS"] = {"elementaryos.ascii"};
+    ascii_arts["Slackware"] = {"slackware.ascii"};
+    ascii_arts["Asahi Linux"] = {"asahi.ascii"};
+    ascii_arts["Peppermint"] = {"peppermintos.ascii"};
+    ascii_arts["CentOS"] = {"centos.ascii"};
+    ascii_arts["Lubuntu"] = {"lubuntu.ascii"};
+    ascii_arts["Navy Linux"] = {"navylinux.ascii"};
+    ascii_arts["BlackArch"] = {"blackarch.ascii"};
+
 
     for(auto it=ascii_arts.begin(); it!=ascii_arts.end(); it++)
     {
