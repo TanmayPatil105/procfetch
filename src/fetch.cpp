@@ -77,7 +77,6 @@ int main()
     cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
     string cpu = getCPU("/proc/cpuinfo");
     cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
-    int temp;
     if (HOST.find("VirtualBox") == string::npos)
     {
         int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
@@ -240,7 +239,7 @@ string getRAM(string path)
             break;
         }
     }
-    int i;
+    size_t i;
     for (i = 0; i < total.size(); i++)
     {
         if (isdigit(total[i]))
@@ -362,7 +361,7 @@ vector<string> getGPU()
     string igpu = exec("lspci | grep -E  \"VGA|3D|Display\"");
     int temp = 0, k = 0;
 
-    for (int i = 0; i < igpu.size(); i++)
+    for (size_t i = 0; i < igpu.size(); i++)
     {
         if (igpu[i] == '\n')
         {
@@ -379,7 +378,6 @@ vector<string> getGPU()
 string getPackages()
 {
     string pkg = "";
-    int count = 0;
     if (exec(" [ -f \"/bin/dpkg\" ] && echo \"1\"|wc -l  ").size() > 1)
     {
         string dpkg = exec(" dpkg -l | wc -l ");
