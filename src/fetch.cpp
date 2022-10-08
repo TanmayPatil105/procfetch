@@ -39,6 +39,8 @@ string getCPU(string path);
 
 int getCPUtemp(string path);
 
+bool CpuTempCheck(string path);
+
 vector<string> getGPU();
 
 string getPackages();
@@ -77,7 +79,7 @@ int main()
     cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
     string cpu = getCPU("/proc/cpuinfo");
     cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
-    if (HOST.find("VirtualBox") == string::npos)
+    if (HOST.find("VirtualBox") == string::npos && CpuTempCheck("/sys/class/thermal/thermal_zone0"))
     {
         int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
         cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;
@@ -352,6 +354,15 @@ int getCPUtemp(string path)
     string temp;
     getline(fptr, temp);
     return stoi(temp);
+}
+
+bool CpuTempCheck(string path)
+{
+    if(exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]  && echo \"true\" | wc -l ").size() > 1)
+    {
+        return true;
+    }
+    return false;
 }
 
 vector<string> getGPU()
