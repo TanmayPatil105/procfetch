@@ -552,6 +552,8 @@ void print()
     ascii_arts["Gentoo"] = {"gentoo.ascii"};
     ascii_arts["Elementary"] = {"elementaryos.ascii"};
     ascii_arts["Slackware"] = {"slackware.ascii"};
+    ascii_arts["Asahi Linux"] = {"asahi.ascii"};
+
 
 
     for(auto it=ascii_arts.begin(); it!=ascii_arts.end(); it++)
