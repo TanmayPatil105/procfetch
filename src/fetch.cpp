@@ -553,6 +553,7 @@ void print()
     ascii_arts["Elementary"] = {"elementaryos.ascii"};
     ascii_arts["Slackware"] = {"slackware.ascii"};
     ascii_arts["Asahi Linux"] = {"asahi.ascii"};
+    ascii_arts["Peppermint"] = {"peppermintos.ascii"};
 
 
 
