@@ -12,10 +12,13 @@ clean:
 install:
 	@echo "Installing $(BINDIR)/$(TARGET) ..."
 	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
+uninstall:
+	- rm $(BINDIR)/$(TARGET)
 format:
 	$(FORMATTER) $(SRCS) *.h
+
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS)
 fetch.o: color.h
 
-.PHONY: all clean install format
+.PHONY: all clean install uninstall format

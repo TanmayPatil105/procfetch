@@ -1,4 +1,4 @@
-TOPTARGETS := all clean install
+TOPTARGETS := all clean install uninstall
 SUBDIRS := src ascii
 
 $(TOPTARGETS): $(SUBDIRS)

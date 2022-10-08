@@ -41,6 +41,8 @@ string getCPU(string path);
 
 int getCPUtemp(string path);
 
+bool CpuTempCheck(string path);
+
 vector<string> getGPU();
 
 string getPackages();
@@ -79,7 +81,7 @@ int main()
     cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
     string cpu = getCPU("/proc/cpuinfo");
     cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
-    if (HOST.find("VirtualBox") == string::npos)
+    if (CpuTempCheck("/sys/class/thermal/thermal_zone0"))
     {
         int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
         cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;
@@ -356,6 +358,15 @@ int getCPUtemp(string path)
     return stoi(temp);
 }
 
+bool CpuTempCheck(string path)
+{
+    if(exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]  && echo \"true\" | wc -l ").size() > 1)
+    {
+        return true;
+    }
+    return false;
+}
+
 vector<string> getGPU()
 {
     vector<string> gpu;
@@ -423,11 +434,6 @@ string getPackages()
     {
         string dnf = exec(" dnf list installed| wc -l ");
         pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf; " + RESET;
-    }
-    if (exec(" [ -f \"/bin/yum\" ] && echo \"1\"|wc -l  ").size() > 1) // redhat
-    {
-        string yum = exec(" yum list installed | wc -l ");
-        pkg += yum.substr(0, yum.size() - 1) + RED + " yum; " + RESET;
     }
     if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1) // opensuse
     {
@@ -549,6 +555,16 @@ void print()
     ascii_arts["OpenSuse"] = {"opensuse.ascii"};
     ascii_arts["Linux Mint"] = {"linuxmint.ascii"};
     ascii_arts["EndeavourOS"] = {"endeavouros.ascii"};
+    ascii_arts["Pop!_OS"] = {"pop!_os.ascii"};
+    ascii_arts["Gentoo"] = {"gentoo.ascii"};
+    ascii_arts["elementary OS"] = {"elementaryos.ascii"};
+    ascii_arts["Slackware"] = {"slackware.ascii"};
+    ascii_arts["Asahi Linux"] = {"asahi.ascii"};
+    ascii_arts["Peppermint"] = {"peppermintos.ascii"};
+    ascii_arts["CentOS"] = {"centos.ascii"};
+    ascii_arts["Lubuntu"] = {"lubuntu.ascii"};
+    ascii_arts["Navy Linux"] = {"navylinux.ascii"};
+    ascii_arts["BlackArch"] = {"blackarch.ascii"};
 
     for (auto it = ascii_arts.begin(); it != ascii_arts.end(); it++)
     {
