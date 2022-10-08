@@ -554,6 +554,11 @@ void print()
     ascii_arts["Slackware"] = {"slackware.ascii"};
     ascii_arts["Asahi Linux"] = {"asahi.ascii"};
     ascii_arts["Peppermint"] = {"peppermintos.ascii"};
+    ascii_arts["CentOS"] = {"centos.ascii"};
+    ascii_arts["Lubuntu"] = {"lubuntu.ascii"};
+    ascii_arts["Navy Linux"] = {"navylinux.ascii"};
+    ascii_arts["BlackArch"] = {"blackarch.ascii"};
+
 
 
 
