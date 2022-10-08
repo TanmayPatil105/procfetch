@@ -11,8 +11,10 @@ clean:
 install:
 	@echo "Installing $(BINDIR)/$(TARGET) ..."
 	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
+uninstall:
+	- rm $(BINDIR)/$(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS)
 fetch.o: color.h
 
-.PHONY: all clean install
+.PHONY: all clean install uninstall
