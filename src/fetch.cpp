@@ -93,7 +93,6 @@ int main()
     return 0;
 }
 
-
 string exec(string command)
 {
     char buffer[128];
@@ -423,11 +422,6 @@ string getPackages()
         string dnf = exec(" dnf list installed| wc -l ");
         pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf; " + RESET;
     }
-    if (exec(" [ -f \"/bin/yum\" ] && echo \"1\"|wc -l  ").size() > 1) // redhat
-    {
-        string yum = exec(" yum list installed | wc -l ");
-        pkg += yum.substr(0, yum.size() - 1) + RED + " yum; " + RESET;
-    }
     if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1) // opensuse
     {
         string zypper = exec(" zypper se --installed-only | wc -l ");
@@ -515,17 +509,17 @@ string getColor(string line)
 void print_process(string art)
 {
     string color;
-    string path="/usr/share/procfetch/ascii/" + art;
+    string path = "/usr/share/procfetch/ascii/" + art;
     fstream fptr;
     fptr.open(path, ios::in);
     string txt;
-    getline(fptr,txt);
-    color=getColor(txt);
-    cout<<color<<endl;
-    while(fptr)
+    getline(fptr, txt);
+    color = getColor(txt);
+    cout << color << endl;
+    while (fptr)
     {
-        getline(fptr,txt);
-        cout<<BRIGHT<<color<<txt<<endl;
+        getline(fptr, txt);
+        cout << BRIGHT << color << txt << endl;
     }
     fptr.close();
 }
@@ -559,10 +553,9 @@ void print()
     ascii_arts["Navy Linux"] = {"navylinux.ascii"};
     ascii_arts["BlackArch"] = {"blackarch.ascii"};
 
-
-    for(auto it=ascii_arts.begin(); it!=ascii_arts.end(); it++)
+    for (auto it = ascii_arts.begin(); it != ascii_arts.end(); it++)
     {
-        if(os.find(it->first) != string::npos)
+        if (os.find(it->first) != string::npos)
         {
             print_process(it->second);
             return;
