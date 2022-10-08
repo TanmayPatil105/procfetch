@@ -1,9 +1,11 @@
-#include <iostream>
 #include <bits/stdc++.h>
+#include <unistd.h>
+
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
-#include <unistd.h>
+
 #include "color.h"
 using namespace std;
 
@@ -92,7 +94,6 @@ int main()
     cout << endl;
     return 0;
 }
-
 
 string exec(string command)
 {
@@ -515,17 +516,17 @@ string getColor(string line)
 void print_process(string art)
 {
     string color;
-    string path="/usr/share/procfetch/ascii/" + art;
+    string path = "/usr/share/procfetch/ascii/" + art;
     fstream fptr;
     fptr.open(path, ios::in);
     string txt;
-    getline(fptr,txt);
-    color=getColor(txt);
-    cout<<color<<endl;
-    while(fptr)
+    getline(fptr, txt);
+    color = getColor(txt);
+    cout << color << endl;
+    while (fptr)
     {
-        getline(fptr,txt);
-        cout<<BRIGHT<<color<<txt<<endl;
+        getline(fptr, txt);
+        cout << BRIGHT << color << txt << endl;
     }
     fptr.close();
 }
@@ -549,9 +550,9 @@ void print()
     ascii_arts["Linux Mint"] = {"linuxmint.ascii"};
     ascii_arts["EndeavourOS"] = {"endeavouros.ascii"};
 
-    for(auto it=ascii_arts.begin(); it!=ascii_arts.end(); it++)
+    for (auto it = ascii_arts.begin(); it != ascii_arts.end(); it++)
     {
-        if(os.find(it->first) != string::npos)
+        if (os.find(it->first) != string::npos)
         {
             print_process(it->second);
             return;

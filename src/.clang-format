@@ -1,0 +1,5 @@
+---
+BasedOnStyle: Microsoft
+AllowShortFunctionsOnASingleLine: None
+#ColumnLimit:    110
+IndentWidth:     4
