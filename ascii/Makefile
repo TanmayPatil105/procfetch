@@ -8,5 +8,7 @@ install:
 	for i in *.ascii; do             \
 		$(INSTALL) "$$i" $(DATADIR)/ascii ;\
 	done
+uninstall:
+	rm -rf $(DATADIR)
 
-.PHONY: all clean install
+.PHONY: all clean install uninstall
