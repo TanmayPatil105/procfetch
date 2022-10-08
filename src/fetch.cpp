@@ -1,11 +1,9 @@
-#include <bits/stdc++.h>
-#include <unistd.h>
-
-#include <fstream>
 #include <iostream>
+#include <bits/stdc++.h>
+#include <fstream>
 #include <string>
 #include <vector>
-
+#include <unistd.h>
 #include "color.h"
 using namespace std;
 
