@@ -1,8 +1,9 @@
 #include <iostream>
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
 #include <unistd.h>
 #include "color.h"
 using namespace std;
