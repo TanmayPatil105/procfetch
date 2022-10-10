@@ -594,6 +594,30 @@ void print()
     ascii_arts["Lubuntu"] = {"lubuntu.ascii"};
     ascii_arts["Navy Linux"] = {"navylinux.ascii"};
     ascii_arts["BlackArch"] = {"blackarch.ascii"};
+    ascii_arts["ArrowOs"] = {"arrowos.ascii"};
+    ascii_arts["Pixelexperience"] = {"pixelexperience.ascii"};
+    ascii_arts["LineageOS"] = {"lineageos.ascii"};
+    ascii_arts["GrapheneOS"] = {"grapheneos.ascii"};
+    ascii_arts["cyanogenMod"] = {"cyanogenmod.ascii"};
+    ascii_arts["ChromiumOS"] = {"chromiumos.ascii"};
+    ascii_arts["ChromeOS"] = {"chromeos.ascii"};
+    ascii_arts["SteamOS"] = {"steamos.ascii"};
+    ascii_arts["Garuda Linux"] = {"garudalinux.ascii"};
+    ascii_arts["Raspberry Pi OS"] = {"raspberrypios.ascii"};
+    ascii_arts["MX Linux"] = {"mxlinux.ascii"};
+    ascii_arts["BOSS Linux"] = {"bosslinux.ascii"};
+    ascii_arts["Linux Lite"] = {"linuxlite.ascii"};
+    ascii_arts["Bodhi Linux"] = {"bodhilinux.ascii"};
+    ascii_arts["Xubuntu"] = {"xubuntu.ascii"};
+    ascii_arts["Kubuntu"] = {"kubuntu.ascii"};
+    ascii_arts["QubesOS"] = {"qubesos.ascii"};
+    ascii_arts["Rocky Linux"] = {"rockylinux.ascii"};
+    ascii_arts["Deepin"] = {"deepin.ascii"};
+    ascii_arts["KaiOS"] = {"kaios.ascii"};
+    ascii_arts["Pure OS"] = {"pureos.ascii"};
+    ascii_arts["Zorin OS"] = {"zorin.ascii"};
+    
+    
 
     for (auto it = ascii_arts.begin(); it != ascii_arts.end(); it++)
     {
