@@ -1,13 +1,133 @@
-#include <bits/stdc++.h>
-#include <unistd.h>
-
-#include <fstream>
 #include <iostream>
+#include <algorithm>
+#include <fstream>
 #include <string>
 #include <vector>
-
+#include <map>
+#include <unistd.h>
 #include "color.h"
 #include "fetch.h"
+
+using namespace std;
+
+string exec(string command);
+
+string getuser();
+
+string gethostname(string path);
+
+string getOS(string path);
+
+string getHardwarePlatform();
+
+string getHost(string path);
+
+string getKernel(string path);
+
+string getUpTime(string path);
+
+string getRAM(string path);
+
+string getSHELL(string path);
+
+string getDE();
+
+string getRES(string path);
+
+string getTheme();
+
+string getIcons();
+
+string getCPU(string path);
+
+int getCPUtemp(string path);
+
+bool CpuTempCheck(string path);
+
+vector<string> getGPU();
+
+string getPackages();
+
+string getColor();
+
+void print();
+
+int main()
+{
+    // prints ASCII ART
+    print();
+
+    //prints USERNAME@HOSTNAME
+    string user = getuser();
+    string hostname = gethostname("/etc/hostname");
+    string username = YELLOW + user + RESET + "@" + YELLOW + hostname;
+    cout << UNDERSCORE << username << RESET << endl;
+    cout << endl;
+
+    // prints OS Info
+    string os = getOS("/etc/os-release");
+    cout << BRIGHT << GREEN << "OS : " << RESET << os << getHardwarePlatform() << endl;
+
+    // prints HOST Info
+    string HOST = getHost("/sys/devices/virtual/dmi/id/");
+    cout << BRIGHT << GREEN << "Host : " << RESET << HOST << endl;
+
+    // prints KERNEL Info
+    string kernel = getKernel("/proc/sys/kernel/osrelease");
+    cout << BRIGHT << GREEN << "Kernel : " << RESET << kernel << endl;
+
+    // prints UPTIME
+    string upTime = getUpTime("/proc/uptime");
+    cout << BRIGHT << GREEN << "UpTime : " << RESET << upTime << endl;
+
+    // prints RAM Info
+    string ram = getRAM("/proc/meminfo");
+    cout << BRIGHT << GREEN << "RAM : " << RESET << ram << endl;
+
+    // prints SHELL Info
+    string shell = getSHELL("/etc/passwd");
+    cout << BRIGHT << GREEN << "shell : " << RESET << shell << endl;
+
+    //prints DE Info
+    string DE = getDE();
+    cout << BRIGHT << GREEN << "DE : " << RESET << DE << endl;
+
+    // prints RESOLUTION Info
+    string res = getRES("/sys/class/graphics/fb0/modes");
+    cout << BRIGHT << GREEN << "Resolution : " << RESET << res << endl;
+
+    // prints THEME Info
+    string theme = getTheme();
+    cout << BRIGHT << GREEN << "Theme : " << RESET << theme << endl;
+
+    // prints ICON THEME Info
+    string icon = getIcons();
+    cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
+
+    // prints CPU vendor
+    string cpu = getCPU("/proc/cpuinfo");
+    cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
+    if (CpuTempCheck("/sys/class/thermal/thermal_zone0"))
+    {
+        int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
+        cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;
+    }
+
+    // prints GPU vendor
+    vector<string> gpu = getGPU();
+    for (auto it : gpu)
+    {
+        cout << BRIGHT << GREEN "GPU : " << RESET << it << endl;
+    }
+
+    // prints COUNT OF PACKAGES installed
+    string pkg = getPackages();
+    cout << BRIGHT << GREEN << "Packages : " << RESET << pkg << endl;
+    cout << endl;
+    
+    return 0;
+}
+>>>>>>> main
 
 string exec(string command)
 {

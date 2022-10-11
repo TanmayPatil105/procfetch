@@ -1,4 +1,3 @@
-// clang-format off
 #define BLACK   "\033[0;30m"
 #define RED     "\033[0;31m"
 #define GREEN   "\033[0;32m"
@@ -19,8 +18,7 @@
 #define BWHITE   "\033[1;37m"
 
 #define RESET "\033[0;m"
-#define BITAL "\033[1;3m"
+#define BITAL "\033[1;3m" 
 #define BRIGHT "\033[1m"
 #define BLINK "\033[5m"
 #define UNDERSCORE "\033[4m"
-// clang-format on
