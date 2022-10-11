@@ -1,11 +1,11 @@
-#include <iostream>
+#include "color.h"
 #include <algorithm>
 #include <fstream>
-#include <string>
-#include <vector>
+#include <iostream>
 #include <map>
+#include <string>
 #include <unistd.h>
-#include "color.h"
+#include <vector>
 using namespace std;
 
 string exec(string command);
@@ -55,7 +55,7 @@ int main()
     // prints ASCII ART
     print();
 
-    //prints USERNAME@HOSTNAME
+    // prints USERNAME@HOSTNAME
     string user = getuser();
     string hostname = gethostname("/etc/hostname");
     string username = YELLOW + user + RESET + "@" + YELLOW + hostname;
@@ -86,7 +86,7 @@ int main()
     string shell = getSHELL("/etc/passwd");
     cout << BRIGHT << GREEN << "shell : " << RESET << shell << endl;
 
-    //prints DE Info
+    // prints DE Info
     string DE = getDE();
     cout << BRIGHT << GREEN << "DE : " << RESET << DE << endl;
 
@@ -122,7 +122,7 @@ int main()
     string pkg = getPackages();
     cout << BRIGHT << GREEN << "Packages : " << RESET << pkg << endl;
     cout << endl;
-    
+
     return 0;
 }
 
@@ -389,7 +389,7 @@ int getCPUtemp(string path)
 
 bool CpuTempCheck(string path)
 {
-    if(exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]  && echo \"true\" | wc -l ").size() > 1)
+    if (exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]  && echo \"true\" | wc -l ").size() > 1)
     {
         return true;
     }
