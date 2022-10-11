@@ -1,0 +1,6 @@
+---
+BasedOnStyle: Microsoft
+AlignConsecutiveMacros: AcrossEmptyLines
+AllowShortFunctionsOnASingleLine: None
+#ColumnLimit:    110
+IndentWidth:     4
