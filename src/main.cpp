@@ -1,6 +1,5 @@
 #include "fetch.h"
 #include "color.h"
-#include <iostream>
 
 int main()
 {
