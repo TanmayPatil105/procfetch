@@ -1,8 +1,9 @@
 #include <iostream>
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
 #include <unistd.h>
 #include "color.h"
 using namespace std;
@@ -39,6 +40,8 @@ string getCPU(string path);
 
 int getCPUtemp(string path);
 
+bool CpuTempCheck(string path);
+
 vector<string> getGPU();
 
 string getPackages();
@@ -49,50 +52,79 @@ void print();
 
 int main()
 {
+    // prints ASCII ART
     print();
+
+    //prints USERNAME@HOSTNAME
     string user = getuser();
     string hostname = gethostname("/etc/hostname");
     string username = YELLOW + user + RESET + "@" + YELLOW + hostname;
     cout << UNDERSCORE << username << RESET << endl;
     cout << endl;
+
+    // prints OS Info
     string os = getOS("/etc/os-release");
     cout << BRIGHT << GREEN << "OS : " << RESET << os << getHardwarePlatform() << endl;
+
+    // prints HOST Info
     string HOST = getHost("/sys/devices/virtual/dmi/id/");
     cout << BRIGHT << GREEN << "Host : " << RESET << HOST << endl;
+
+    // prints KERNEL Info
     string kernel = getKernel("/proc/sys/kernel/osrelease");
     cout << BRIGHT << GREEN << "Kernel : " << RESET << kernel << endl;
+
+    // prints UPTIME
     string upTime = getUpTime("/proc/uptime");
     cout << BRIGHT << GREEN << "UpTime : " << RESET << upTime << endl;
+
+    // prints RAM Info
     string ram = getRAM("/proc/meminfo");
     cout << BRIGHT << GREEN << "RAM : " << RESET << ram << endl;
+
+    // prints SHELL Info
     string shell = getSHELL("/etc/passwd");
     cout << BRIGHT << GREEN << "shell : " << RESET << shell << endl;
+
+    //prints DE Info
     string DE = getDE();
     cout << BRIGHT << GREEN << "DE : " << RESET << DE << endl;
+
+    // prints RESOLUTION Info
     string res = getRES("/sys/class/graphics/fb0/modes");
     cout << BRIGHT << GREEN << "Resolution : " << RESET << res << endl;
+
+    // prints THEME Info
     string theme = getTheme();
     cout << BRIGHT << GREEN << "Theme : " << RESET << theme << endl;
+
+    // prints ICON THEME Info
     string icon = getIcons();
     cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
+
+    // prints CPU vendor
     string cpu = getCPU("/proc/cpuinfo");
     cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
-    if (HOST.find("VirtualBox") == string::npos)
+    if (CpuTempCheck("/sys/class/thermal/thermal_zone0"))
     {
         int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
         cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;
     }
+
+    // prints GPU vendor
     vector<string> gpu = getGPU();
     for (auto it : gpu)
     {
         cout << BRIGHT << GREEN "GPU : " << RESET << it << endl;
     }
+
+    // prints COUNT OF PACKAGES installed
     string pkg = getPackages();
     cout << BRIGHT << GREEN << "Packages : " << RESET << pkg << endl;
     cout << endl;
+    
     return 0;
 }
-
 
 string exec(string command)
 {
@@ -355,6 +387,15 @@ int getCPUtemp(string path)
     return stoi(temp);
 }
 
+bool CpuTempCheck(string path)
+{
+    if(exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]  && echo \"true\" | wc -l ").size() > 1)
+    {
+        return true;
+    }
+    return false;
+}
+
 vector<string> getGPU()
 {
     vector<string> gpu;
@@ -422,11 +463,6 @@ string getPackages()
     {
         string dnf = exec(" dnf list installed| wc -l ");
         pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf; " + RESET;
-    }
-    if (exec(" [ -f \"/bin/yum\" ] && echo \"1\"|wc -l  ").size() > 1) // redhat
-    {
-        string yum = exec(" yum list installed | wc -l ");
-        pkg += yum.substr(0, yum.size() - 1) + RED + " yum; " + RESET;
     }
     if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1) // opensuse
     {
@@ -515,17 +551,17 @@ string getColor(string line)
 void print_process(string art)
 {
     string color;
-    string path="/usr/share/procfetch/ascii/" + art;
+    string path = "/usr/share/procfetch/ascii/" + art;
     fstream fptr;
     fptr.open(path, ios::in);
     string txt;
-    getline(fptr,txt);
-    color=getColor(txt);
-    cout<<color<<endl;
-    while(fptr)
+    getline(fptr, txt);
+    color = getColor(txt);
+    cout << color << endl;
+    while (fptr)
     {
-        getline(fptr,txt);
-        cout<<BRIGHT<<color<<txt<<endl;
+        getline(fptr, txt);
+        cout << BRIGHT << color << txt << endl;
     }
     fptr.close();
 }
@@ -546,7 +582,17 @@ void print()
         {"Parrot", "parrot.ascii"},
         {"OpenSuse", "opensuse.ascii"},
         {"Linux Mint", "linuxmint.ascii"},
-        {"EndeavourOS", "endeavouros.ascii"}
+        {"EndeavourOS", "endeavouros.ascii"},
+        {"Pop!_OS", "pop!_os.ascii"},
+        {"Gentoo", "gentoo.ascii"},
+        {"elementary OS", "elementaryos.ascii"},
+        {"Slackware", "slackware.ascii"},
+        {"Asahi Linux", "asahi.ascii"},
+        {"Peppermint", "peppermintos.ascii"},
+        {"CentOS", "centos.ascii"},
+        {"Lubuntu", "lubuntu.ascii"},
+        {"Navy Linux", "navylinux.ascii"},
+        {"BlackArch", "blackarch.ascii"},
     };
 
     for (const auto& [key, value] : ascii_arts)
