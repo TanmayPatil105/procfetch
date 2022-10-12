@@ -1,5 +1,5 @@
 TARGET = procfetch
-SRCS = fetch.cpp
+SRCS = fetch.cpp main.cpp util.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXXFLAGS = -std=c++2a -Wall --pedantic-errors
 INSTALL = /usr/bin/install -c
@@ -15,6 +15,8 @@ uninstall:
 	- rm $(BINDIR)/$(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS)
-fetch.o: color.h
+main.o:  fetch.h color.h
+fetch.o: fetch.h color.h
+util.o:  fetch.h color.h
 
 .PHONY: all clean install uninstall

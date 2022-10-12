@@ -7,7 +7,7 @@ then
 fi
 
 echo "Building procfetch ..."
-make all || exit $?
+make -j || exit $?
 
 echo "Removing old version ..."
 sudo make uninstall || exit ?
