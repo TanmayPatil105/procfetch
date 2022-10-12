@@ -3,6 +3,6 @@ SUBDIRS := src ascii
 
 $(TOPTARGETS): $(SUBDIRS)
 $(SUBDIRS):
-	$(MAKE) -C $@ $(MAKECMDGOALS)
+	$(MAKE) -C $@ -j $(MAKECMDGOALS)
 
 .PHONY: $(TOPTARGETS) $(SUBDIRS)

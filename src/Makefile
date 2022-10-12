@@ -1,5 +1,5 @@
 TARGET = procfetch
-SRCS = main.cpp fetch.cpp util.cpp
+SRCS = fetch.cpp main.cpp util.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXXFLAGS = -std=c++2a -Wall --pedantic-errors
 INSTALL = /usr/bin/install -c
