@@ -351,36 +351,36 @@ void print()
 {
     string os = getOS("/etc/os-release");
 
-    map<string, string> ascii_arts;
+    map<string, string> ascii_arts = {
+        {"Ubuntu", "ubuntu.ascii"},
+        {"Debian", "debian.ascii"},
+        {"Fedora", "fedora.ascii"},
+        {"Red Hat", "redhat.ascii"},
+        {"Arch Linux", "arch.ascii"},
+        {"Manjaro", "manjaro.ascii"},
+        {"Archcraft", "archcraft.ascii"},
+        {"Kali", "kali.ascii"},
+        {"Parrot", "parrot.ascii"},
+        {"OpenSuse", "opensuse.ascii"},
+        {"Linux Mint", "linuxmint.ascii"},
+        {"EndeavourOS", "endeavouros.ascii"},
+        {"Pop!_OS", "pop!_os.ascii"},
+        {"Gentoo", "gentoo.ascii"},
+        {"elementary OS", "elementaryos.ascii"},
+        {"Slackware", "slackware.ascii"},
+        {"Asahi Linux", "asahi.ascii"},
+        {"Peppermint", "peppermintos.ascii"},
+        {"CentOS", "centos.ascii"},
+        {"Lubuntu", "lubuntu.ascii"},
+        {"Navy Linux", "navylinux.ascii"},
+        {"BlackArch", "blackarch.ascii"},
+    };
 
-    ascii_arts["Ubuntu"] = {"ubuntu.ascii"};
-    ascii_arts["Debian"] = {"debian.ascii"};
-    ascii_arts["Fedora"] = {"fedora.ascii"};
-    ascii_arts["Red Hat"] = {"redhat.ascii"};
-    ascii_arts["Arch Linux"] = {"arch.ascii"};
-    ascii_arts["Manjaro"] = {"manjaro.ascii"};
-    ascii_arts["Archcraft"] = {"archcraft.ascii"};
-    ascii_arts["Kali"] = {"kali.ascii"};
-    ascii_arts["Parrot"] = {"parrot.ascii"};
-    ascii_arts["OpenSuse"] = {"opensuse.ascii"};
-    ascii_arts["Linux Mint"] = {"linuxmint.ascii"};
-    ascii_arts["EndeavourOS"] = {"endeavouros.ascii"};
-    ascii_arts["Pop!_OS"] = {"pop!_os.ascii"};
-    ascii_arts["Gentoo"] = {"gentoo.ascii"};
-    ascii_arts["elementary OS"] = {"elementaryos.ascii"};
-    ascii_arts["Slackware"] = {"slackware.ascii"};
-    ascii_arts["Asahi Linux"] = {"asahi.ascii"};
-    ascii_arts["Peppermint"] = {"peppermintos.ascii"};
-    ascii_arts["CentOS"] = {"centos.ascii"};
-    ascii_arts["Lubuntu"] = {"lubuntu.ascii"};
-    ascii_arts["Navy Linux"] = {"navylinux.ascii"};
-    ascii_arts["BlackArch"] = {"blackarch.ascii"};
-
-    for (auto it = ascii_arts.begin(); it != ascii_arts.end(); it++)
+    for (const auto& [key, value] : ascii_arts)
     {
-        if (os.find(it->first) != string::npos)
+        if(os.find(key) != string::npos)
         {
-            print_process(it->second);
+            print_process(value);
             return;
         }
     }
