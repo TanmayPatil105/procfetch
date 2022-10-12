@@ -1,10 +1,3 @@
-#include <iostream>
-#include <algorithm>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <map>
-#include <unistd.h>
 #include "color.h"
 #include "fetch.h"
 
