@@ -7,6 +7,7 @@
 #include <fstream>
 #include <map>
 #include <unistd.h>
+#include <stdexcept>
 
 using namespace std;
 
