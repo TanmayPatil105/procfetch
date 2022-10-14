@@ -375,18 +375,15 @@ void print()
         {"Navy Linux", "navylinux.ascii"},
         {"BlackArch", "blackarch.ascii"},
         {"SteamOS" , "steamos.ascii"},
-        {"MX Linux" , "mxlinux.ascii"},
+        {"MX" , "mxlinux.ascii"},
         {"Linux Lite" , "linuxlite.ascii"},
-        {"Bodhi Linux" , "bodhilinux.ascii"},
+        {"Bodhi" , "bodhilinux.ascii"},
         {"Xubuntu" , "xubuntu.ascii"},
         {"Kubuntu" , "kubuntu.ascii"},
-        {"QubesOS" , "qubesos.ascii"},
-        {"Rocky Linux" , "rockylinux.ascii"},
+        {"Rocky" , "rockylinux.ascii"},
         {"Deepin" , "deepin.ascii"},
-        {"KaiOS" , "kaios.ascii"},
-        {"Pure OS" , "pureos.ascii"},
-        {"Zorin OS" , "zorin.ascii"},
-        {"Garuda Linux" , "garudalinux.ascii"},
+        {"Zorin" , "zorin.ascii"},
+        {"Garuda" , "garudalinux.ascii"},
     };
 
     for (const auto& [key, value] : ascii_arts)
