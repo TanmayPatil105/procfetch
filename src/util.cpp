@@ -8,7 +8,7 @@ string exec(string command)
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)
     {
-        return "popen failed!";
+        throw runtime_error("popen failed: \"" + command + "\"");
     }
     while (!feof(pipe))
     {
