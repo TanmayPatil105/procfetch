@@ -383,7 +383,7 @@ void print()
         {"Rocky" , "rockylinux.ascii"},
         {"Deepin" , "deepin.ascii"},
         {"Zorin" , "zorin.ascii"},
-        {"Garuda" , "garudalinux.ascii"},
+        {"Garuda" , "garudalinux.ascii"}
     };
 
     for (const auto& [key, value] : ascii_arts)
