@@ -1,8 +1,17 @@
 #include "fetch.h"
 #include "color.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+    if (argc == 2 && !"-t"s.compare(argv[1]))
+    {
+        test_util();
+        cout << "========================"s << endl
+             << " All unit tests passed. "s << endl
+             << "========================"s << endl;
+        return 0;
+    }
+
     print();
     string user = getuser();
     string hostname = gethostname("/etc/hostname");
