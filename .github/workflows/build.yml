@@ -15,4 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: build
-      run: make -j
+      run: make
+    - name: check
+      run: make check
