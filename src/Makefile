@@ -6,6 +6,8 @@ INSTALL = /usr/bin/install -c
 BINDIR = /bin
 
 all: $(TARGET)
+check: $(TARGET)
+	./$(TARGET) -t
 clean:
 	- rm $(TARGET) $(OBJS)
 install:
@@ -19,4 +21,4 @@ main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
 
-.PHONY: all clean install uninstall
+.PHONY: all check clean install uninstall
