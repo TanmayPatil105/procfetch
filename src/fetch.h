@@ -8,6 +8,7 @@
 #include <map>
 #include <unistd.h>
 #include <stdexcept>
+#include <ostream>
 
 using namespace std;
 
@@ -56,3 +57,16 @@ void print();
 string getColor(string);
 
 string exec(string command);
+
+void test_util();
+
+template <typename T>
+void expect(T want, T got, string msg) {
+    if (want == got)
+        return;
+
+    cout << "Error: "s << msg << " ("s << want << "), but got ("s << got << ")"s
+         << endl;
+
+    exit(1);
+}

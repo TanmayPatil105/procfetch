@@ -11,4 +11,4 @@ install:
 uninstall:
 	rm -rf $(DATADIR)
 
-.PHONY: all clean install uninstall
+.PHONY: all check clean install uninstall
