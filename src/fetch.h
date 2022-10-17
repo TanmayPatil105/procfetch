@@ -58,6 +58,58 @@ string getColor(string);
 
 string exec(string command);
 
+class Command {
+private:
+    int exit_code;
+    string output;
+    int lines;
+
+    Command()
+    {
+        output = string();
+        lines = 0;
+    }
+
+public:
+    static Command exec(string cmd)
+    {
+        Command result = Command();
+
+        FILE *pipe = popen(cmd.c_str(), "r");
+        if (!pipe)
+        {
+            throw runtime_error("popen failed: \"" + cmd + "\"");
+        }
+
+        int c;
+        while ( (c = fgetc(pipe)) != EOF)
+        {
+            if (c == '\n') {
+                result.lines += 1;
+            }
+            result.output += c;
+        }
+        result.exit_code = WEXITSTATUS(pclose(pipe));
+
+        return result;
+    }
+
+    string getOutput()
+    {
+        return output;
+    }
+
+    int getOutputLines()
+    {
+        return lines;
+    }
+
+    int getExitCode()
+    {
+        return exit_code;
+    }
+};
+
 void test_util();
 
 template <typename T>
