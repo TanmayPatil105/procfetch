@@ -39,7 +39,7 @@ string getOS(string path)
 
 string getHardwarePlatform()
 {
-    string s = exec("uname -m");
+    string s = Command::exec("uname -m"s).getOutput();  
     s = s.substr(0, s.find("\n"));
     return " " + s;
 }
@@ -202,16 +202,16 @@ string getRES(string path)
 
 string getTheme()
 {
-    string theme = exec("gsettings get org.gnome.desktop.interface gtk-theme");
-    theme = theme.substr(1);
-    return theme.substr(0, theme.find("\'"));
+    auto c = Command::exec("gsettings get org.gnome.desktop.interface gtk-theme"s);
+    auto s = c.getOutput();
+    return s.substr(1, s.find("\'", 1) - 1);
 }
 
 string getIcons()
 {
-    string icon = exec(" gsettings get org.gnome.desktop.interface icon-theme");
-    icon = icon.substr(1);
-    return icon.substr(0, icon.find("\'"));
+    auto c = Command::exec("gsettings get org.gnome.desktop.interface icon-theme"s);
+    auto s = c.getOutput();
+    return s.substr(1, s.find("\'", 1) - 1);
 }
 
 string getCPU(string path)
@@ -245,11 +245,8 @@ int getCPUtemp(string path)
 
 bool CpuTempCheck(string path)
 {
-    if(exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]  && echo \"true\" | wc -l ").size() > 1)
-    {
-        return true;
-    }
-    return false;
+    auto c = Command::exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]"s);
+    return c.getExitCode() == 0;
 }
 
 vector<string> getGPU()
