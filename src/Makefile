@@ -2,7 +2,7 @@ TARGET = procfetch
 SRCS = fetch.cpp main.cpp util.cpp
 OBJS = $(SRCS:.cpp=.o)
 
-CXXFLAGS = -std=c++20 -Wall -Wextra --pedantic-errors
+CXXFLAGS = -std=c++2a -Wall -Wextra --pedantic-errors
 
 ifeq ($(COVERAGE_TEST), 1)
 	CXXFLAGS += -fprofile-arcs -ftest-coverage -O0
