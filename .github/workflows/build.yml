@@ -19,7 +19,7 @@ jobs:
     - name: check
       run: make check
     - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          gcov: true
-          gcov_include: main.cpp fetch.cpp util.cpp
+      uses: codecov/codecov-action@v3
+      with:
+        gcov: true
+        gcov_include: main.cpp fetch.cpp util.cpp
