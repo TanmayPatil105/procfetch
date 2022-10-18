@@ -1,7 +1,14 @@
 TARGET = procfetch
 SRCS = fetch.cpp main.cpp util.cpp
 OBJS = $(SRCS:.cpp=.o)
+
 CXXFLAGS = -std=c++20 -Wall -Wextra --pedantic-errors
+
+ifeq ($(COVERAGE_TEST), 1)
+	CXXFLAGS += -fprofile-arcs -ftest-coverage -O0
+	LDFLAGS = -lgcov
+endif
+
 INSTALL = /usr/bin/install -c
 BINDIR = /bin
 
@@ -16,7 +23,7 @@ install:
 uninstall:
 	- rm $(BINDIR)/$(TARGET)
 $(TARGET): $(OBJS)
-	$(CXX) -o $@ $(OBJS)
+	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
 main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
