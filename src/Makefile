@@ -13,11 +13,13 @@ INSTALL = /usr/bin/install -c
 BINDIR = /bin
 
 all: $(TARGET)
-check: $(TARGET)
+check: all
 	./$(TARGET) -t
+gcov:
+	gcov $(SRCS)
 clean:
-	- rm -f $(TARGET) $(OBJS)
-install:
+	- rm -f $(TARGET) $(OBJS) *.gcov *.gcda *.gcno
+install: all
 	@echo "Installing $(BINDIR)/$(TARGET) ..."
 	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
 uninstall:
@@ -28,4 +30,4 @@ main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
 
-.PHONY: all check clean install uninstall
+.PHONY: all check gcov clean install uninstall
