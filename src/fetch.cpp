@@ -243,7 +243,7 @@ int getCPUtemp(string path)
     return stoi(temp);
 }
 
-bool CpuTempCheck(string path)
+bool CpuTempCheck()
 {
     if(exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]  && echo \"true\" | wc -l ").size() > 1)
     {

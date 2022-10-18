@@ -44,7 +44,7 @@ string getCPU(string path);
 
 int getCPUtemp(string path);
 
-bool CpuTempCheck(string path);
+bool CpuTempCheck();
 
 vector<string> getGPU();
 
