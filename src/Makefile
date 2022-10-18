@@ -9,7 +9,7 @@ all: $(TARGET)
 check: $(TARGET)
 	./$(TARGET) -t
 clean:
-	- rm $(TARGET) $(OBJS)
+	- rm -f $(TARGET) $(OBJS)
 install:
 	@echo "Installing $(BINDIR)/$(TARGET) ..."
 	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
