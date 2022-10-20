@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -70,3 +71,25 @@ void expect(T want, T got, string msg) {
 
     exit(1);
 }
+
+class Path {
+private:
+    filesystem::path path;
+    filesystem::file_status status;
+
+    Path(filesystem::path path, filesystem::file_status status) {
+        this->path = path;
+        this->status = status;
+    }
+
+public:
+    static Path of(string path) {
+        return Path(filesystem::path(path), filesystem::status(path));
+    }
+    bool is_regular_fie() {
+        return filesystem::is_regular_file(status);
+    }
+    bool is_directory() {
+        return filesystem::is_directory(status);
+    }
+};
