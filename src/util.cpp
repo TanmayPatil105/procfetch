@@ -96,8 +96,8 @@ string getColor(string line)
 }
 
 static void test_exec() {
-    string result = exec("echo -n \"hello, world\""s);
-    expect("hello, world"s, result, "exec() returns"s);
+    string result = exec("echo \"hello, world\""s);
+    expect("hello, world\n"s, result, "exec() returns"s);
 }
 
 static void test_Path() {
