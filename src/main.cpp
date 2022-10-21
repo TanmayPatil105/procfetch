@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     cout << BRIGHT << GREEN << "Icons : " << RESET << icon << endl;
     string cpu = getCPU("/proc/cpuinfo");
     cout << BRIGHT << GREEN << "CPU : " << RESET << cpu << endl;
-    if (CpuTempCheck("/sys/class/thermal/thermal_zone0"))
+    if (CpuTempCheck())
     {
         int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
         cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;

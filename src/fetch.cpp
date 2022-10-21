@@ -243,10 +243,13 @@ int getCPUtemp(string path)
     return stoi(temp);
 }
 
-bool CpuTempCheck(string path)
+bool CpuTempCheck()
 {
-    auto c = Command::exec("[ -d \"/sys/class/thermal/thermal_zone1\" ]"s);
-    return c.getExitCode() == 0;
+    if (Path::of("/sys/class/thermal/thermal_zone1"s).is_directory()) 
+    {
+        return true;
+    }
+    return false;
 }
 
 vector<string> getGPU()
@@ -272,52 +275,52 @@ vector<string> getGPU()
 string getPackages()
 {
     string pkg = "";
-    if (exec(" [ -f \"/bin/dpkg\" ] && echo \"1\"|wc -l  ").size() > 1)
+    if (Path::of("/bin/dpkg"s).is_regular_fie())
     {
         string dpkg = exec(" dpkg -l | wc -l ");
         pkg += dpkg.substr(0, dpkg.size() - 1) + RED + " dpkg; " + RESET;
     }
-    if (exec(" [ -f \"/bin/snap\" ] && echo \"1\"|wc -l  ").size() > 1)
+    if (Path::of("/bin/snap"s).is_regular_fie())    
     {
         string snap = exec(" snap list | wc -l ");
         pkg += snap.substr(0, snap.size() - 1) + RED + " snap; " + RESET;
     }
-    if (exec(" [ -f \"/bin/pacman\" ] && echo \"1\"|wc -l  ").size() > 1)
+    if (Path::of("/bin/pacman"s).is_regular_fie())        
     {
         string pacman = exec(" pacman -Q | wc -l  ");
         pkg += pacman.substr(0, pacman.size() - 1) + RED + " pacman; " + RESET;
     }
-    if (exec(" [ -f \"/bin/flatpak\" ] && echo \"1\"|wc -l  ").size() > 1)
+    if (Path::of("/bin/flatpak"s).is_regular_fie())        
     {
         string flatpak = exec(" flatpak list | wc -l ");
         pkg += flatpak.substr(0, flatpak.size() - 1) + RED + " flatpak; " + RESET;
     }
-    if (exec(" [ -f \"/var/lib/rpm\" ] && echo \"1\"|wc -l  ").size() > 1)
+    if (Path::of("/var/lib/rpm"s).is_regular_fie())        
     {
         string rpm = exec(" rpm -qa | wc -l ");
         pkg += rpm.substr(0, rpm.size() - 1) + RED + " rpm; " + RESET;
     }
-    if (exec(" [ -f \"/bin/npm\" ] && echo \"1\"|wc -l  ").size() > 1)
+    if (Path::of("/bin/npm"s).is_regular_fie())        
     {
         string npm = exec(" npm list | wc -l ");
         pkg += npm.substr(0, npm.size() - 1) + RED + " npm; " + RESET;
     }
-    if (exec(" [ -f \"/bin/emerge\" ] && echo \"1\"|wc -l  ").size() > 1) // gentoo
+    if (Path::of("/bin/emerge"s).is_regular_fie()) // gentoo       
     {
         string portage = exec("echo -n $(cd /var/db/pkg && ls -d */* | wc -l");
         pkg += portage.substr(0, portage.size() - 1) + RED + " portage; " + RESET;
     }
-    if (exec(" [ -f \"/bin/xbps-install\" ] && echo \"1\"|wc -l  ").size() > 1) // void linux
+    if (Path::of("/bin/xbps-install"s).is_regular_fie()) // void linux       
     {
         string xbps = exec(" flatpak list | wc -l ");
         pkg += xbps.substr(0, xbps.size() - 1) + RED + " xbps; " + RESET;
     }
-    if (exec(" [ -f \"/bin/dnf\" ] && echo \"1\"|wc -l  ").size() > 1) // fedora
+    if (Path::of("/bin/dnf"s).is_regular_fie()) // fedora       
     {
         string dnf = exec(" dnf list installed| wc -l ");
         pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf; " + RESET;
     }
-    if (exec(" [ -f \"/bin/zypper\" ] && echo \"1\"|wc -l  ").size() > 1) // opensuse
+    if (Path::of("/bin/zypper"s).is_regular_fie()) // opensuse       
     {
         string zypper = exec(" zypper se --installed-only | wc -l ");
         pkg += zypper.substr(0, zypper.size() - 1) + RED + " zypper; " + RESET;

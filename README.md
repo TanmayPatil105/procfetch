@@ -1,4 +1,4 @@
-# procfetch
+# procfetch [![codecov](https://codecov.io/gh/TanmayPatil105/procfetch/branch/main/graph/badge.svg?token=QR6JGV3862)](https://codecov.io/gh/TanmayPatil105/procfetch)
 
 #### procfetch is a command-line tool to fetch system information and display it on the screen. 
 #### It is written in `C++`. 
