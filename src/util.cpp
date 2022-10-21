@@ -110,7 +110,6 @@ static void test_Path() {
     expect(false, reg.is_directory(),   "[ -d reg ]");
 }
 
-
 static void test_command()
 {
     Command c = Command::exec("/usr/bin/echo -ne \"\n\n\n\""s);
