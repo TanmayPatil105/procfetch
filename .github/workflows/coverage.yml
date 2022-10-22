@@ -1,4 +1,4 @@
-name: build
+name: Coverage Testing
 
 on:
   push:
@@ -7,11 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+  coverage-test:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: build
