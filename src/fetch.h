@@ -103,7 +103,9 @@ public:
             }
             result.output += c;
         }
-        result.exit_code = WEXITSTATUS(pclose(pipe));
+        // Don't concise below 2 lines. It must be assigned to a variable for macOS.
+        int n = pclose(pipe); 
+        result.exit_code = WEXITSTATUS(n); 
 
         return result;
     }

@@ -103,6 +103,7 @@ static void test_exec() {
 static void test_Command()
 {
     Command c = Command::exec("/usr/bin/echo -ne \"\n\n\n\""s);
+    expect("\n\n\n"s, c.getOutput(), "getOutput()"s);
     expect(3, c.getOutputLines(), "getOutputLines()"s);
 
     c = Command::exec("true"s);
