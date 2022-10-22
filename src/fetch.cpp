@@ -306,10 +306,9 @@ string getPackages()
         auto c = Command::exec("npm list"s);
         pkg += to_string(c.getOutputLines()) + RED + " npm; " + RESET;
     }
-    if (Path::of("/bin/emerge"s).is_regular_fie()) // gentoo       
+    if (Path::of("/bin/emerge"s).is_regular_fie()) // gentoo
     {
-        string portage = exec("echo -n $(cd /var/db/pkg && ls -d */* | wc -l");
-        pkg += portage.substr(0, portage.size() - 1) + RED + " portage; " + RESET;
+        pkg +=  "not supported"s + RED + " portage; " + RESET;
     }
     if (Path::of("/bin/xbps-install"s).is_regular_fie()) // void linux       
     {
