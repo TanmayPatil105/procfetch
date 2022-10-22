@@ -100,17 +100,7 @@ static void test_exec() {
     expect("hello, world\n"s, result, "exec() returns"s);
 }
 
-static void test_Path() {
-    auto dir = Path::of("/etc"s);
-    expect(false, dir.is_regular_fie(), "[ -f dir ]");
-    expect(true,  dir.is_directory(),   "[ -d dir ]");
-
-    auto reg = Path::of("/etc/os-release"s);
-    expect(true,  reg.is_regular_fie(), "[ -f reg ]");
-    expect(false, reg.is_directory(),   "[ -d reg ]");
-}
-
-static void test_command()
+static void test_Command()
 {
     Command c = Command::exec("/usr/bin/echo -ne \"\n\n\n\""s);
     expect(3, c.getOutputLines(), "getOutputLines()"s);
@@ -122,8 +112,18 @@ static void test_command()
     expect(1, c.getExitCode(), "Exit code"s);
 }
 
+static void test_Path() {
+    auto dir = Path::of("/etc"s);
+    expect(false, dir.is_regular_fie(), "[ -f dir ]");
+    expect(true,  dir.is_directory(),   "[ -d dir ]");
+
+    auto reg = Path::of("/etc/os-release"s);
+    expect(true,  reg.is_regular_fie(), "[ -f reg ]");
+    expect(false, reg.is_directory(),   "[ -d reg ]");
+}
+
 void test_util() {
     test_exec();
     test_Path();
-    test_command();
+    test_Command();
 }

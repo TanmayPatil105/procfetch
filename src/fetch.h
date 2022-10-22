@@ -59,6 +59,19 @@ string getColor(string);
 
 string exec(string command);
 
+void test_util();
+
+template <typename T>
+void expect(const T& want, const T& got, const string& msg) {
+    if (want == got)
+        return;
+
+    cout << "Error: "s << msg << " ("s << want << "), but got ("s << got << ")"s
+         << endl;
+
+    exit(1);
+}
+
 class Command {
 private:
     int exit_code;
@@ -72,14 +85,14 @@ private:
     }
 
 public:
-    static Command exec(string cmd)
+    static Command exec(const string& cmd)
     {
         Command result = Command();
 
         FILE *pipe = popen(cmd.c_str(), "r");
         if (!pipe)
         {
-            throw runtime_error("popen failed: \"" + cmd + "\"");
+            throw runtime_error("popen failed: \""s + cmd + "\""s);
         }
 
         int c;
@@ -111,19 +124,6 @@ public:
     }
 };
 
-void test_util();
-
-template <typename T>
-void expect(T want, T got, string msg) {
-    if (want == got)
-        return;
-
-    cout << "Error: "s << msg << " ("s << want << "), but got ("s << got << ")"s
-         << endl;
-
-    exit(1);
-}
-
 class Path {
 private:
     filesystem::path path;
@@ -135,7 +135,7 @@ private:
     }
 
 public:
-    static Path of(string path) {
+    static Path of(const string& path) {
         return Path(filesystem::path(path), filesystem::status(path));
     }
     bool is_regular_fie() {

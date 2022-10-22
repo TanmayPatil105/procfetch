@@ -312,18 +312,18 @@ string getPackages()
     }
     if (Path::of("/bin/xbps-install"s).is_regular_fie()) // void linux       
     {
-        string xbps = exec(" flatpak list | wc -l ");
-        pkg += xbps.substr(0, xbps.size() - 1) + RED + " xbps; " + RESET;
+        auto c = Command::exec("flatpak list"s);
+        pkg += to_string(c.getOutputLines()) + RED + " xbps; " + RESET;
     }
     if (Path::of("/bin/dnf"s).is_regular_fie()) // fedora       
     {
-        string dnf = exec(" dnf list installed| wc -l ");
-        pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf; " + RESET;
+        auto c = Command::exec("dnf list installed"s);
+        pkg += to_string(c.getOutputLines()) + RED + " dnf; " + RESET;
     }
     if (Path::of("/bin/zypper"s).is_regular_fie()) // opensuse       
     {
-        string zypper = exec(" zypper se --installed-only | wc -l ");
-        pkg += zypper.substr(0, zypper.size() - 1) + RED + " zypper; " + RESET;
+        auto c = Command::exec("zypper se --installed-only"s);
+        pkg += to_string(c.getOutputLines()) + RED + " zypper; " + RESET;
     }
 
     return pkg;
