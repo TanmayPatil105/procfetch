@@ -117,7 +117,7 @@ static void test_Path() {
     expect(false, dir.is_regular_fie(), "[ -f dir ]");
     expect(true,  dir.is_directory(),   "[ -d dir ]");
 
-    auto reg = Path::of("/etc/os-release"s);
+    auto reg = Path::of("/bin/sh"s);
     expect(true,  reg.is_regular_fie(), "[ -f reg ]");
     expect(false, reg.is_directory(),   "[ -d reg ]");
 }
