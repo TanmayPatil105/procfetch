@@ -62,7 +62,7 @@ string exec(string command);
 void test_util();
 
 template <typename T>
-void expect(T want, T got, string msg) {
+void expect(const T& want, const T& got, const string& msg) {
     if (want == got)
         return;
 
@@ -71,6 +71,60 @@ void expect(T want, T got, string msg) {
 
     exit(1);
 }
+
+class Command {
+private:
+    int exit_code;
+    string output;
+    int lines;
+
+    Command()
+    {
+        output = string();
+        lines = 0;
+    }
+
+public:
+    static Command exec(const string& cmd)
+    {
+        Command result = Command();
+
+        FILE *pipe = popen(cmd.c_str(), "r");
+        if (!pipe)
+        {
+            throw runtime_error("popen failed: \""s + cmd + "\""s);
+        }
+
+        int c;
+        while ( (c = fgetc(pipe)) != EOF)
+        {
+            if (c == '\n') {
+                result.lines += 1;
+            }
+            result.output += c;
+        }
+        // Don't concise below 2 lines. It must be assigned to a variable for macOS.
+        int n = pclose(pipe); 
+        result.exit_code = WEXITSTATUS(n); 
+
+        return result;
+    }
+
+    string getOutput()
+    {
+        return output;
+    }
+
+    int getOutputLines()
+    {
+        return lines;
+    }
+
+    int getExitCode()
+    {
+        return exit_code;
+    }
+};
 
 class Path {
 private:
@@ -83,7 +137,7 @@ private:
     }
 
 public:
-    static Path of(string path) {
+    static Path of(const string& path) {
         return Path(filesystem::path(path), filesystem::status(path));
     }
     bool is_regular_fie() {

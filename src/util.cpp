@@ -100,6 +100,19 @@ static void test_exec() {
     expect("hello, world\n"s, result, "exec() returns"s);
 }
 
+static void test_Command()
+{
+    Command c = Command::exec("ls Makefile"s);
+    expect("Makefile\n"s, c.getOutput(), "getOutput()"s);
+    expect(1, c.getOutputLines(), "getOutputLines()"s);
+
+    c = Command::exec("true"s);
+    expect(0, c.getExitCode(), "Exit code"s);
+
+    c = Command::exec("false"s);
+    expect(1, c.getExitCode(), "Exit code"s);
+}
+
 static void test_Path() {
     auto dir = Path::of("/etc"s);
     expect(false, dir.is_regular_fie(), "[ -f dir ]");
@@ -113,4 +126,5 @@ static void test_Path() {
 void test_util() {
     test_exec();
     test_Path();
+    test_Command();
 }

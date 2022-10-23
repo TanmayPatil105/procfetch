@@ -39,7 +39,7 @@ string getOS(string path)
 
 string getHardwarePlatform()
 {
-    string s = exec("uname -m");
+    string s = Command::exec("uname -m"s).getOutput();  
     s = s.substr(0, s.find("\n"));
     return " " + s;
 }
@@ -202,16 +202,16 @@ string getRES(string path)
 
 string getTheme()
 {
-    string theme = exec("gsettings get org.gnome.desktop.interface gtk-theme");
-    theme = theme.substr(1);
-    return theme.substr(0, theme.find("\'"));
+    auto c = Command::exec("gsettings get org.gnome.desktop.interface gtk-theme"s);
+    auto s = c.getOutput();
+    return s.substr(1, s.find("\'", 1) - 1);
 }
 
 string getIcons()
 {
-    string icon = exec(" gsettings get org.gnome.desktop.interface icon-theme");
-    icon = icon.substr(1);
-    return icon.substr(0, icon.find("\'"));
+    auto c = Command::exec("gsettings get org.gnome.desktop.interface icon-theme"s);
+    auto s = c.getOutput();
+    return s.substr(1, s.find("\'", 1) - 1);
 }
 
 string getCPU(string path)
@@ -255,7 +255,8 @@ bool CpuTempCheck()
 vector<string> getGPU()
 {
     vector<string> gpu;
-    string igpu = exec("lspci | grep -E  \"VGA|3D|Display\"");
+    auto c = Command::exec("lspci | grep -E  \"VGA|3D|Display\"");
+    string igpu = c.getOutput();
     int temp = 0, k = 0;
 
     for (size_t i = 0; i < igpu.size(); i++)
@@ -277,33 +278,33 @@ string getPackages()
     string pkg = "";
     if (Path::of("/bin/dpkg"s).is_regular_fie())
     {
-        string dpkg = exec(" dpkg -l | wc -l ");
-        pkg += dpkg.substr(0, dpkg.size() - 1) + RED + " dpkg; " + RESET;
+        auto c = Command::exec("dpkg -l"s);
+        pkg += to_string(c.getOutputLines()) + RED + " dpkg; " + RESET;
     }
     if (Path::of("/bin/snap"s).is_regular_fie())    
     {
-        string snap = exec(" snap list | wc -l ");
-        pkg += snap.substr(0, snap.size() - 1) + RED + " snap; " + RESET;
+        auto c = Command::exec("snap list"s);
+        pkg += to_string(c.getOutputLines()) + RED + " snap; " + RESET;
     }
     if (Path::of("/bin/pacman"s).is_regular_fie())        
     {
-        string pacman = exec(" pacman -Q | wc -l  ");
-        pkg += pacman.substr(0, pacman.size() - 1) + RED + " pacman; " + RESET;
+        auto c = Command::exec("pacman -Q"s);
+        pkg += to_string(c.getOutputLines()) + RED + " pacman; " + RESET;
     }
     if (Path::of("/bin/flatpak"s).is_regular_fie())        
     {
-        string flatpak = exec(" flatpak list | wc -l ");
-        pkg += flatpak.substr(0, flatpak.size() - 1) + RED + " flatpak; " + RESET;
+        auto c = Command::exec("flatpak list"s);
+        pkg += to_string(c.getOutputLines()) + RED + " flatpak; " + RESET;
     }
     if (Path::of("/var/lib/rpm"s).is_regular_fie())        
     {
-        string rpm = exec(" rpm -qa | wc -l ");
-        pkg += rpm.substr(0, rpm.size() - 1) + RED + " rpm; " + RESET;
+        auto c = Command::exec("rpm -qa"s);
+        pkg += to_string(c.getOutputLines()) + RED + " rpm; " + RESET;
     }
     if (Path::of("/bin/npm"s).is_regular_fie())        
     {
-        string npm = exec(" npm list | wc -l ");
-        pkg += npm.substr(0, npm.size() - 1) + RED + " npm; " + RESET;
+        auto c = Command::exec("npm list"s);
+        pkg += to_string(c.getOutputLines()) + RED + " npm; " + RESET;
     }
     if (Path::of("/bin/emerge"s).is_regular_fie()) // gentoo
     {
@@ -311,18 +312,18 @@ string getPackages()
     }
     if (Path::of("/bin/xbps-install"s).is_regular_fie()) // void linux       
     {
-        string xbps = exec(" flatpak list | wc -l ");
-        pkg += xbps.substr(0, xbps.size() - 1) + RED + " xbps; " + RESET;
+        auto c = Command::exec("flatpak list"s);
+        pkg += to_string(c.getOutputLines()) + RED + " xbps; " + RESET;
     }
     if (Path::of("/bin/dnf"s).is_regular_fie()) // fedora       
     {
-        string dnf = exec(" dnf list installed| wc -l ");
-        pkg += dnf.substr(0, dnf.size() - 1) + RED + " dnf; " + RESET;
+        auto c = Command::exec("dnf list installed"s);
+        pkg += to_string(c.getOutputLines()) + RED + " dnf; " + RESET;
     }
     if (Path::of("/bin/zypper"s).is_regular_fie()) // opensuse       
     {
-        string zypper = exec(" zypper se --installed-only | wc -l ");
-        pkg += zypper.substr(0, zypper.size() - 1) + RED + " zypper; " + RESET;
+        auto c = Command::exec("zypper se --installed-only"s);
+        pkg += to_string(c.getOutputLines()) + RED + " zypper; " + RESET;
     }
 
     return pkg;

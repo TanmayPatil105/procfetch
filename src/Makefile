@@ -13,6 +13,8 @@ INSTALL = /usr/bin/install -c
 BINDIR = /bin
 
 all: $(TARGET)
+run: all
+	./$(TARGET)
 check: all
 	./$(TARGET) -t
 gcov:
@@ -30,4 +32,4 @@ main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
 
-.PHONY: all check gcov clean install uninstall
+.PHONY: all run check gcov clean install uninstall
