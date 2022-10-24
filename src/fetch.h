@@ -67,7 +67,8 @@ void expect(const T &want, const T &got, const string &msg)
     if (want == got)
         return;
 
-    cout << "Error: "s << msg << " ("s << want << "), but got ("s << got << ")"s << endl;
+    cout << "Error: "s << msg << " ("s << want << "), but got ("s << got << ")"s
+         << endl;
 
     exit(1);
 }

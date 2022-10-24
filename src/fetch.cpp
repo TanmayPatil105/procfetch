@@ -97,7 +97,8 @@ string getUpTime(string path)
     }
     else
     {
-        timeS = to_string(d) + " d, " + to_string(h % 24) + " hours, " + to_string(m % 60) + " mins";
+        timeS = to_string(d) + " d, " + to_string(h % 24) + " hours, " +
+                to_string(m % 60) + " mins";
     }
 
     return timeS;
@@ -162,7 +163,8 @@ string getRAM(string path)
     int memFree = stoi(free);
     int memAvail = (memTotal - memFree) - stoi(shmem);
 
-    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) + "MiB";
+    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) +
+           "MiB";
 }
 
 string getSHELL(string path)
@@ -202,14 +204,16 @@ string getRES(string path)
 
 string getTheme()
 {
-    auto c = Command::exec("gsettings get org.gnome.desktop.interface gtk-theme"s);
+    auto c =
+        Command::exec("gsettings get org.gnome.desktop.interface gtk-theme"s);
     auto s = c.getOutput();
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
 string getIcons()
 {
-    auto c = Command::exec("gsettings get org.gnome.desktop.interface icon-theme"s);
+    auto c =
+        Command::exec("gsettings get org.gnome.desktop.interface icon-theme"s);
     auto s = c.getOutput();
     return s.substr(1, s.find("\'", 1) - 1);
 }
