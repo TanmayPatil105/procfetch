@@ -105,7 +105,8 @@ class Command
             }
             result.output += c;
         }
-        // Don't concise below 2 lines. It must be assigned to a variable for macOS.
+        // Don't concise below 2 lines. It must be assigned to a variable for
+        // macOS.
         int n = pclose(pipe);
         result.exit_code = WEXITSTATUS(n);
 
