@@ -1,0 +1,21 @@
+name: Coverage Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  coverage-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: build
+      run: make COVERAGE_TEST=1
+    - name: check
+      run: make check
+    - name: gcov
+      run: make gcov
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
