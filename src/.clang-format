@@ -2,5 +2,6 @@
 BasedOnStyle: Microsoft
 AlignConsecutiveMacros: AcrossEmptyLines
 AllowShortFunctionsOnASingleLine: None
+AlwaysBreakTemplateDeclarations: Yes
 #ColumnLimit:    110
 IndentWidth:     4

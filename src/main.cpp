@@ -1,7 +1,7 @@
-#include "fetch.h"
 #include "color.h"
+#include "fetch.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     if (argc == 2 && !"-t"s.compare(argv[1]))
     {

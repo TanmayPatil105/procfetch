@@ -1,5 +1,5 @@
-#include "fetch.h"
 #include "color.h"
+#include "fetch.h"
 
 string exec(string command)
 {
@@ -95,7 +95,8 @@ string getColor(string line)
     return color;
 }
 
-static void test_exec() {
+static void test_exec()
+{
     string result = exec("echo \"hello, world\""s);
     expect("hello, world\n"s, result, "exec() returns"s);
 }
@@ -113,17 +114,19 @@ static void test_Command()
     expect(1, c.getExitCode(), "Exit code"s);
 }
 
-static void test_Path() {
+static void test_Path()
+{
     auto dir = Path::of("/etc"s);
     expect(false, dir.is_regular_fie(), "[ -f dir ]");
-    expect(true,  dir.is_directory(),   "[ -d dir ]");
+    expect(true, dir.is_directory(), "[ -d dir ]");
 
     auto reg = Path::of("/bin/sh"s);
-    expect(true,  reg.is_regular_fie(), "[ -f reg ]");
-    expect(false, reg.is_directory(),   "[ -d reg ]");
+    expect(true, reg.is_regular_fie(), "[ -f reg ]");
+    expect(false, reg.is_directory(), "[ -d reg ]");
 }
 
-void test_util() {
+void test_util()
+{
     test_exec();
     test_Path();
     test_Command();

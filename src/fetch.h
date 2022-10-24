@@ -1,15 +1,15 @@
 #pragma once
 
-#include <filesystem>
-#include <iostream>
-#include <string>
-#include <vector>
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <map>
-#include <unistd.h>
-#include <stdexcept>
 #include <ostream>
+#include <stdexcept>
+#include <string>
+#include <unistd.h>
+#include <vector>
 
 using namespace std;
 
@@ -62,18 +62,19 @@ string exec(string command);
 void test_util();
 
 template <typename T>
-void expect(const T& want, const T& got, const string& msg) {
+void expect(const T &want, const T &got, const string &msg)
+{
     if (want == got)
         return;
 
-    cout << "Error: "s << msg << " ("s << want << "), but got ("s << got << ")"s
-         << endl;
+    cout << "Error: "s << msg << " ("s << want << "), but got ("s << got << ")"s << endl;
 
     exit(1);
 }
 
-class Command {
-private:
+class Command
+{
+  private:
     int exit_code;
     string output;
     int lines;
@@ -84,8 +85,8 @@ private:
         lines = 0;
     }
 
-public:
-    static Command exec(const string& cmd)
+  public:
+    static Command exec(const string &cmd)
     {
         Command result = Command();
 
@@ -96,16 +97,17 @@ public:
         }
 
         int c;
-        while ( (c = fgetc(pipe)) != EOF)
+        while ((c = fgetc(pipe)) != EOF)
         {
-            if (c == '\n') {
+            if (c == '\n')
+            {
                 result.lines += 1;
             }
             result.output += c;
         }
         // Don't concise below 2 lines. It must be assigned to a variable for macOS.
-        int n = pclose(pipe); 
-        result.exit_code = WEXITSTATUS(n); 
+        int n = pclose(pipe);
+        result.exit_code = WEXITSTATUS(n);
 
         return result;
     }
@@ -126,24 +128,29 @@ public:
     }
 };
 
-class Path {
-private:
+class Path
+{
+  private:
     filesystem::path path;
     filesystem::file_status status;
 
-    Path(filesystem::path path, filesystem::file_status status) {
+    Path(filesystem::path path, filesystem::file_status status)
+    {
         this->path = path;
         this->status = status;
     }
 
-public:
-    static Path of(const string& path) {
+  public:
+    static Path of(const string &path)
+    {
         return Path(filesystem::path(path), filesystem::status(path));
     }
-    bool is_regular_fie() {
+    bool is_regular_fie()
+    {
         return filesystem::is_regular_file(status);
     }
-    bool is_directory() {
+    bool is_directory()
+    {
         return filesystem::is_directory(status);
     }
 };
