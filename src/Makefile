@@ -10,6 +10,7 @@ ifeq ($(COVERAGE_TEST), 1)
 endif
 
 INSTALL = /usr/bin/install -c
+FORMATTER = clang-format -i
 BINDIR = /bin
 
 all: $(TARGET)
@@ -26,10 +27,13 @@ install: all
 	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
 uninstall:
 	- rm $(BINDIR)/$(TARGET)
+format:
+	$(FORMATTER) $(SRCS) *.h
+
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
 main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
 
-.PHONY: all run check gcov clean install uninstall
+.PHONY: all run check gcov clean install uninstall format

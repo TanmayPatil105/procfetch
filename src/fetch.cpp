@@ -1,5 +1,5 @@
-#include "color.h"
 #include "fetch.h"
+#include "color.h"
 
 string getuser()
 {
@@ -39,7 +39,7 @@ string getOS(string path)
 
 string getHardwarePlatform()
 {
-    string s = Command::exec("uname -m"s).getOutput();  
+    string s = Command::exec("uname -m"s).getOutput();
     s = s.substr(0, s.find("\n"));
     return " " + s;
 }
@@ -97,7 +97,8 @@ string getUpTime(string path)
     }
     else
     {
-        timeS = to_string(d) + " d, " + to_string(h % 24) + " hours, " + to_string(m % 60) + " mins";
+        timeS = to_string(d) + " d, " + to_string(h % 24) + " hours, " +
+                to_string(m % 60) + " mins";
     }
 
     return timeS;
@@ -162,7 +163,8 @@ string getRAM(string path)
     int memFree = stoi(free);
     int memAvail = (memTotal - memFree) - stoi(shmem);
 
-    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) + "MiB";
+    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) +
+           "MiB";
 }
 
 string getSHELL(string path)
@@ -202,14 +204,16 @@ string getRES(string path)
 
 string getTheme()
 {
-    auto c = Command::exec("gsettings get org.gnome.desktop.interface gtk-theme"s);
+    auto c =
+        Command::exec("gsettings get org.gnome.desktop.interface gtk-theme"s);
     auto s = c.getOutput();
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
 string getIcons()
 {
-    auto c = Command::exec("gsettings get org.gnome.desktop.interface icon-theme"s);
+    auto c =
+        Command::exec("gsettings get org.gnome.desktop.interface icon-theme"s);
     auto s = c.getOutput();
     return s.substr(1, s.find("\'", 1) - 1);
 }
@@ -245,7 +249,7 @@ int getCPUtemp(string path)
 
 bool CpuTempCheck()
 {
-    if (Path::of("/sys/class/thermal/thermal_zone1"s).is_directory()) 
+    if (Path::of("/sys/class/thermal/thermal_zone1"s).is_directory())
     {
         return true;
     }
@@ -281,46 +285,46 @@ string getPackages()
         auto c = Command::exec("dpkg -l"s);
         pkg += to_string(c.getOutputLines()) + RED + " dpkg; " + RESET;
     }
-    if (Path::of("/bin/snap"s).is_regular_fie())    
+    if (Path::of("/bin/snap"s).is_regular_fie())
     {
         auto c = Command::exec("snap list"s);
         pkg += to_string(c.getOutputLines()) + RED + " snap; " + RESET;
     }
-    if (Path::of("/bin/pacman"s).is_regular_fie())        
+    if (Path::of("/bin/pacman"s).is_regular_fie())
     {
         auto c = Command::exec("pacman -Q"s);
         pkg += to_string(c.getOutputLines()) + RED + " pacman; " + RESET;
     }
-    if (Path::of("/bin/flatpak"s).is_regular_fie())        
+    if (Path::of("/bin/flatpak"s).is_regular_fie())
     {
         auto c = Command::exec("flatpak list"s);
         pkg += to_string(c.getOutputLines()) + RED + " flatpak; " + RESET;
     }
-    if (Path::of("/var/lib/rpm"s).is_regular_fie())        
+    if (Path::of("/var/lib/rpm"s).is_regular_fie())
     {
         auto c = Command::exec("rpm -qa"s);
         pkg += to_string(c.getOutputLines()) + RED + " rpm; " + RESET;
     }
-    if (Path::of("/bin/npm"s).is_regular_fie())        
+    if (Path::of("/bin/npm"s).is_regular_fie())
     {
         auto c = Command::exec("npm list"s);
         pkg += to_string(c.getOutputLines()) + RED + " npm; " + RESET;
     }
     if (Path::of("/bin/emerge"s).is_regular_fie()) // gentoo
     {
-        pkg +=  "not supported"s + RED + " portage; " + RESET;
+        pkg += "not supported"s + RED + " portage; " + RESET;
     }
-    if (Path::of("/bin/xbps-install"s).is_regular_fie()) // void linux       
+    if (Path::of("/bin/xbps-install"s).is_regular_fie()) // void linux
     {
         auto c = Command::exec("flatpak list"s);
         pkg += to_string(c.getOutputLines()) + RED + " xbps; " + RESET;
     }
-    if (Path::of("/bin/dnf"s).is_regular_fie()) // fedora       
+    if (Path::of("/bin/dnf"s).is_regular_fie()) // fedora
     {
         auto c = Command::exec("dnf list installed"s);
         pkg += to_string(c.getOutputLines()) + RED + " dnf; " + RESET;
     }
-    if (Path::of("/bin/zypper"s).is_regular_fie()) // opensuse       
+    if (Path::of("/bin/zypper"s).is_regular_fie()) // opensuse
     {
         auto c = Command::exec("zypper se --installed-only"s);
         pkg += to_string(c.getOutputLines()) + RED + " zypper; " + RESET;
@@ -351,44 +355,42 @@ void print()
 {
     string os = getOS("/etc/os-release");
 
-    map<string, string> ascii_arts = {
-        {"Ubuntu", "ubuntu.ascii"},
-        {"Debian", "debian.ascii"},
-        {"Fedora", "fedora.ascii"},
-        {"Red Hat", "redhat.ascii"},
-        {"Arch Linux", "arch.ascii"},
-        {"Manjaro", "manjaro.ascii"},
-        {"Archcraft", "archcraft.ascii"},
-        {"Kali", "kali.ascii"},
-        {"Parrot", "parrot.ascii"},
-        {"OpenSuse", "opensuse.ascii"},
-        {"Linux Mint", "linuxmint.ascii"},
-        {"EndeavourOS", "endeavouros.ascii"},
-        {"Pop!_OS", "pop!_os.ascii"},
-        {"Gentoo", "gentoo.ascii"},
-        {"elementary OS", "elementaryos.ascii"},
-        {"Slackware", "slackware.ascii"},
-        {"Asahi Linux", "asahi.ascii"},
-        {"Peppermint", "peppermintos.ascii"},
-        {"CentOS", "centos.ascii"},
-        {"Lubuntu", "lubuntu.ascii"},
-        {"Navy Linux", "navylinux.ascii"},
-        {"BlackArch", "blackarch.ascii"},
-        {"SteamOS" , "steamos.ascii"},
-        {"MX" , "mxlinux.ascii"},
-        {"Linux Lite" , "linuxlite.ascii"},
-        {"Bodhi" , "bodhilinux.ascii"},
-        {"Xubuntu" , "xubuntu.ascii"},
-        {"Kubuntu" , "kubuntu.ascii"},
-        {"Rocky" , "rockylinux.ascii"},
-        {"Deepin" , "deepin.ascii"},
-        {"Zorin" , "zorin.ascii"},
-        {"Garuda" , "garudalinux.ascii"}
-    };
+    map<string, string> ascii_arts = {{"Ubuntu", "ubuntu.ascii"},
+                                      {"Debian", "debian.ascii"},
+                                      {"Fedora", "fedora.ascii"},
+                                      {"Red Hat", "redhat.ascii"},
+                                      {"Arch Linux", "arch.ascii"},
+                                      {"Manjaro", "manjaro.ascii"},
+                                      {"Archcraft", "archcraft.ascii"},
+                                      {"Kali", "kali.ascii"},
+                                      {"Parrot", "parrot.ascii"},
+                                      {"OpenSuse", "opensuse.ascii"},
+                                      {"Linux Mint", "linuxmint.ascii"},
+                                      {"EndeavourOS", "endeavouros.ascii"},
+                                      {"Pop!_OS", "pop!_os.ascii"},
+                                      {"Gentoo", "gentoo.ascii"},
+                                      {"elementary OS", "elementaryos.ascii"},
+                                      {"Slackware", "slackware.ascii"},
+                                      {"Asahi Linux", "asahi.ascii"},
+                                      {"Peppermint", "peppermintos.ascii"},
+                                      {"CentOS", "centos.ascii"},
+                                      {"Lubuntu", "lubuntu.ascii"},
+                                      {"Navy Linux", "navylinux.ascii"},
+                                      {"BlackArch", "blackarch.ascii"},
+                                      {"SteamOS", "steamos.ascii"},
+                                      {"MX", "mxlinux.ascii"},
+                                      {"Linux Lite", "linuxlite.ascii"},
+                                      {"Bodhi", "bodhilinux.ascii"},
+                                      {"Xubuntu", "xubuntu.ascii"},
+                                      {"Kubuntu", "kubuntu.ascii"},
+                                      {"Rocky", "rockylinux.ascii"},
+                                      {"Deepin", "deepin.ascii"},
+                                      {"Zorin", "zorin.ascii"},
+                                      {"Garuda", "garudalinux.ascii"}};
 
-    for (const auto& [key, value] : ascii_arts)
+    for (const auto &[key, value] : ascii_arts)
     {
-        if(os.find(key) != string::npos)
+        if (os.find(key) != string::npos)
         {
             print_process(value);
             return;

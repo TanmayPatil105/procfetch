@@ -1,7 +1,7 @@
-#include "fetch.h"
 #include "color.h"
+#include "fetch.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     if (argc == 2 && !"-t"s.compare(argv[1]))
     {
@@ -19,7 +19,8 @@ int main(int argc, char* argv[])
     cout << UNDERSCORE << username << RESET << endl;
     cout << endl;
     string os = getOS("/etc/os-release");
-    cout << BRIGHT << GREEN << "OS : " << RESET << os << getHardwarePlatform() << endl;
+    cout << BRIGHT << GREEN << "OS : " << RESET << os << getHardwarePlatform()
+         << endl;
     string HOST = getHost("/sys/devices/virtual/dmi/id/");
     cout << BRIGHT << GREEN << "Host : " << RESET << HOST << endl;
     string kernel = getKernel("/proc/sys/kernel/osrelease");
@@ -43,7 +44,8 @@ int main(int argc, char* argv[])
     if (CpuTempCheck())
     {
         int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-        cout << BRIGHT << GREEN << "CPU Temperature : " << RESET << float(temp / 1000.0) << " °C" << endl;
+        cout << BRIGHT << GREEN << "CPU Temperature : " << RESET
+             << float(temp / 1000.0) << " °C" << endl;
     }
     vector<string> gpu = getGPU();
     for (auto it : gpu)
