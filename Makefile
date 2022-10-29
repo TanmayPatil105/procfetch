@@ -1,4 +1,4 @@
-TOPTARGETS := all check gcov clean install uninstall
+TOPTARGETS := all run check gcov clean install uninstall
 SUBDIRS := src ascii
 
 $(TOPTARGETS): $(SUBDIRS)

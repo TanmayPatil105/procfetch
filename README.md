@@ -59,6 +59,35 @@ $ ./uninstall.sh
 
 <hr/>
 
+## Docker
+
+Define environment variable `PROCFETCH` in the actual project home directory.
+
+```sh
+$ PROCFETCH=$HOME/procfetch
+```
+
+Build Docker image
+
+```sh
+$ docker build -t procfetch .
+```
+
+Build with Docker container
+```sh
+$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make
+```
+
+Run with Docker container
+```sh
+$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make run
+```
+
+Test with Docker container
+```sh
+$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make check
+```
+
 ### Contributing
 
 Make sure reading [Contributing.md](https://github.com/TanmayPatil105/procfetch/blob/main/CONTRIBUTING.md) before Contributing
