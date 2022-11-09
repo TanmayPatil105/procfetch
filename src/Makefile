@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++2a -Wall -Wextra --pedantic-errors
 
 ifeq ($(COVERAGE_TEST), 1)
 	CXXFLAGS += -fprofile-arcs -ftest-coverage -O0
-	LDFLAGS = -lgcov
+	LIBS += -lgcov
 endif
 
 INSTALL = /usr/bin/install -c
@@ -31,7 +31,7 @@ format:
 	$(FORMATTER) $(SRCS) *.h
 
 $(TARGET): $(OBJS)
-	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
+	$(CXX) -o $@ $(OBJS) $(LIBS)
 main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
