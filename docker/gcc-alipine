@@ -1,0 +1,10 @@
+FROM alpine:latest
+
+RUN apk update && \
+    apk add --no-cache g++ gdb make clang-extra-tools sudo
+
+RUN adduser --disabled-password --gecos '' user
+RUN echo 'user ALL=(root) NOPASSWD:ALL' > /etc/sudoers.d/user
+
+USER user
+WORKDIR /home/user
