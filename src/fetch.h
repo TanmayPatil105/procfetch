@@ -147,7 +147,7 @@ class Path
     {
         return Path(filesystem::path(path), filesystem::status(path));
     }
-    bool is_regular_fie()
+    bool is_regular_file()
     {
         return filesystem::is_regular_file(status);
     }
