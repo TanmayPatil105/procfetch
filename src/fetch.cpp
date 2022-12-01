@@ -329,6 +329,11 @@ string getPackages()
         auto c = Command::exec("zypper se --installed-only"s);
         pkg += to_string(c.getOutputLines()) + RED + " zypper; " + RESET;
     }
+    if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).is_regular_fie())
+    {
+        auto c = Command::exec("brew list | { tr '' '\n'; }"s);
+        pkg += to_string(c.getOutputLines()) + RED + " brew; " + RESET;
+    }
 
     return pkg;
 }
