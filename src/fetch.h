@@ -151,8 +151,18 @@ class Path
     {
         return filesystem::is_regular_file(status);
     }
+    bool is_executable()
+    {
+        if (status.permissions() == filesystem::perms::unknown)
+            return false;
+        return (status.permissions() & filesystem::perms::others_exec) != filesystem::perms::none;
+    }
     bool is_directory()
     {
         return filesystem::is_directory(status);
+    }
+    string to_s()
+    {
+        return path.string();
     }
 };
