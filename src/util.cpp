@@ -116,13 +116,17 @@ static void test_Command()
 
 static void test_Path()
 {
-    auto dir = Path::of("/etc"s);
-    expect(false, dir.is_regular_file(), "[ -f dir ]");
-    expect(true, dir.is_directory(), "[ -d dir ]");
+    auto p = Path::of("/etc"s);
+    expect(false, p.is_regular_file(), "[ -f dir ]");
+    expect(true, p.is_directory(), "[ -d dir ]");
 
-    auto reg = Path::of("/bin/sh"s);
-    expect(true, reg.is_regular_file(), "[ -f reg ]");
-    expect(false, reg.is_directory(), "[ -d reg ]");
+    p = Path::of("/bin/sh"s);
+    expect(true, p.is_regular_file(), "[ -f reg ]");
+    expect(false, p.is_directory(), "[ -d reg ]");
+
+    p = Path::of("not_existence"s);
+    expect(false, p.is_regular_file(), "[ -f not_existence ]");
+    expect(false, p.is_directory(), "[ -d not_existence ]");
 }
 
 void test_util()
