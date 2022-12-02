@@ -116,17 +116,29 @@ static void test_Command()
 
 static void test_Path()
 {
+    // directory
     auto p = Path::of("/etc"s);
-    expect(false, p.is_regular_file(), "[ -f dir ]");
-    expect(true, p.is_directory(), "[ -d dir ]");
+    expect(false, p.is_regular_file(), "test -f "s + p.to_s());
+    expect(true, p.is_directory(), "test -d "s + p.to_s());
+    expect(true, p.is_executable(), "test -x "s + p.to_s());
 
+    // executable regular file
     p = Path::of("/bin/sh"s);
-    expect(true, p.is_regular_file(), "[ -f reg ]");
-    expect(false, p.is_directory(), "[ -d reg ]");
+    expect(true, p.is_regular_file(), "test -f "s + p.to_s());
+    expect(false, p.is_directory(), "test -d "s + p.to_s());
+    expect(true, p.is_executable(), "test -x "s + p.to_s());
 
+    // non-executable regular file
+    p = Path::of("Makefile"s);
+    expect(true, p.is_regular_file(), "test -f "s + p.to_s());
+    expect(false, p.is_directory(), "test -d "s + p.to_s());
+    expect(false, p.is_executable(), "test -x "s + p.to_s());
+
+    // not existence path
     p = Path::of("not_existence"s);
-    expect(false, p.is_regular_file(), "[ -f not_existence ]");
-    expect(false, p.is_directory(), "[ -d not_existence ]");
+    expect(false, p.is_regular_file(), "test -f "s + p.to_s());
+    expect(false, p.is_executable(), "test -x "s + p.to_s());
+    expect(false, p.is_directory(), "test -d "s + p.to_s());
 }
 
 void test_util()
