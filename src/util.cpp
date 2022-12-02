@@ -117,7 +117,7 @@ static void test_Command()
 static void test_Path()
 {
     // directory
-    auto p = Path::of("/bin"s);
+    auto p = Path::of("/etc"s);
     expect(false, p.is_regular_file(), "test -f "s + p.to_s());
     expect(true, p.is_directory(), "test -d "s + p.to_s());
     expect(true, p.is_executable(), "test -x "s + p.to_s());
