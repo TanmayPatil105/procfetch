@@ -17,6 +17,10 @@ all: $(TARGET)
 run: all
 	./$(TARGET)
 check: all
+	@if test -f not_existence; then \
+		echo "Error: It is assumed that file 'not_existence' DOES NOT exist." ;\
+		false ;\
+	fi
 	./$(TARGET) -t
 gcov:
 	gcov $(SRCS)

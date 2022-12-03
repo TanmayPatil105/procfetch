@@ -147,12 +147,22 @@ class Path
     {
         return Path(filesystem::path(path), filesystem::status(path));
     }
-    bool is_regular_fie()
+    bool is_regular_file()
     {
         return filesystem::is_regular_file(status);
+    }
+    bool is_executable()
+    {
+        if (status.permissions() == filesystem::perms::unknown)
+            return false;
+        return (status.permissions() & filesystem::perms::others_exec) != filesystem::perms::none;
     }
     bool is_directory()
     {
         return filesystem::is_directory(status);
+    }
+    string to_s()
+    {
+        return path.string();
     }
 };
