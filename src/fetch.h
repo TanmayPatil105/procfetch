@@ -73,6 +73,17 @@ void expect(const T &want, const T &got, const string &msg)
     exit(1);
 }
 
+/**
+ * Command executes a command in a subshell(shell runs on a forked process).
+ *
+ * Sample code:
+ * ```cpp
+ * auto c = Command::exec("ls -l");
+ * if (c.getExitcode() == 0) {
+ *     std::cout << c.getOutput();
+ * }
+ * ```
+ */
 class Command
 {
   private:
@@ -87,6 +98,13 @@ class Command
     }
 
   public:
+
+    /**
+     * Executes the specified command in a subshell.
+     * @param cmd containing the command to call and its arguments
+     * @returns Command object for getting the results.
+     * @throws runtime_error failed to popen(3)
+     */
     static Command exec(const string &cmd)
     {
         Command result = Command();
@@ -114,22 +132,34 @@ class Command
         return result;
     }
 
+    /**
+     * @returns get contents written by the command to standard output
+     */
     string getOutput()
     {
         return output;
     }
 
+    /**
+     * @returns get the new line counts of the output.
+     */
     int getOutputLines()
     {
         return lines;
     }
 
+    /**
+     * @returns get the exit code of the command.
+     */
     int getExitCode()
     {
         return exit_code;
     }
 };
 
+/**
+ * A Path represents a path.
+ */
 class Path
 {
   private:
@@ -143,14 +173,27 @@ class Path
     }
 
   public:
+
+    /**
+     * @returns Path object
+     * @param path
+     */
     static Path of(const string &path)
     {
         return Path(filesystem::path(path), filesystem::status(path));
     }
+
+    /**
+     * @returns exists and is a regular file
+     */
     bool is_regular_file()
     {
         return filesystem::is_regular_file(status);
     }
+
+    /**
+     * @returns exists and is a executable(or searchable)
+     */
     bool is_executable()
     {
         if (status.permissions() == filesystem::perms::unknown)
@@ -158,10 +201,18 @@ class Path
         return (status.permissions() & filesystem::perms::others_exec) !=
                filesystem::perms::none;
     }
+
+    /**
+     * @returns exists and is a directory
+     */
     bool is_directory()
     {
         return filesystem::is_directory(status);
     }
+
+    /**
+     * @returns readable reprsentation for dev.
+     */
     string to_s()
     {
         return path.string();
