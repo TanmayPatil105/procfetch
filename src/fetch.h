@@ -155,7 +155,8 @@ class Path
     {
         if (status.permissions() == filesystem::perms::unknown)
             return false;
-        return (status.permissions() & filesystem::perms::others_exec) != filesystem::perms::none;
+        return (status.permissions() & filesystem::perms::others_exec) !=
+               filesystem::perms::none;
     }
     bool is_directory()
     {
