@@ -26,6 +26,8 @@ gcov:
 	gcov $(SRCS)
 clean:
 	- rm -f $(TARGET) $(OBJS) *.gcov *.gcda *.gcno
+docs:
+	doxygen ../Doxyfile
 install: all
 	@echo "Installing $(BINDIR)/$(TARGET) ..."
 	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
@@ -40,4 +42,4 @@ main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
 
-.PHONY: all run check gcov clean install uninstall format
+.PHONY: all run check gcov clean docs install uninstall format
