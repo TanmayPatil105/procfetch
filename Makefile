@@ -1,8 +1,10 @@
-TOPTARGETS := all run check gcov clean install uninstall
+TOPTARGETS := all run check gcov clean docs install uninstall
 SUBDIRS := src ascii
+.PHONY: $(TOPTARGETS) $(SUBDIRS)
 
 $(TOPTARGETS): $(SUBDIRS)
 $(SUBDIRS):
 	$(MAKE) -C $@ -j $(MAKECMDGOALS)
 
-.PHONY: $(TOPTARGETS) $(SUBDIRS)
+clean:
+	rm -rf docs
