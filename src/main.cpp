@@ -13,6 +13,7 @@ void DisplayInfo();
  */
 int main(int argc, char *argv[])
 {
+    bool test_mode = false;
     string color_name = "def"s;
 
     int opt;
@@ -21,17 +22,22 @@ int main(int argc, char *argv[])
         switch(opt) 
         { 
             case 't':
-                test_util();
-                cout << "========================"s << endl
-                    << " All unit tests passed. "s << endl
-                    << "========================"s << endl;
-                return 0;
+                test_mode = true;
+                break;
             case 'a':
                 color_name = string(optarg);
                 break;
             case '?':    
                 return 1;
-        } 
+        }
+    }
+
+    if (test_mode) {
+        test_util();
+        cout << "========================"s << endl
+             << " All unit tests passed. "s << endl
+             << "========================"s << endl;
+        return 0;
     }
 
     print("def");
