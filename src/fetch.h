@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #pragma once
 
 #include <algorithm>
@@ -61,6 +64,13 @@ string exec(string command);
 
 void test_util();
 
+/**
+ * tests that want and got are equal.
+ * Fails with the supplied failure message then halt.
+ * @param want
+ * @param got
+ * @param msg
+ */
 template <typename T>
 void expect(const T &want, const T &got, const string &msg)
 {
