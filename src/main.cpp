@@ -3,18 +3,14 @@
  */
 #include "color.h"
 #include "fetch.h"
+
+void DisplayInfo();
+
 /**
  * @returns
  * @param argc
  * @param argv
  */
-
-/**
- * @returns Displays Info
- */
-void DisplayInfo();
-
-
 int main(int argc, char *argv[])
 {
     int opt;
@@ -43,6 +39,9 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+/**
+ * @returns Displays Info
+ */
 void DisplayInfo()
 {
     string user = getuser();
