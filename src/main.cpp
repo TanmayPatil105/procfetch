@@ -3,46 +3,57 @@
  */
 #include "color.h"
 #include "fetch.h"
+
+void DisplayInfo();
+
 /**
  * @returns
  * @param argc
  * @param argv
  */
-
-/**
- * @returns Displays Info
- */
-void DisplayInfo();
-
-
 int main(int argc, char *argv[])
 {
+    bool test_mode = false;
+    string color_name = "def"s;
+
     int opt;
-    if (argc == 1)
-    {
-        print("def");
-        DisplayInfo();
-        return 0;
-    }
-    while((opt = getopt(argc, argv, "ta")) != -1) 
+    while((opt = getopt(argc, argv, "ta:")) != -1) 
     { 
         switch(opt) 
         { 
             case 't':
-                test_util();
-                cout << "========================"s << endl
-                    << " All unit tests passed. "s << endl
-                    << "========================"s << endl;
+                test_mode = true;
                 break;
             case 'a':
-                print(argv[2]);
-                DisplayInfo();
+                color_name = string(optarg);
                 break;
-        } 
+            default:
+                return 1;
+        }
     }
+
+    if (test_mode) {
+        test_util();
+        cout << "========================"s << endl
+             << " All unit tests passed. "s << endl
+             << "========================"s << endl;
+        return 0;
+    }
+
+    if (optind != argc) {
+        cout << "Error: "s << argv[0] << ": unknown argument: "s << argv[optind] << endl;
+        return 1;
+    }
+
+    print(color_name);
+    DisplayInfo();
+
     return 0;
 }
 
+/**
+ * @returns Displays Info
+ */
 void DisplayInfo()
 {
     string user = getuser();
