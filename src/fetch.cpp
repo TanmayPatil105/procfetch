@@ -1,11 +1,21 @@
+/**
+ * @file
+ */
 #include "fetch.h"
 #include "color.h"
 
+/**
+ * @returns
+ */
 string getuser()
 {
     return getenv("USER");
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string gethostname(string path)
 {
     fstream fptr;
@@ -15,6 +25,10 @@ string gethostname(string path)
     return hostname;
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getOS(string path)
 {
     fstream fptr;
@@ -37,6 +51,9 @@ string getOS(string path)
     return line;
 }
 
+/**
+ * @returns
+ */
 string getHardwarePlatform()
 {
     string s = Command::exec("uname -m"s).getOutput();
@@ -44,6 +61,10 @@ string getHardwarePlatform()
     return " " + s;
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getHost(string path)
 {
     fstream f1, f2;
@@ -64,6 +85,10 @@ string getHost(string path)
     return host;
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getKernel(string path)
 {
     fstream fptr;
@@ -73,6 +98,10 @@ string getKernel(string path)
     return kernel;
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getUpTime(string path)
 {
     fstream fptr;
@@ -104,6 +133,10 @@ string getUpTime(string path)
     return timeS;
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getRAM(string path)
 {
     fstream fptr;
@@ -167,6 +200,10 @@ string getRAM(string path)
            "MiB";
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getSHELL(string path)
 {
     fstream fptr;
@@ -187,11 +224,18 @@ string getSHELL(string path)
     return line;
 }
 
+/**
+ * @returns
+ */
 string getDE()
 {
     return getenv("XDG_CURRENT_DESKTOP");
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getRES(string path)
 {
     fstream fptr;
@@ -202,6 +246,9 @@ string getRES(string path)
     return res.substr(0, res.find("p"));
 }
 
+/**
+ * @returns
+ */
 string getTheme()
 {
     auto c =
@@ -210,6 +257,9 @@ string getTheme()
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
+/**
+ * @returns
+ */
 string getIcons()
 {
     auto c =
@@ -218,6 +268,10 @@ string getIcons()
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
+/**
+ * @returns
+ * @param path
+ */
 string getCPU(string path)
 {
     fstream fptr;
@@ -238,6 +292,10 @@ string getCPU(string path)
     return cpu;
 }
 
+/**
+ * @returns
+ * @param path
+ */
 int getCPUtemp(string path)
 {
     fstream fptr;
@@ -247,6 +305,9 @@ int getCPUtemp(string path)
     return stoi(temp);
 }
 
+/**
+ * @returns
+ */
 bool CpuTempCheck()
 {
     if (Path::of("/sys/class/thermal/thermal_zone1"s).is_directory())
@@ -256,6 +317,9 @@ bool CpuTempCheck()
     return false;
 }
 
+/**
+ * @returns
+ */
 vector<string> getGPU()
 {
     vector<string> gpu;
@@ -277,6 +341,9 @@ vector<string> getGPU()
     return gpu;
 }
 
+/**
+ * @returns
+ */
 string getPackages()
 {
     string pkg = "";
@@ -338,6 +405,9 @@ string getPackages()
     return pkg;
 }
 
+/**
+ * @param path
+ */
 void print_process(string art)
 {
     string color;
@@ -356,6 +426,9 @@ void print_process(string art)
     fptr.close();
 }
 
+/**
+ * description  
+ */
 void print()
 {
     string os = getOS("/etc/os-release");
