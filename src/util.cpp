@@ -1,6 +1,13 @@
+/**
+ * @file
+ */
 #include "color.h"
 #include "fetch.h"
 
+/**
+ * @returns
+ * @param command
+ */
 string exec(string command)
 {
     char buffer[128];
@@ -20,6 +27,10 @@ string exec(string command)
     return result;
 }
 
+/**
+ * @returns
+ * @param line
+ */
 string getColor(string line)
 {
     string color;
@@ -141,6 +152,12 @@ static void test_Path()
     expect(false, p.is_directory(), "test -d "s + p.to_s());
 }
 
+/**
+ * Tests belows.
+ * * function exec()
+ * * class Path
+ * * class Command
+ */
 void test_util()
 {
     test_exec();

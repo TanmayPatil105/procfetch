@@ -1,6 +1,14 @@
+/**
+ * @file
+ */
 #include "color.h"
 #include "fetch.h"
 
+/**
+ * @returns
+ * @param argc
+ * @param argv
+ */
 int main(int argc, char *argv[])
 {
     if (argc == 2 && !"-t"s.compare(argv[1]))
