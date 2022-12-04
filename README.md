@@ -27,6 +27,10 @@
 ## Prerequisites
 
 * GNU Make
+* GCC
+* ClangFormat
+* Doxygen
+* Graphviz
 
 ## Installation
 
