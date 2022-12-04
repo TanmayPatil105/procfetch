@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
             case 'a':
                 color_name = string(optarg);
                 break;
-            case '?':    
+            default:
                 return 1;
         }
     }
@@ -40,7 +40,12 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    print("def");
+    if (optind != argc) {
+        cout << "Error: "s << argv[0] << ": unknown argument: "s << argv[optind] << endl;
+        return 1;
+    }
+
+    print(color_name);
     DisplayInfo();
 
     return 0;
