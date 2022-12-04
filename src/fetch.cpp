@@ -5,7 +5,7 @@
 #include "color.h"
 
 /**
- * @returns
+ * @returns gets the username
  */
 string getuser()
 {
@@ -13,7 +13,7 @@ string getuser()
 }
 
 /**
- * @returns
+ * @returns gets the hostname
  * @param path
  */
 string gethostname(string path)
@@ -26,7 +26,7 @@ string gethostname(string path)
 }
 
 /**
- * @returns
+ * @returns gets name of Operating System
  * @param path
  */
 string getOS(string path)
@@ -52,7 +52,7 @@ string getOS(string path)
 }
 
 /**
- * @returns
+ * @returns gets HardWare Platform
  */
 string getHardwarePlatform()
 {
@@ -62,7 +62,7 @@ string getHardwarePlatform()
 }
 
 /**
- * @returns
+ * @returns gets Host
  * @param path
  */
 string getHost(string path)
@@ -86,7 +86,7 @@ string getHost(string path)
 }
 
 /**
- * @returns
+ * @returns gets kernel
  * @param path
  */
 string getKernel(string path)
@@ -99,7 +99,7 @@ string getKernel(string path)
 }
 
 /**
- * @returns
+ * @returns get Uptime
  * @param path
  */
 string getUpTime(string path)
@@ -134,7 +134,7 @@ string getUpTime(string path)
 }
 
 /**
- * @returns
+ * @returns gets RAM usage details
  * @param path
  */
 string getRAM(string path)
@@ -201,7 +201,7 @@ string getRAM(string path)
 }
 
 /**
- * @returns
+ * @returns gets type of shell
  * @param path
  */
 string getSHELL(string path)
@@ -225,7 +225,7 @@ string getSHELL(string path)
 }
 
 /**
- * @returns
+ * @returns gets the Desktop Environment
  */
 string getDE()
 {
@@ -233,7 +233,7 @@ string getDE()
 }
 
 /**
- * @returns
+ * @returns gets current Screen Resolution
  * @param path
  */
 string getRES(string path)
@@ -247,7 +247,7 @@ string getRES(string path)
 }
 
 /**
- * @returns
+ * @returns gets current Theme info
  */
 string getTheme()
 {
@@ -258,7 +258,7 @@ string getTheme()
 }
 
 /**
- * @returns
+ * @returns gets current Icon info
  */
 string getIcons()
 {
@@ -269,7 +269,7 @@ string getIcons()
 }
 
 /**
- * @returns
+ * @returns gets CPU info
  * @param path
  */
 string getCPU(string path)
@@ -293,7 +293,7 @@ string getCPU(string path)
 }
 
 /**
- * @returns
+ * @returns gets CPU temp
  * @param path
  */
 int getCPUtemp(string path)
@@ -306,7 +306,7 @@ int getCPUtemp(string path)
 }
 
 /**
- * @returns
+ * @returns checks for CPUtemp file
  */
 bool CpuTempCheck()
 {
@@ -318,7 +318,7 @@ bool CpuTempCheck()
 }
 
 /**
- * @returns
+ * @returns gets vendor of Internal and External GPU
  */
 vector<string> getGPU()
 {
@@ -342,7 +342,7 @@ vector<string> getGPU()
 }
 
 /**
- * @returns
+ * @returns gets count of all packages installed
  */
 string getPackages()
 {
@@ -427,7 +427,7 @@ void print_process(string art)
 }
 
 /**
- * description  
+ * Utility to print ascii art of Distro
  */
 void print()
 {
