@@ -108,7 +108,6 @@ class Command
     }
 
   public:
-
     /**
      * Executes the specified command in a subshell.
      * @param cmd containing the command to call and its arguments
@@ -183,7 +182,6 @@ class Path
     }
 
   public:
-
     /**
      * @returns Path object
      * @param path
