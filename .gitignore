@@ -1,5 +1,6 @@
 src/procfetch
 *.o
+docs/
 # files for coverage test
 *.gcov
 *.gcda
