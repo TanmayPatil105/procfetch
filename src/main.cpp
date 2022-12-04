@@ -13,13 +13,9 @@ void DisplayInfo();
  */
 int main(int argc, char *argv[])
 {
+    string color_name = "def"s;
+
     int opt;
-    if (argc == 1)
-    {
-        print("def");
-        DisplayInfo();
-        return 0;
-    }
     while((opt = getopt(argc, argv, "ta:")) != -1) 
     { 
         switch(opt) 
@@ -29,13 +25,18 @@ int main(int argc, char *argv[])
                 cout << "========================"s << endl
                     << " All unit tests passed. "s << endl
                     << "========================"s << endl;
-                break;
+                return 0;
             case 'a':
-                print(optarg);
-                DisplayInfo();
+                color_name = string(optarg);
                 break;
+            case '?':    
+                return 1;
         } 
     }
+
+    print("def");
+    DisplayInfo();
+
     return 0;
 }
 
