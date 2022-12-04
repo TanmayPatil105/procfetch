@@ -408,7 +408,7 @@ string getPackages()
 /**
  * @param path
  */
-void print_process(string art)
+void print_process(string art,string color_name)
 {
     string color;
     string path = "/usr/share/procfetch/ascii/" + art;
@@ -416,7 +416,14 @@ void print_process(string art)
     fptr.open(path, ios::in);
     string txt;
     getline(fptr, txt);
-    color = getColor(txt);
+    if (color_name == "def")
+    {
+        color = getColor(txt);
+    }
+    else{
+        transform(color_name.begin(),color_name.end(),color_name.begin(),::toupper);
+        color=getColor(color_name);
+    }
     cout << color << endl;
     while (fptr)
     {
@@ -429,7 +436,7 @@ void print_process(string art)
 /**
  * Utility to print ascii art of Distro
  */
-void print()
+void print(string color_name)
 {
     string os = getOS("/etc/os-release");
 
@@ -470,7 +477,7 @@ void print()
     {
         if (os.find(key) != string::npos)
         {
-            print_process(value);
+            print_process(value,color_name);
             return;
         }
     }

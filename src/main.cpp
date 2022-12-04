@@ -3,24 +3,48 @@
  */
 #include "color.h"
 #include "fetch.h"
-
 /**
  * @returns
  * @param argc
  * @param argv
  */
+
+/**
+ * @returns Displays Info
+ */
+void DisplayInfo();
+
+
 int main(int argc, char *argv[])
 {
-    if (argc == 2 && !"-t"s.compare(argv[1]))
+    int opt;
+    if (argc == 1)
     {
-        test_util();
-        cout << "========================"s << endl
-             << " All unit tests passed. "s << endl
-             << "========================"s << endl;
+        print("def");
+        DisplayInfo();
         return 0;
     }
+    while((opt = getopt(argc, argv, "ta")) != -1) 
+    { 
+        switch(opt) 
+        { 
+            case 't':
+                test_util();
+                cout << "========================"s << endl
+                    << " All unit tests passed. "s << endl
+                    << "========================"s << endl;
+                break;
+            case 'a':
+                print(argv[2]);
+                DisplayInfo();
+                break;
+        } 
+    }
+    return 0;
+}
 
-    print();
+void DisplayInfo()
+{
     string user = getuser();
     string hostname = gethostname("/etc/hostname");
     string username = YELLOW + user + RESET + "@" + YELLOW + hostname;
@@ -63,5 +87,4 @@ int main(int argc, char *argv[])
     string pkg = getPackages();
     cout << BRIGHT << GREEN << "Packages : " << RESET << pkg << endl;
     cout << endl;
-    return 0;
 }

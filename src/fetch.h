@@ -13,6 +13,7 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include <cctype>
 
 using namespace std;
 
@@ -54,7 +55,7 @@ vector<string> getGPU();
 
 string getPackages();
 
-void print();
+void print(string color);
 
 // util.cpp
 
