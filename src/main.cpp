@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         DisplayInfo();
         return 0;
     }
-    while((opt = getopt(argc, argv, "ta")) != -1) 
+    while((opt = getopt(argc, argv, "ta:")) != -1) 
     { 
         switch(opt) 
         { 
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
                     << "========================"s << endl;
                 break;
             case 'a':
-                print(argv[2]);
+                print(optarg);
                 DisplayInfo();
                 break;
         } 
