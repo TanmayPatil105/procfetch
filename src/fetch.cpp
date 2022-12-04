@@ -406,7 +406,7 @@ string getPackages()
 }
 
 /**
- * @param path
+ * @param art
  */
 void print_process(string art)
 {
