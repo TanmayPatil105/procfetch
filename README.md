@@ -38,7 +38,7 @@
 
 ## Documentation
 
-See the [documentation](https://tanmaypatil105.github.io/procfetch/util_8cpp.html)
+See the [documentation](https://tanmaypatil105.github.io/procfetch/)
 
 ## Installation
 
