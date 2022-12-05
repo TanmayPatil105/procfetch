@@ -8,3 +8,6 @@ $(SUBDIRS):
 
 clean:
 	rm -rf docs
+
+docs:
+	doxygen
