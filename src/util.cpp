@@ -125,7 +125,6 @@ static void test_Path()
 
 /**
  * Tests belows.
- * * function exec()
  * * class Path
  * * class Command
  */
