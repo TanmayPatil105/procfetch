@@ -36,6 +36,10 @@
 * Doxygen
 * Graphviz
 
+## Documentation
+
+See the [documentation](https://tanmaypatil105.github.io/procfetch/)
+
 ## Installation
 
 ```

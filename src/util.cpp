@@ -6,29 +6,6 @@
 
 /**
  * @returns
- * @param command
- */
-string exec(string command)
-{
-    char buffer[128];
-    string result = "";
-    FILE *pipe = popen(command.c_str(), "r");
-    if (!pipe)
-    {
-        throw runtime_error("popen failed: \"" + command + "\"");
-    }
-    while (!feof(pipe))
-    {
-        if (fgets(buffer, 128, pipe) != NULL)
-            result += buffer;
-    }
-
-    pclose(pipe);
-    return result;
-}
-
-/**
- * @returns
  * @param line
  */
 string getColor(string line)
@@ -106,12 +83,6 @@ string getColor(string line)
     return color;
 }
 
-static void test_exec()
-{
-    string result = exec("echo \"hello, world\""s);
-    expect("hello, world\n"s, result, "exec() returns"s);
-}
-
 static void test_Command()
 {
     Command c = Command::exec("ls Makefile"s);
@@ -154,13 +125,11 @@ static void test_Path()
 
 /**
  * Tests belows.
- * * function exec()
  * * class Path
  * * class Command
  */
 void test_util()
 {
-    test_exec();
     test_Path();
     test_Command();
 }
