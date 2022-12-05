@@ -60,8 +60,6 @@ void print();
 
 string getColor(string);
 
-string exec(string command);
-
 void test_util();
 
 /**
