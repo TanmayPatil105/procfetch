@@ -26,8 +26,6 @@ gcov:
 	gcov $(SRCS)
 clean:
 	- rm -f $(TARGET) $(OBJS) *.gcov *.gcda *.gcno
-docs:
-	doxygen ../Doxyfile
 install: all
 	@echo "Installing $(BINDIR)/$(TARGET) ..."
 	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
