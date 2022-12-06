@@ -55,7 +55,7 @@ vector<string> getGPU();
 
 string getPackages();
 
-void print(string color);
+void print(string color,string distro_name);
 
 // util.cpp
 

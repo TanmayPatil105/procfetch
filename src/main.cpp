@@ -15,9 +15,10 @@ int main(int argc, char *argv[])
 {
     bool test_mode = false;
     string color_name = "def"s;
+    string distro_name = "def"s;
 
     int opt;
-    while((opt = getopt(argc, argv, "ta:")) != -1) 
+    while((opt = getopt(argc, argv, "ta:d:")) != -1) 
     { 
         switch(opt) 
         { 
@@ -26,6 +27,9 @@ int main(int argc, char *argv[])
                 break;
             case 'a':
                 color_name = string(optarg);
+                break;
+            case 'd':
+                distro_name = string(optarg);
                 break;
             default:
                 return 1;
@@ -45,7 +49,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    print(color_name);
+    print(color_name,distro_name);
     DisplayInfo();
 
     return 0;

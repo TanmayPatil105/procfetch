@@ -436,9 +436,14 @@ void print_process(string art,string color_name)
 /**
  * Utility to print ascii art of Distro
  */
-void print(string color_name)
+void print(string color_name,string distro_name)
 {
-    string os = getOS("/etc/os-release");
+    string os = distro_name;
+
+    if (distro_name == "def")
+    {
+        os = getOS("/etc/os-release");
+    }
 
     map<string, string> ascii_arts = {{"Ubuntu", "ubuntu.ascii"},
                                       {"Debian", "debian.ascii"},
@@ -481,4 +486,8 @@ void print(string color_name)
             return;
         }
     }
+
+    print_process("linux.ascii",color_name);
+    
+    return;
 }
