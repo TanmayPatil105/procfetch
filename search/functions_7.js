@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['test_5futil_79',['test_util',['../fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d',1,'test_util():&#160;util.cpp'],['../util_8cpp.html#a75d79411d2a46aab2a7ef1ff8e23b65d',1,'test_util():&#160;util.cpp']]],
-  ['to_5fs_80',['to_s',['../classPath.html#ac5357e135f5b4d8065255314347e4985',1,'Path']]]
+  ['print_79',['print',['../fetch_8cpp.html#ad6d5ed4efb6721304d00c1277bff90fd',1,'print(string color_name, string distro_name):&#160;fetch.cpp'],['../fetch_8h.html#a73f2fe526cbdeb94007aabce5d5b080f',1,'print(string color, string distro_name):&#160;fetch.cpp']]],
+  ['print_5fprocess_80',['print_process',['../fetch_8cpp.html#a8760435a6d7f54b4983543d29b5bb722',1,'fetch.cpp']]]
 ];
