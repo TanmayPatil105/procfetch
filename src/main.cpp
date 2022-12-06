@@ -4,6 +4,8 @@
 #include "color.h"
 #include "fetch.h"
 
+void DisplayInfo();
+
 /**
  * @returns
  * @param argc
@@ -11,8 +13,30 @@
  */
 int main(int argc, char *argv[])
 {
-    if (argc == 2 && !"-t"s.compare(argv[1]))
-    {
+    bool test_mode = false;
+    string color_name = "def"s;
+    string distro_name = "def"s;
+
+    int opt;
+    while((opt = getopt(argc, argv, "ta:d:")) != -1) 
+    { 
+        switch(opt) 
+        { 
+            case 't':
+                test_mode = true;
+                break;
+            case 'a':
+                color_name = string(optarg);
+                break;
+            case 'd':
+                distro_name = string(optarg);
+                break;
+            default:
+                return 1;
+        }
+    }
+
+    if (test_mode) {
         test_util();
         cout << "========================"s << endl
              << " All unit tests passed. "s << endl
@@ -20,7 +44,22 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    print();
+    if (optind != argc) {
+        cout << "Error: "s << argv[0] << ": unknown argument: "s << argv[optind] << endl;
+        return 1;
+    }
+
+    print(color_name,distro_name);
+    DisplayInfo();
+
+    return 0;
+}
+
+/**
+ * @returns Displays Info
+ */
+void DisplayInfo()
+{
     string user = getuser();
     string hostname = gethostname("/etc/hostname");
     string username = YELLOW + user + RESET + "@" + YELLOW + hostname;
@@ -63,5 +102,4 @@ int main(int argc, char *argv[])
     string pkg = getPackages();
     cout << BRIGHT << GREEN << "Packages : " << RESET << pkg << endl;
     cout << endl;
-    return 0;
 }
