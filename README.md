@@ -71,6 +71,17 @@ $ ./uninstall.sh
 
 <hr/>
 
+## Usage
+
+- `-a` to change color of ascii_art
+```bash
+$ procfetch -a cyan
+```
+
+- `-d` to change print ascii_art of different distros
+```bash
+$ procfetch -d Manjaro
+```
 ## Docker
 
 Define environment variable `PROCFETCH` in the actual project home directory.
