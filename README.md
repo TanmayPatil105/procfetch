@@ -1,4 +1,7 @@
-# procfetch [![codecov](https://codecov.io/gh/TanmayPatil105/procfetch/branch/main/graph/badge.svg?token=QR6JGV3862)](https://codecov.io/gh/TanmayPatil105/procfetch)
+# procfetch 
+[![codecov](https://codecov.io/gh/TanmayPatil105/procfetch/branch/main/graph/badge.svg?token=QR6JGV3862)](https://codecov.io/gh/TanmayPatil105/procfetch)
+![](https://github.com/TanmayPatil105/procfetch/actions/workflows/unit-test.yml/badge.svg)
+![](https://github.com/TanmayPatil105/procfetch/actions/workflows/doxygen-gh-pages.yml/badge.svg)
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/92677342/205502731-328ab040-1df7-4b1b-bfa2-c5b84adafb85.png" width="1000">
