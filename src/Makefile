@@ -40,4 +40,4 @@ main.o:  fetch.h color.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
 
-.PHONY: all run check gcov clean docs install uninstall format
+.PHONY: all run check gcov clean docs install uninstall dist format
