@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <vector>
 #include <cctype>
+#include "color.h"
 
 using namespace std;
 
@@ -225,3 +226,38 @@ class Path
         return path.string();
     }
 };
+
+/**
+ *
+ */
+class Chalk
+{
+private:
+    string _color;
+    
+    Chalk(string color) {
+        _color = color;
+    }
+    
+public:
+    string bright(string s) {
+        return BRIGHT + _color + s + RESET;        
+    }
+    static Chalk color(string color) {
+        return Chalk(color);
+    }
+    /*
+    static string color(string c, string txt) {
+        return c + txt;
+        }*/
+    static string red(string s) {
+        return RED + s + RESET;
+        //        return s;
+    }
+};
+
+//string color(int c, string s);
+/*{
+    //cout << color(YELLOW, "hi!");
+    return NULL;
+    }*/

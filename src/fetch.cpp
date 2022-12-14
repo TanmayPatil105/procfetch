@@ -350,56 +350,56 @@ string getPackages()
     if (Path::of("/bin/dpkg"s).is_executable())
     {
         auto c = Command::exec("dpkg -l"s);
-        pkg += to_string(c.getOutputLines()) + RED + " dpkg; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" dpkg; "); 
     }
     if (Path::of("/bin/snap"s).is_executable())
     {
         auto c = Command::exec("snap list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " snap; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" snap; ");
     }
     if (Path::of("/bin/pacman"s).is_executable())
     {
         auto c = Command::exec("pacman -Q"s);
-        pkg += to_string(c.getOutputLines()) + RED + " pacman; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" pacman; ");
     }
     if (Path::of("/bin/flatpak"s).is_executable())
     {
         auto c = Command::exec("flatpak list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " flatpak; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" flatpak; ");
     }
     if (Path::of("/var/lib/rpm"s).is_executable())
     {
         auto c = Command::exec("rpm -qa"s);
-        pkg += to_string(c.getOutputLines()) + RED + " rpm; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" rpm; ");
     }
     if (Path::of("/bin/npm"s).is_executable())
     {
         auto c = Command::exec("npm list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " npm; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" npm; ");
     }
     if (Path::of("/bin/emerge"s).is_executable()) // gentoo
     {
-        pkg += "not supported"s + RED + " portage; " + RESET;
+        pkg += "not supported"s + Chalk::red(" portage; ");
     }
     if (Path::of("/bin/xbps-install"s).is_executable()) // void linux
     {
         auto c = Command::exec("flatpak list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " xbps; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" xbps; ");
     }
     if (Path::of("/bin/dnf"s).is_executable()) // fedora
     {
         auto c = Command::exec("dnf list installed"s);
-        pkg += to_string(c.getOutputLines()) + RED + " dnf; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" dnf; ");
     }
     if (Path::of("/bin/zypper"s).is_executable()) // opensuse
     {
         auto c = Command::exec("zypper se --installed-only"s);
-        pkg += to_string(c.getOutputLines()) + RED + " zypper; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" zypper; ");
     }
     if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).is_executable())
     {
         auto c = Command::exec("brew list | { tr '' '\n'; }"s);
-        pkg += to_string(c.getOutputLines()) + RED + " brew; " + RESET;
+        pkg += to_string(c.getOutputLines()) + Chalk::red(" brew; ");
     }
 
     return pkg;
@@ -424,11 +424,12 @@ void print_process(string art,string color_name)
         transform(color_name.begin(),color_name.end(),color_name.begin(),::toupper);
         color=getColor(color_name);
     }
-    cout << color << endl;
+    //cout << color << endl;
     while (fptr)
     {
         getline(fptr, txt);
-        cout << BRIGHT << color << txt << endl;
+        // cout << BRIGHT << color << txt << endl;
+        cout << Chalk::color(color).bright(txt) << endl;        
     }
     fptr.close();
 }

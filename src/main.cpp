@@ -102,4 +102,17 @@ void DisplayInfo()
     string pkg = getPackages();
     cout << BRIGHT << GREEN << "Packages : " << RESET << pkg << endl;
     cout << endl;
+
+    //auto title = Chalk.bright.green;
+    // cout << name("RAM") + value(str);
+
+    /*
+    rec.name = "RAM";
+    rec.value = "value";
+    info.append(rec);
+
+    info.append("RAM", "value");
+    info.append("RAM", "value");
+    info.display();
+    */
 }
