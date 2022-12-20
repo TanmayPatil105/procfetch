@@ -230,34 +230,24 @@ class Path
 /**
  *
  */
-class Chalk
+class Color
 {
 private:
-    string _color;
-    
-    Chalk(string color) {
-        _color = color;
-    }
+    string escape_codes;
     
 public:
-    string bright(string s) {
-        return BRIGHT + _color + s + RESET;        
+    Color() {
+        escape_codes = ""s;
     }
-    static Chalk color(string color) {
-        return Chalk(color);
+    Color bright() {
+        escape_codes += BRIGHT;
+        return *this;
     }
-    /*
-    static string color(string c, string txt) {
-        return c + txt;
-        }*/
-    static string red(string s) {
-        return RED + s + RESET;
-        //        return s;
+    Color red() {
+        escape_codes += RED;
+        return *this;
+    }
+    string text(string s) {
+        return escape_codes + s + RESET;
     }
 };
-
-//string color(int c, string s);
-/*{
-    //cout << color(YELLOW, "hi!");
-    return NULL;
-    }*/
