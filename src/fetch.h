@@ -3,7 +3,9 @@
  */
 #pragma once
 
+#include "color.h"
 #include <algorithm>
+#include <cctype>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -13,7 +15,6 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
-#include <cctype>
 
 using namespace std;
 
@@ -55,7 +56,7 @@ vector<string> getGPU();
 
 string getPackages();
 
-void print(string color,string distro_name);
+void print(string color, string distro_name);
 
 // util.cpp
 
@@ -223,5 +224,39 @@ class Path
     string to_s()
     {
         return path.string();
+    }
+};
+
+/**
+ *
+ */
+class Color
+{
+  private:
+    string escape_codes;
+
+  public:
+    Color()
+    {
+        escape_codes = ""s;
+    }
+    Color bright()
+    {
+        escape_codes += BRIGHT;
+        return *this;
+    }
+    Color red()
+    {
+        escape_codes += RED;
+        return *this;
+    }
+    Color green()
+    {
+        escape_codes += GREEN;
+        return *this;
+    }
+    string text(string s)
+    {
+        return escape_codes + s + RESET;
     }
 };

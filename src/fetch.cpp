@@ -346,60 +346,61 @@ vector<string> getGPU()
  */
 string getPackages()
 {
+    auto red = Color{}.red();
     string pkg = "";
     if (Path::of("/bin/dpkg"s).is_executable())
     {
         auto c = Command::exec("dpkg -l"s);
-        pkg += to_string(c.getOutputLines()) + RED + " dpkg; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" dpkg; ");
     }
     if (Path::of("/bin/snap"s).is_executable())
     {
         auto c = Command::exec("snap list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " snap; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" snap; ");
     }
     if (Path::of("/bin/pacman"s).is_executable())
     {
         auto c = Command::exec("pacman -Q"s);
-        pkg += to_string(c.getOutputLines()) + RED + " pacman; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" pacman; ");
     }
     if (Path::of("/bin/flatpak"s).is_executable())
     {
         auto c = Command::exec("flatpak list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " flatpak; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" flatpak; ");
     }
     if (Path::of("/var/lib/rpm"s).is_executable())
     {
         auto c = Command::exec("rpm -qa"s);
-        pkg += to_string(c.getOutputLines()) + RED + " rpm; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" rpm; ");
     }
     if (Path::of("/bin/npm"s).is_executable())
     {
         auto c = Command::exec("npm list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " npm; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" npm; ");
     }
     if (Path::of("/bin/emerge"s).is_executable()) // gentoo
     {
-        pkg += "not supported"s + RED + " portage; " + RESET;
+        pkg += "not supported"s + red.text(" portage; ");
     }
     if (Path::of("/bin/xbps-install"s).is_executable()) // void linux
     {
         auto c = Command::exec("flatpak list"s);
-        pkg += to_string(c.getOutputLines()) + RED + " xbps; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" xbps; ");
     }
     if (Path::of("/bin/dnf"s).is_executable()) // fedora
     {
         auto c = Command::exec("dnf list installed"s);
-        pkg += to_string(c.getOutputLines()) + RED + " dnf; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" dnf; ");
     }
     if (Path::of("/bin/zypper"s).is_executable()) // opensuse
     {
         auto c = Command::exec("zypper se --installed-only"s);
-        pkg += to_string(c.getOutputLines()) + RED + " zypper; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" zypper; ");
     }
     if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).is_executable())
     {
         auto c = Command::exec("brew list | { tr '' '\n'; }"s);
-        pkg += to_string(c.getOutputLines()) + RED + " brew; " + RESET;
+        pkg += to_string(c.getOutputLines()) + red.text(" brew; ");
     }
 
     return pkg;
@@ -408,7 +409,7 @@ string getPackages()
 /**
  * @param art
  */
-void print_process(string art,string color_name)
+void print_process(string art, string color_name)
 {
     string color;
     string path = "/usr/share/procfetch/ascii/" + art;
@@ -420,9 +421,11 @@ void print_process(string art,string color_name)
     {
         color = getColor(txt);
     }
-    else{
-        transform(color_name.begin(),color_name.end(),color_name.begin(),::toupper);
-        color=getColor(color_name);
+    else
+    {
+        transform(color_name.begin(), color_name.end(), color_name.begin(),
+                  ::toupper);
+        color = getColor(color_name);
     }
     cout << color << endl;
     while (fptr)
@@ -436,7 +439,7 @@ void print_process(string art,string color_name)
 /**
  * Utility to print ascii art of Distro
  */
-void print(string color_name,string distro_name)
+void print(string color_name, string distro_name)
 {
     string os = distro_name;
 
@@ -482,12 +485,12 @@ void print(string color_name,string distro_name)
     {
         if (os.find(key) != string::npos)
         {
-            print_process(value,color_name);
+            print_process(value, color_name);
             return;
         }
     }
 
-    print_process("linux.ascii",color_name);
-    
+    print_process("linux.ascii", color_name);
+
     return;
 }
