@@ -351,7 +351,7 @@ string getPackages()
     if (Path::of("/bin/dpkg"s).is_executable())
     {
         auto c = Command::exec("dpkg -l"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" dpkg; "); 
+        pkg += to_string(c.getOutputLines()) + red.text(" dpkg; ");
     }
     if (Path::of("/bin/snap"s).is_executable())
     {
@@ -409,7 +409,7 @@ string getPackages()
 /**
  * @param art
  */
-void print_process(string art,string color_name)
+void print_process(string art, string color_name)
 {
     string color;
     string path = "/usr/share/procfetch/ascii/" + art;
@@ -421,11 +421,13 @@ void print_process(string art,string color_name)
     {
         color = getColor(txt);
     }
-    else{
-        transform(color_name.begin(),color_name.end(),color_name.begin(),::toupper);
-        color=getColor(color_name);
+    else
+    {
+        transform(color_name.begin(), color_name.end(), color_name.begin(),
+                  ::toupper);
+        color = getColor(color_name);
     }
-    //cout << color << endl;
+    // cout << color << endl;
     while (fptr)
     {
         getline(fptr, txt);
@@ -437,7 +439,7 @@ void print_process(string art,string color_name)
 /**
  * Utility to print ascii art of Distro
  */
-void print(string color_name,string distro_name)
+void print(string color_name, string distro_name)
 {
     string os = distro_name;
 
@@ -483,12 +485,12 @@ void print(string color_name,string distro_name)
     {
         if (os.find(key) != string::npos)
         {
-            print_process(value,color_name);
+            print_process(value, color_name);
             return;
         }
     }
 
-    print_process("linux.ascii",color_name);
-    
+    print_process("linux.ascii", color_name);
+
     return;
 }

@@ -123,7 +123,8 @@ static void test_Path()
     expect(false, p.is_directory(), "test -d "s + p.to_s());
 }
 
-static void test_Color() {
+static void test_Color()
+{
     auto title = Color{}.bright().red();
     expect("\033[1m\033[0;31mWAKAME\033[0;m"s, title.text("WAKAME"), ""s);
 }
