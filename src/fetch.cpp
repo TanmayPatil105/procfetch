@@ -427,7 +427,7 @@ void print_process(string art, string color_name)
                   ::toupper);
         color = getColor(color_name);
     }
-    // cout << color << endl;
+    cout << color << endl;
     while (fptr)
     {
         getline(fptr, txt);
