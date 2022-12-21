@@ -346,7 +346,7 @@ vector<string> getGPU()
  */
 string getPackages()
 {
-    auto red = Color{}.red();
+    auto red = Crayon{}.red();
     string pkg = "";
     if (Path::of("/bin/dpkg"s).is_executable())
     {
@@ -411,27 +411,27 @@ string getPackages()
  */
 void print_process(string art, string color_name)
 {
-    string color;
     string path = "/usr/share/procfetch/ascii/" + art;
     fstream fptr;
     fptr.open(path, ios::in);
     string txt;
     getline(fptr, txt);
+    auto style = Crayon{}.bright();
     if (color_name == "def")
     {
-        color = getColor(txt);
+        style = style.color(txt);
     }
     else
     {
         transform(color_name.begin(), color_name.end(), color_name.begin(),
                   ::toupper);
-        color = getColor(color_name);
+        style = style.color(color_name);
     }
-    cout << color << endl;
+    cout << style.text(""s) << endl;
     while (fptr)
     {
         getline(fptr, txt);
-        cout << BRIGHT << color << txt << endl;
+        cout << style.text(txt) << endl;
     }
     fptr.close();
 }

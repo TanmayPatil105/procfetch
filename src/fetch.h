@@ -230,27 +230,32 @@ class Path
 /**
  *
  */
-class Color
+class Crayon
 {
   private:
     string escape_codes;
 
   public:
-    Color()
+    Crayon()
     {
         escape_codes = ""s;
     }
-    Color bright()
+    Crayon bright()
     {
         escape_codes += BRIGHT;
         return *this;
     }
-    Color red()
+    Crayon color(string color)
+    {
+        escape_codes += getColor(color);
+        return *this;
+    }
+    Crayon red()
     {
         escape_codes += RED;
         return *this;
     }
-    Color green()
+    Crayon green()
     {
         escape_codes += GREEN;
         return *this;
