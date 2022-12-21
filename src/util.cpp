@@ -123,9 +123,9 @@ static void test_Path()
     expect(false, p.is_directory(), "test -d "s + p.to_s());
 }
 
-static void test_Color()
+static void test_Crayon()
 {
-    auto title = Color{}.bright().red();
+    auto title = Crayon{}.bright().red();
     expect("\033[1m\033[0;31mWAKAME\033[0;m"s, title.text("WAKAME"), ""s);
 }
 
@@ -138,5 +138,5 @@ void test_util()
 {
     test_Path();
     test_Command();
-    test_Color();
+    test_Crayon();
 }
