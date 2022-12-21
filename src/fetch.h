@@ -228,7 +228,19 @@ class Path
 };
 
 /**
+ * A terminal string style manager provides abstracted ASCII escape codes.
  *
+ * Sample code:
+ * ```cpp
+ * Crayon style;
+ * style = Crayon{}.bright();
+ * cout << style.text("BRIGHT");
+ * style.green();
+ * cout << style.text("BRIGHT and GREEN");
+ *
+ * style = Crayon{}.bright().color("RED");
+ * cout << style.text("BRIGHT and RED");
+ * ```
  */
 class Crayon
 {
@@ -260,6 +272,10 @@ class Crayon
         escape_codes += GREEN;
         return *this;
     }
+    /**
+     * @returns s with ascii escape codes.
+     * @param s
+     */
     string text(string s)
     {
         return escape_codes + s + RESET;

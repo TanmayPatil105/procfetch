@@ -125,8 +125,14 @@ static void test_Path()
 
 static void test_Crayon()
 {
-    auto title = Crayon{}.bright().red();
-    expect("\033[1m\033[0;31mWAKAME\033[0;m"s, title.text("WAKAME"), ""s);
+    Crayon style;
+    style = Crayon{}.bright();
+    expect("\033[1mWAKAME\033[0;m"s, style.text("WAKAME"), ""s);
+    style.red();
+    expect("\033[1m\033[0;31mHIJIKI\033[0;m"s, style.text("HIJIKI"), ""s);
+
+    style = Crayon{}.color("RED"s);
+    expect("\033[0;31mKOMBU\033[0;m"s, style.text("KOMBU"), ""s);
 }
 
 /**
