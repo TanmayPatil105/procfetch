@@ -133,8 +133,10 @@ Functions</h2></td></tr>
 <tr class="separator:a1128630eae1fe9e3bb1236d06e0ee2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75d6ab52c4b1db30ff093894ac805f40"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#a75d6ab52c4b1db30ff093894ac805f40">getPackages</a> ()</td></tr>
 <tr class="separator:a75d6ab52c4b1db30ff093894ac805f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe4ff641d59a44f5f906367353614b71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#abe4ff641d59a44f5f906367353614b71">print</a> (string color, string distro)</td></tr>
-<tr class="separator:abe4ff641d59a44f5f906367353614b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8760435a6d7f54b4983543d29b5bb722"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#a8760435a6d7f54b4983543d29b5bb722">print_process</a> (string art, string color_name)</td></tr>
+<tr class="separator:a8760435a6d7f54b4983543d29b5bb722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6d5ed4efb6721304d00c1277bff90fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#ad6d5ed4efb6721304d00c1277bff90fd">print</a> (string color_name, string distro_name)</td></tr>
+<tr class="separator:ad6d5ed4efb6721304d00c1277bff90fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ad590bc5922119d92bac6e19eb6a839bf"></a>
@@ -531,8 +533,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abe4ff641d59a44f5f906367353614b71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe4ff641d59a44f5f906367353614b71">&#9670;&nbsp;</a></span>print()</h2>
+<a id="ad6d5ed4efb6721304d00c1277bff90fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6d5ed4efb6721304d00c1277bff90fd">&#9670;&nbsp;</a></span>print()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -541,13 +543,13 @@ Functions</h2></td></tr>
           <td class="memname">void print </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>color</em>, </td>
+          <td class="paramname"><em>color_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>distro</em>&#160;</td>
+          <td class="paramname"><em>distro_name</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -556,10 +558,38 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Utility to print ascii art of Distro </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Utility to print ascii art of Distro </p>
+
+</div>
+</div>
+<a id="a8760435a6d7f54b4983543d29b5bb722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8760435a6d7f54b4983543d29b5bb722">&#9670;&nbsp;</a></span>print_process()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_process </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>art</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>color_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">color</td><td>name of color or, "def" default color of the distro. </td></tr>
-    <tr><td class="paramname">distro</td><td>name of distro or, "def" detected distro. </td></tr>
+    <tr><td class="paramname">art</td><td></td></tr>
   </table>
   </dd>
 </dl>
