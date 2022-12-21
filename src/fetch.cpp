@@ -406,46 +406,44 @@ string getPackages()
     return pkg;
 }
 
-/**
- * @param art
- */
-void print_process(string art, string color_name)
+static void print_process(string distro, string color)
 {
-    string color;
-    string path = "/usr/share/procfetch/ascii/" + art;
     fstream fptr;
+    string path = "/usr/share/procfetch/ascii/" + distro;
     fptr.open(path, ios::in);
     string txt;
     getline(fptr, txt);
-    if (color_name == "def")
+
+    auto style = Crayon{}.bright();
+    if (color == "def")
     {
-        color = getColor(txt);
+        style.color(txt);
     }
     else
     {
-        transform(color_name.begin(), color_name.end(), color_name.begin(),
-                  ::toupper);
-        color = getColor(color_name);
+        transform(color.begin(), color.end(), color.begin(), ::toupper);
+        style.color(color);
     }
-    cout << color << endl;
+
+    cout << style.text("") << endl;
     while (fptr)
     {
         getline(fptr, txt);
-        cout << BRIGHT << color << txt << endl;
+        cout << style.text(txt) << endl;
     }
     fptr.close();
 }
 
 /**
  * Utility to print ascii art of Distro
+ * @param color name of color or, "def" default color of the distro.
+ * @param distro name of distro or, "def" detected distro.
  */
-void print(string color_name, string distro_name)
+void print(string color, string distro)
 {
-    string os = distro_name;
-
-    if (distro_name == "def")
+    if (distro == "def")
     {
-        os = getOS("/etc/os-release");
+        distro = getOS("/etc/os-release");
     }
 
     map<string, string> ascii_arts = {{"Ubuntu", "ubuntu.ascii"},
@@ -483,14 +481,12 @@ void print(string color_name, string distro_name)
 
     for (const auto &[key, value] : ascii_arts)
     {
-        if (os.find(key) != string::npos)
+        if (distro.find(key) != string::npos)
         {
-            print_process(value, color_name);
+            print_process(value, color);
             return;
         }
     }
 
-    print_process("linux.ascii", color_name);
-
-    return;
+    print_process("linux.ascii", color);
 }

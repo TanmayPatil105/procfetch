@@ -245,6 +245,11 @@ class Crayon
         escape_codes += BRIGHT;
         return *this;
     }
+    Crayon color(string name)
+    {
+        escape_codes += getColor(name);
+        return *this;
+    }
     Crayon red()
     {
         escape_codes += RED;
