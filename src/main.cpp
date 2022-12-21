@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
  */
 void DisplayInfo()
 {
-    auto title = Color{}.bright().green();
+    auto title = Crayon{}.bright().green();
     string user = getuser();
     string hostname = gethostname("/etc/hostname");
     string username = YELLOW + user + RESET + "@" + YELLOW + hostname;

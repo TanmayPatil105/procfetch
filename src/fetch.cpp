@@ -346,7 +346,7 @@ vector<string> getGPU()
  */
 string getPackages()
 {
-    auto red = Color{}.red();
+    auto red = Crayon{}.red();
     string pkg = "";
     if (Path::of("/bin/dpkg"s).is_executable())
     {
