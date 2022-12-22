@@ -45,6 +45,15 @@ See the [documentation](https://tanmaypatil105.github.io/procfetch/)
 
 ## Installation
 
+### Brew
+```
+$ brew tap TanmayPatil105/tap
+```
+```
+$ brew install procfetch
+```
+
+### Manually
 ```
 $ git clone https://github.com/TanmayPatil105/procfetch.git
  ```
