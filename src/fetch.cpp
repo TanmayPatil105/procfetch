@@ -418,13 +418,13 @@ void print_process(string art, string color_name)
     auto style = Crayon{}.bright();
     if (color_name == "def")
     {
-        style = style.color(txt);
+        style = style.color(txt.substr(0, txt.find(" ")));
     }
     else
     {
         transform(color_name.begin(), color_name.end(), color_name.begin(),
                   ::toupper);
-        style = style.color(color_name);
+        style = style.color(color_name.substr(0, color_name.find(" ")));
     }
     cout << style.text(""s) << endl;
     while (fptr)

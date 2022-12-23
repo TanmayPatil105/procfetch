@@ -234,6 +234,19 @@ class Crayon
 {
   private:
     string escape_codes;
+    inline static map<string, string> m = {
+        {"RED", RED},         {"GREEN", GREEN},   {"BLACK", BLACK},
+        {"YELLOW", YELLOW},   {"BLUE", BLUE},     {"MAGENTA", MAGENTA},
+        {"CYAN", CYAN},       {"WHITE", WHITE},   {"BBLACK", BBLACK},
+        {"BGRAY", BGRAY},     {"BRED", BRED},     {"BGREEN", BGREEN},
+        {"BYELLOW", BYELLOW}, {"BBLUE", BBLUE},   {"BMAGENTA", BMAGENTA},
+        {"BCYAN", BCYAN},     {"BWHITE", BWHITE},
+    };
+
+    static string getColor(string s)
+    {
+        return m[s];
+    }
 
   public:
     Crayon()
