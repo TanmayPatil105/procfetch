@@ -64,7 +64,8 @@ void DisplayInfo()
 {
     auto title = Crayon{}.bright().green();
     auto ye = Crayon{}.yellow();
-    string username = ye.text(getuser()) + "@" + ye.text(gethostname("/etc/hostname"));
+    string username =
+        ye.text(getuser()) + "@" + ye.text(gethostname("/etc/hostname"));
     cout << Crayon{}.underscore().text(username) << endl;
     cout << endl;
 
