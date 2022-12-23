@@ -245,6 +245,11 @@ class Crayon
         escape_codes += BRIGHT;
         return *this;
     }
+    Crayon underscore()
+    {
+        escape_codes += UNDERSCORE;
+        return *this;
+    }
     Crayon color(string color)
     {
         escape_codes += getColor(color);
@@ -258,6 +263,11 @@ class Crayon
     Crayon green()
     {
         escape_codes += GREEN;
+        return *this;
+    }
+    Crayon yellow()
+    {
+        escape_codes += YELLOW;
         return *this;
     }
     string text(string s)

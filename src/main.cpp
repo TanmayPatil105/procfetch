@@ -1,7 +1,6 @@
 /**
  * @file
  */
-#include "color.h"
 #include "fetch.h"
 
 void DisplayInfo();
@@ -64,10 +63,9 @@ int main(int argc, char *argv[])
 void DisplayInfo()
 {
     auto title = Crayon{}.bright().green();
-    string user = getuser();
-    string hostname = gethostname("/etc/hostname");
-    string username = YELLOW + user + RESET + "@" + YELLOW + hostname;
-    cout << UNDERSCORE << username << RESET << endl;
+    auto ye = Crayon{}.yellow();
+    string username = ye.text(getuser()) + "@" + ye.text(gethostname("/etc/hostname"));
+    cout << Crayon{}.underscore().text(username) << endl;
     cout << endl;
 
     cout << title.text("OS : ") << getOS("/etc/os-release")

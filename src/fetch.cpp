@@ -2,7 +2,6 @@
  * @file
  */
 #include "fetch.h"
-#include "color.h"
 
 /**
  * @returns gets the username
