@@ -129,7 +129,7 @@ $(function() {
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">// util.cpp</span></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">string</span> <a class="code" href="fetch_8h.html#aa0627648b948b2ee0ae4b3475bf73894">getColor</a>(<span class="keywordtype">string</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">string</span> getColor(<span class="keywordtype">string</span>);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> <a class="code" href="fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d">test_util</a>();</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
@@ -257,7 +257,7 @@ $(function() {
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        {<span class="stringliteral">&quot;BCYAN&quot;</span>, BCYAN},     {<span class="stringliteral">&quot;BWHITE&quot;</span>, BWHITE},</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    };</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> <a class="code" href="fetch_8h.html#aa0627648b948b2ee0ae4b3475bf73894">getColor</a>(<span class="keywordtype">string</span> s)</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> getColor(<span class="keywordtype">string</span> s)</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    {</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keywordflow">return</span> m[s];</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
@@ -279,7 +279,7 @@ $(function() {
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    }</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> color(<span class="keywordtype">string</span> color)</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        escape_codes += <a class="code" href="fetch_8h.html#aa0627648b948b2ee0ae4b3475bf73894">getColor</a>(color);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        escape_codes += getColor(color);</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    }</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> red()</div>
@@ -324,10 +324,9 @@ $(function() {
 <div class="ttc" id="afetch_8h_html_a6b5687ecd7db49ef10af5909892d6ce3"><div class="ttname"><a href="fetch_8h.html#a6b5687ecd7db49ef10af5909892d6ce3">getuser</a></div><div class="ttdeci">string getuser()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:9</div></div>
 <div class="ttc" id="afetch_8h_html_a73f2fe526cbdeb94007aabce5d5b080f"><div class="ttname"><a href="fetch_8h.html#a73f2fe526cbdeb94007aabce5d5b080f">print</a></div><div class="ttdeci">void print(string color, string distro_name)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:441</div></div>
 <div class="ttc" id="afetch_8h_html_a75d6ab52c4b1db30ff093894ac805f40"><div class="ttname"><a href="fetch_8h.html#a75d6ab52c4b1db30ff093894ac805f40">getPackages</a></div><div class="ttdeci">string getPackages()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:346</div></div>
-<div class="ttc" id="afetch_8h_html_a75d79411d2a46aab2a7ef1ff8e23b65d"><div class="ttname"><a href="fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d">test_util</a></div><div class="ttdeci">void test_util()</div><div class="ttdef"><b>Definition:</b> util.cpp:143</div></div>
+<div class="ttc" id="afetch_8h_html_a75d79411d2a46aab2a7ef1ff8e23b65d"><div class="ttname"><a href="fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d">test_util</a></div><div class="ttdeci">void test_util()</div><div class="ttdef"><b>Definition:</b> util.cpp:63</div></div>
 <div class="ttc" id="afetch_8h_html_a82cbf4d4e9927420fcf624439fad7ebf"><div class="ttname"><a href="fetch_8h.html#a82cbf4d4e9927420fcf624439fad7ebf">getUpTime</a></div><div class="ttdeci">string getUpTime(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:104</div></div>
 <div class="ttc" id="afetch_8h_html_a92893f60492e0d737c5a9fcc7d5fb4e4"><div class="ttname"><a href="fetch_8h.html#a92893f60492e0d737c5a9fcc7d5fb4e4">getCPU</a></div><div class="ttdeci">string getCPU(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:274</div></div>
-<div class="ttc" id="afetch_8h_html_aa0627648b948b2ee0ae4b3475bf73894"><div class="ttname"><a href="fetch_8h.html#aa0627648b948b2ee0ae4b3475bf73894">getColor</a></div><div class="ttdeci">string getColor(string)</div><div class="ttdef"><b>Definition:</b> util.cpp:11</div></div>
 <div class="ttc" id="afetch_8h_html_aaed77d38be492b2328719483f8bdd685"><div class="ttname"><a href="fetch_8h.html#aaed77d38be492b2328719483f8bdd685">getRAM</a></div><div class="ttdeci">string getRAM(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:139</div></div>
 <div class="ttc" id="afetch_8h_html_abf0ef22de70cb60f180d958d00eddc04"><div class="ttname"><a href="fetch_8h.html#abf0ef22de70cb60f180d958d00eddc04">expect</a></div><div class="ttdeci">void expect(const T &amp;want, const T &amp;got, const string &amp;msg)</div><div class="ttdef"><b>Definition:</b> fetch.h:75</div></div>
 <div class="ttc" id="afetch_8h_html_ac0cfc567ca2b179ab3a2c5f1ece9626f"><div class="ttname"><a href="fetch_8h.html#ac0cfc567ca2b179ab3a2c5f1ece9626f">getTheme</a></div><div class="ttdeci">string getTheme()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:251</div></div>
