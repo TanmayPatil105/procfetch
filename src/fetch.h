@@ -228,7 +228,7 @@ class Path
 };
 
 /**
- *
+ * String Styling for terminal.
  */
 class Crayon
 {
@@ -249,40 +249,60 @@ class Crayon
     }
 
   public:
+    /**
+     * default constructor
+     */
     Crayon()
     {
         escape_codes = ""s;
     }
+    /**
+     * set bright mode
+     */
     Crayon bright()
     {
         escape_codes += BRIGHT;
         return *this;
     }
+    /**
+     * set underscore mode
+     */
     Crayon underscore()
     {
         escape_codes += UNDERSCORE;
         return *this;
     }
+    /**
+     * set color
+     * @param color
+     */
     Crayon color(string color)
     {
         escape_codes += getColor(color);
         return *this;
     }
+    /** set color red */
     Crayon red()
     {
         escape_codes += RED;
         return *this;
     }
+    /** set color green */
     Crayon green()
     {
         escape_codes += GREEN;
         return *this;
     }
+    /** set color yellow */
     Crayon yellow()
     {
         escape_codes += YELLOW;
         return *this;
     }
+    /**
+     * @param s
+     * @returns styled text
+     */
     string text(string s)
     {
         return escape_codes + s + RESET;
