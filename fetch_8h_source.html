@@ -263,51 +263,59 @@ $(function() {
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a>()</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    {</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        escape_codes = <span class="stringliteral">&quot;&quot;</span>s;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    }</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> bright()</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    {</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        escape_codes += BRIGHT;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    }</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> underscore()</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        escape_codes += UNDERSCORE;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    }</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> color(<span class="keywordtype">string</span> color)</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        escape_codes += getColor(color);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    }</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> red()</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    {</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        escape_codes += RED;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    }</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> green()</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    {</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        escape_codes += GREEN;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    }</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> yellow()</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    {</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        escape_codes += YELLOW;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    }</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordtype">string</span> text(<span class="keywordtype">string</span> s)</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    {</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="keywordflow">return</span> escape_codes + s + RESET;</div>
+<div class="line"><a name="l00255"></a><span class="lineno"><a class="line" href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">  255</a></span>&#160;    <a class="code" href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon</a>()</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    {</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        escape_codes = <span class="stringliteral">&quot;&quot;</span>s;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    }</div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">  262</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">bright</a>()</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    {</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        escape_codes += BRIGHT;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    }</div>
+<div class="line"><a name="l00270"></a><span class="lineno"><a class="line" href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">  270</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">underscore</a>()</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    {</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        escape_codes += UNDERSCORE;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    }</div>
+<div class="line"><a name="l00279"></a><span class="lineno"><a class="line" href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">  279</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">color</a>(<span class="keywordtype">string</span> color)</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    {</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        escape_codes += getColor(color);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    }</div>
+<div class="line"><a name="l00285"></a><span class="lineno"><a class="line" href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">  285</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">red</a>()</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    {</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        escape_codes += RED;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    }</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;};</div>
+<div class="line"><a name="l00291"></a><span class="lineno"><a class="line" href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">  291</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">green</a>()</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        escape_codes += GREEN;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    }</div>
+<div class="line"><a name="l00297"></a><span class="lineno"><a class="line" href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">  297</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">yellow</a>()</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    {</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        escape_codes += YELLOW;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    }</div>
+<div class="line"><a name="l00306"></a><span class="lineno"><a class="line" href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">  306</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">text</a>(<span class="keywordtype">string</span> s)</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    {</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="keywordflow">return</span> escape_codes + s + RESET;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    }</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;};</div>
 <div class="ttc" id="aclassCommand_html"><div class="ttname"><a href="classCommand.html">Command</a></div><div class="ttdef"><b>Definition:</b> fetch.h:98</div></div>
 <div class="ttc" id="aclassCommand_html_a314e47b7b1733c4fbde4aa77f04fa42e"><div class="ttname"><a href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">Command::getOutputLines</a></div><div class="ttdeci">int getOutputLines()</div><div class="ttdef"><b>Definition:</b> fetch.h:155</div></div>
 <div class="ttc" id="aclassCommand_html_a41a0a3360bdfddabfff631ef713b898b"><div class="ttname"><a href="classCommand.html#a41a0a3360bdfddabfff631ef713b898b">Command::getExitCode</a></div><div class="ttdeci">int getExitCode()</div><div class="ttdef"><b>Definition:</b> fetch.h:163</div></div>
 <div class="ttc" id="aclassCommand_html_a5179f1c9a1893c499540bfc3e81d5a10"><div class="ttname"><a href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">Command::getOutput</a></div><div class="ttdeci">string getOutput()</div><div class="ttdef"><b>Definition:</b> fetch.h:147</div></div>
 <div class="ttc" id="aclassCommand_html_a5b7cdf0794953616c607db07f3388b02"><div class="ttname"><a href="classCommand.html#a5b7cdf0794953616c607db07f3388b02">Command::exec</a></div><div class="ttdeci">static Command exec(const string &amp;cmd)</div><div class="ttdef"><b>Definition:</b> fetch.h:117</div></div>
 <div class="ttc" id="aclassCrayon_html"><div class="ttname"><a href="classCrayon.html">Crayon</a></div><div class="ttdef"><b>Definition:</b> fetch.h:234</div></div>
+<div class="ttc" id="aclassCrayon_html_a118e286440aa67bcca97aea4f5856ded"><div class="ttname"><a href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">Crayon::yellow</a></div><div class="ttdeci">Crayon yellow()</div><div class="ttdef"><b>Definition:</b> fetch.h:297</div></div>
+<div class="ttc" id="aclassCrayon_html_a29fb5b6777cda07f4af7227ba6c99625"><div class="ttname"><a href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">Crayon::text</a></div><div class="ttdeci">string text(string s)</div><div class="ttdef"><b>Definition:</b> fetch.h:306</div></div>
+<div class="ttc" id="aclassCrayon_html_a47fb69fa9dfc8e495cd799057a8bd6c2"><div class="ttname"><a href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">Crayon::bright</a></div><div class="ttdeci">Crayon bright()</div><div class="ttdef"><b>Definition:</b> fetch.h:262</div></div>
+<div class="ttc" id="aclassCrayon_html_a57ef86754f1e3f4be7a3c171d43b0619"><div class="ttname"><a href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">Crayon::red</a></div><div class="ttdeci">Crayon red()</div><div class="ttdef"><b>Definition:</b> fetch.h:285</div></div>
+<div class="ttc" id="aclassCrayon_html_a86d6fdfad59b3712367e00d1daa4bc28"><div class="ttname"><a href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">Crayon::green</a></div><div class="ttdeci">Crayon green()</div><div class="ttdef"><b>Definition:</b> fetch.h:291</div></div>
+<div class="ttc" id="aclassCrayon_html_aabf626c0efaf5363a6c8ee3aa48ddc12"><div class="ttname"><a href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">Crayon::color</a></div><div class="ttdeci">Crayon color(string color)</div><div class="ttdef"><b>Definition:</b> fetch.h:279</div></div>
+<div class="ttc" id="aclassCrayon_html_ab39cbd748948fe56fe5a2a1619d19f97"><div class="ttname"><a href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">Crayon::underscore</a></div><div class="ttdeci">Crayon underscore()</div><div class="ttdef"><b>Definition:</b> fetch.h:270</div></div>
+<div class="ttc" id="aclassCrayon_html_ab50e11ffb3f775b1ba7fc658b5486e29"><div class="ttname"><a href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon::Crayon</a></div><div class="ttdeci">Crayon()</div><div class="ttdef"><b>Definition:</b> fetch.h:255</div></div>
 <div class="ttc" id="aclassPath_html"><div class="ttname"><a href="classPath.html">Path</a></div><div class="ttdef"><b>Definition:</b> fetch.h:173</div></div>
 <div class="ttc" id="aclassPath_html_a0d09f3c408fe6c5457fbecc224a88b65"><div class="ttname"><a href="classPath.html#a0d09f3c408fe6c5457fbecc224a88b65">Path::of</a></div><div class="ttdeci">static Path of(const string &amp;path)</div><div class="ttdef"><b>Definition:</b> fetch.h:189</div></div>
 <div class="ttc" id="aclassPath_html_a1db8f51c7ecaea47625230abfa272fe4"><div class="ttname"><a href="classPath.html#a1db8f51c7ecaea47625230abfa272fe4">Path::is_regular_file</a></div><div class="ttdeci">bool is_regular_file()</div><div class="ttdef"><b>Definition:</b> fetch.h:197</div></div>
@@ -322,7 +330,7 @@ $(function() {
 <div class="ttc" id="afetch_8h_html_a4a87b41bb8b7e8e0ae28581ed2028a9d"><div class="ttname"><a href="fetch_8h.html#a4a87b41bb8b7e8e0ae28581ed2028a9d">getRES</a></div><div class="ttdeci">string getRES(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:238</div></div>
 <div class="ttc" id="afetch_8h_html_a4f6fddf4be974fd932704e831a5c60d1"><div class="ttname"><a href="fetch_8h.html#a4f6fddf4be974fd932704e831a5c60d1">getOS</a></div><div class="ttdeci">string getOS(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:31</div></div>
 <div class="ttc" id="afetch_8h_html_a6b5687ecd7db49ef10af5909892d6ce3"><div class="ttname"><a href="fetch_8h.html#a6b5687ecd7db49ef10af5909892d6ce3">getuser</a></div><div class="ttdeci">string getuser()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:9</div></div>
-<div class="ttc" id="afetch_8h_html_a73f2fe526cbdeb94007aabce5d5b080f"><div class="ttname"><a href="fetch_8h.html#a73f2fe526cbdeb94007aabce5d5b080f">print</a></div><div class="ttdeci">void print(string color, string distro_name)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:441</div></div>
+<div class="ttc" id="afetch_8h_html_a73f2fe526cbdeb94007aabce5d5b080f"><div class="ttname"><a href="fetch_8h.html#a73f2fe526cbdeb94007aabce5d5b080f">print</a></div><div class="ttdeci">void print(string color, string distro_name)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:444</div></div>
 <div class="ttc" id="afetch_8h_html_a75d6ab52c4b1db30ff093894ac805f40"><div class="ttname"><a href="fetch_8h.html#a75d6ab52c4b1db30ff093894ac805f40">getPackages</a></div><div class="ttdeci">string getPackages()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:346</div></div>
 <div class="ttc" id="afetch_8h_html_a75d79411d2a46aab2a7ef1ff8e23b65d"><div class="ttname"><a href="fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d">test_util</a></div><div class="ttdeci">void test_util()</div><div class="ttdef"><b>Definition:</b> util.cpp:63</div></div>
 <div class="ttc" id="afetch_8h_html_a82cbf4d4e9927420fcf624439fad7ebf"><div class="ttname"><a href="fetch_8h.html#a82cbf4d4e9927420fcf624439fad7ebf">getUpTime</a></div><div class="ttdeci">string getUpTime(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:104</div></div>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['main_32',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
-  ['main_2ecpp_33',['main.cpp',['../main_8cpp.html',1,'']]]
+  ['is_5fdirectory_32',['is_directory',['../classPath.html#ad4336adffabb2141bcca64470a30ea9c',1,'Path']]],
+  ['is_5fexecutable_33',['is_executable',['../classPath.html#ae9f24441f1fea7e664afb6a5ed63d90d',1,'Path']]],
+  ['is_5fregular_5ffile_34',['is_regular_file',['../classPath.html#a1db8f51c7ecaea47625230abfa272fe4',1,'Path']]]
 ];
