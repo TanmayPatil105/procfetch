@@ -407,6 +407,7 @@ string getPackages()
 
 /**
  * @param art
+ * @param color_name
  */
 void print_process(string art, string color_name)
 {
@@ -437,6 +438,8 @@ void print_process(string art, string color_name)
 
 /**
  * Utility to print ascii art of Distro
+ * @param color_name
+ * @param distro_name
  */
 void print(string color_name, string distro_name)
 {
