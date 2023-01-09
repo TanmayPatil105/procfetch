@@ -33,22 +33,36 @@ string getOS(string path)
 {
     fstream fptr;
     fptr.open(path, ios::in);
-    string line, sub;
+    string os_name, variable_name, quote;
 
     while (fptr)
     {
-        getline(fptr, line);
-        sub = line.substr(0, 13);
-        if (sub == "PRETTY_NAME=\"")
+        getline(fptr, os_name);
+        variable_name = os_name.substr(0, 13);
+        if (variable_name == "PRETTY_NAME=\"")
         {
+            quote = "\"";
+            break;
+        }
+        if (variable_name == "PRETTY_NAME=\'")
+        {
+            quote = "\'";
             break;
         }
     }
 
-    line = line.substr(line.find("\"") + 1);
-    line = line.substr(0, line.find("\""));
+    if (quote == "\"")
+    {
+        os_name = os_name.substr(os_name.find("\"") + 1);
+        os_name = os_name.substr(0, os_name.find("\""));
+    }
+    else 
+    {
+        os_name = os_name.substr(os_name.find("\'") + 1);
+        os_name = os_name.substr(0, os_name.find("\'"));
+    }
 
-    return line;
+    return os_name;
 }
 
 /**
