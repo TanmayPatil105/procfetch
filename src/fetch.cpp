@@ -479,7 +479,7 @@ void print(string color_name,string distro_name)
                                       {"Bodhi", "bodhilinux.ascii"},
                                       {"Xubuntu", "xubuntu.ascii"},
                                       {"Kubuntu", "kubuntu.ascii"},
-                                      {"Rocky", "rockylinux.ascii"},
+                                      {"Rocky", "rocky.ascii"},
                                       {"Deepin", "deepin.ascii"},
                                       {"Zorin", "zorin.ascii"},
                                       {"Garuda", "garudalinux.ascii"}};
