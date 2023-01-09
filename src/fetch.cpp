@@ -51,16 +51,8 @@ string getOS(string path)
         }
     }
 
-    if (quote == "\"")
-    {
-        os_name = os_name.substr(os_name.find("\"") + 1);
-        os_name = os_name.substr(0, os_name.find("\""));
-    }
-    else 
-    {
-        os_name = os_name.substr(os_name.find("\'") + 1);
-        os_name = os_name.substr(0, os_name.find("\'"));
-    }
+    os_name = os_name.substr(os_name.find(quote) + 1);
+    os_name = os_name.substr(0, os_name.find(quote));
 
     return os_name;
 }
