@@ -194,7 +194,7 @@ class Path
     /**
      * @returns exists and is a regular file
      */
-    bool is_regular_file()
+    bool isRegularFile()
     {
         return filesystem::is_regular_file(status);
     }
@@ -202,7 +202,7 @@ class Path
     /**
      * @returns exists and is a executable(or searchable)
      */
-    bool is_executable()
+    bool isExecutable()
     {
         if (status.permissions() == filesystem::perms::unknown)
             return false;
@@ -213,7 +213,7 @@ class Path
     /**
      * @returns exists and is a directory
      */
-    bool is_directory()
+    bool isDirectory()
     {
         return filesystem::is_directory(status);
     }
@@ -221,7 +221,7 @@ class Path
     /**
      * @returns readable reprsentation for dev.
      */
-    string to_s()
+    string toString()
     {
         return path.string();
     }
