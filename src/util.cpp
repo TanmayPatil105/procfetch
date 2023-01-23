@@ -20,27 +20,27 @@ static void test_Path()
 {
     // directory
     auto p = Path::of("/etc"s);
-    expect(false, p.is_regular_file(), "test -f "s + p.to_s());
-    expect(true, p.is_directory(), "test -d "s + p.to_s());
-    expect(true, p.is_executable(), "test -x "s + p.to_s());
+    expect(false, p.isRegularFile(), "test -f "s + p.toString());
+    expect(true, p.isDirectory(), "test -d "s + p.toString());
+    expect(true, p.isExecutable(), "test -x "s + p.toString());
 
     // executable regular file
     p = Path::of("/bin/sh"s);
-    expect(true, p.is_regular_file(), "test -f "s + p.to_s());
-    expect(false, p.is_directory(), "test -d "s + p.to_s());
-    expect(true, p.is_executable(), "test -x "s + p.to_s());
+    expect(true, p.isRegularFile(), "test -f "s + p.toString());
+    expect(false, p.isDirectory(), "test -d "s + p.toString());
+    expect(true, p.isExecutable(), "test -x "s + p.toString());
 
     // non-executable regular file
     p = Path::of("Makefile"s);
-    expect(true, p.is_regular_file(), "test -f "s + p.to_s());
-    expect(false, p.is_directory(), "test -d "s + p.to_s());
-    expect(false, p.is_executable(), "test -x "s + p.to_s());
+    expect(true, p.isRegularFile(), "test -f "s + p.toString());
+    expect(false, p.isDirectory(), "test -d "s + p.toString());
+    expect(false, p.isExecutable(), "test -x "s + p.toString());
 
     // not existence path
     p = Path::of("not_existence"s);
-    expect(false, p.is_regular_file(), "test -f "s + p.to_s());
-    expect(false, p.is_executable(), "test -x "s + p.to_s());
-    expect(false, p.is_directory(), "test -d "s + p.to_s());
+    expect(false, p.isRegularFile(), "test -f "s + p.toString());
+    expect(false, p.isExecutable(), "test -x "s + p.toString());
+    expect(false, p.isDirectory(), "test -d "s + p.toString());
 }
 
 static void test_Crayon()
