@@ -220,12 +220,12 @@ $(function() {
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classPath.html">Path</a>(filesystem::path(path), filesystem::status(path));</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    }</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="classPath.html#a1db8f51c7ecaea47625230abfa272fe4">  197</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classPath.html#a1db8f51c7ecaea47625230abfa272fe4">is_regular_file</a>()</div>
+<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="classPath.html#af45612bb9f1017b9ad69f0bd224523f1">  197</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classPath.html#af45612bb9f1017b9ad69f0bd224523f1">isRegularFile</a>()</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    {</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keywordflow">return</span> filesystem::is_regular_file(status);</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    }</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="classPath.html#ae9f24441f1fea7e664afb6a5ed63d90d">  205</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classPath.html#ae9f24441f1fea7e664afb6a5ed63d90d">is_executable</a>()</div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="classPath.html#ad02f1c63d4d0d49768dd45c9950a7211">  205</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classPath.html#ad02f1c63d4d0d49768dd45c9950a7211">isExecutable</a>()</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    {</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="keywordflow">if</span> (status.permissions() == filesystem::perms::unknown)</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
@@ -233,12 +233,12 @@ $(function() {
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;               filesystem::perms::none;</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    }</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
-<div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="classPath.html#ad4336adffabb2141bcca64470a30ea9c">  216</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classPath.html#ad4336adffabb2141bcca64470a30ea9c">is_directory</a>()</div>
+<div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="classPath.html#a8ebb37ad6ca877310d3fb577ea586a3f">  216</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classPath.html#a8ebb37ad6ca877310d3fb577ea586a3f">isDirectory</a>()</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    {</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordflow">return</span> filesystem::is_directory(status);</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    }</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00224"></a><span class="lineno"><a class="line" href="classPath.html#ac5357e135f5b4d8065255314347e4985">  224</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classPath.html#ac5357e135f5b4d8065255314347e4985">to_s</a>()</div>
+<div class="line"><a name="l00224"></a><span class="lineno"><a class="line" href="classPath.html#a4bbd33a8136241ae61d67b92b7f105f7">  224</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classPath.html#a4bbd33a8136241ae61d67b92b7f105f7">toString</a>()</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    {</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordflow">return</span> path.string();</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    }</div>
@@ -318,10 +318,10 @@ $(function() {
 <div class="ttc" id="aclassCrayon_html_ab50e11ffb3f775b1ba7fc658b5486e29"><div class="ttname"><a href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon::Crayon</a></div><div class="ttdeci">Crayon()</div><div class="ttdef"><b>Definition:</b> fetch.h:255</div></div>
 <div class="ttc" id="aclassPath_html"><div class="ttname"><a href="classPath.html">Path</a></div><div class="ttdef"><b>Definition:</b> fetch.h:173</div></div>
 <div class="ttc" id="aclassPath_html_a0d09f3c408fe6c5457fbecc224a88b65"><div class="ttname"><a href="classPath.html#a0d09f3c408fe6c5457fbecc224a88b65">Path::of</a></div><div class="ttdeci">static Path of(const string &amp;path)</div><div class="ttdef"><b>Definition:</b> fetch.h:189</div></div>
-<div class="ttc" id="aclassPath_html_a1db8f51c7ecaea47625230abfa272fe4"><div class="ttname"><a href="classPath.html#a1db8f51c7ecaea47625230abfa272fe4">Path::is_regular_file</a></div><div class="ttdeci">bool is_regular_file()</div><div class="ttdef"><b>Definition:</b> fetch.h:197</div></div>
-<div class="ttc" id="aclassPath_html_ac5357e135f5b4d8065255314347e4985"><div class="ttname"><a href="classPath.html#ac5357e135f5b4d8065255314347e4985">Path::to_s</a></div><div class="ttdeci">string to_s()</div><div class="ttdef"><b>Definition:</b> fetch.h:224</div></div>
-<div class="ttc" id="aclassPath_html_ad4336adffabb2141bcca64470a30ea9c"><div class="ttname"><a href="classPath.html#ad4336adffabb2141bcca64470a30ea9c">Path::is_directory</a></div><div class="ttdeci">bool is_directory()</div><div class="ttdef"><b>Definition:</b> fetch.h:216</div></div>
-<div class="ttc" id="aclassPath_html_ae9f24441f1fea7e664afb6a5ed63d90d"><div class="ttname"><a href="classPath.html#ae9f24441f1fea7e664afb6a5ed63d90d">Path::is_executable</a></div><div class="ttdeci">bool is_executable()</div><div class="ttdef"><b>Definition:</b> fetch.h:205</div></div>
+<div class="ttc" id="aclassPath_html_a4bbd33a8136241ae61d67b92b7f105f7"><div class="ttname"><a href="classPath.html#a4bbd33a8136241ae61d67b92b7f105f7">Path::toString</a></div><div class="ttdeci">string toString()</div><div class="ttdef"><b>Definition:</b> fetch.h:224</div></div>
+<div class="ttc" id="aclassPath_html_a8ebb37ad6ca877310d3fb577ea586a3f"><div class="ttname"><a href="classPath.html#a8ebb37ad6ca877310d3fb577ea586a3f">Path::isDirectory</a></div><div class="ttdeci">bool isDirectory()</div><div class="ttdef"><b>Definition:</b> fetch.h:216</div></div>
+<div class="ttc" id="aclassPath_html_ad02f1c63d4d0d49768dd45c9950a7211"><div class="ttname"><a href="classPath.html#ad02f1c63d4d0d49768dd45c9950a7211">Path::isExecutable</a></div><div class="ttdeci">bool isExecutable()</div><div class="ttdef"><b>Definition:</b> fetch.h:205</div></div>
+<div class="ttc" id="aclassPath_html_af45612bb9f1017b9ad69f0bd224523f1"><div class="ttname"><a href="classPath.html#af45612bb9f1017b9ad69f0bd224523f1">Path::isRegularFile</a></div><div class="ttdeci">bool isRegularFile()</div><div class="ttdef"><b>Definition:</b> fetch.h:197</div></div>
 <div class="ttc" id="acolor_8h_html"><div class="ttname"><a href="color_8h.html">color.h</a></div></div>
 <div class="ttc" id="afetch_8h_html_a0a639fbbc083bf3eb0369107cf8f81f0"><div class="ttname"><a href="fetch_8h.html#a0a639fbbc083bf3eb0369107cf8f81f0">gethostname</a></div><div class="ttdeci">string gethostname(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:18</div></div>
 <div class="ttc" id="afetch_8h_html_a1128630eae1fe9e3bb1236d06e0ee2ad"><div class="ttname"><a href="fetch_8h.html#a1128630eae1fe9e3bb1236d06e0ee2ad">getGPU</a></div><div class="ttdeci">vector&lt; string &gt; getGPU()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:328</div></div>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['is_5fdirectory_85',['is_directory',['../classPath.html#ad4336adffabb2141bcca64470a30ea9c',1,'Path']]],
-  ['is_5fexecutable_86',['is_executable',['../classPath.html#ae9f24441f1fea7e664afb6a5ed63d90d',1,'Path']]],
-  ['is_5fregular_5ffile_87',['is_regular_file',['../classPath.html#a1db8f51c7ecaea47625230abfa272fe4',1,'Path']]]
+  ['isdirectory_85',['isDirectory',['../classPath.html#a8ebb37ad6ca877310d3fb577ea586a3f',1,'Path']]],
+  ['isexecutable_86',['isExecutable',['../classPath.html#ad02f1c63d4d0d49768dd45c9950a7211',1,'Path']]],
+  ['isregularfile_87',['isRegularFile',['../classPath.html#af45612bb9f1017b9ad69f0bd224523f1',1,'Path']]]
 ];
