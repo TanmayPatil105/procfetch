@@ -1,3 +1,5 @@
+/Makefile
+src/config.h
 src/procfetch
 *.o
 dist/

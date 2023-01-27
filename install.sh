@@ -6,6 +6,9 @@ then
     exit 1
 fi
 
+echo "Configuring ..."
+./configure || exit $?
+
 echo "Building procfetch ..."
 make -j || exit $?
 

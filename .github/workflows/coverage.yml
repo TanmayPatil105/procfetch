@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: configure
+      run: ./configure
     - name: build
       run: make COVERAGE_TEST=1
     - name: check

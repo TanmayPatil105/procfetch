@@ -14,6 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
+    - name: configure
+      run: ./configure
     - name: build
       run: make
     - name: check

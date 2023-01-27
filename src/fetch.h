@@ -4,6 +4,7 @@
 #pragma once
 
 #include "color.h"
+#include "config.h"
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
@@ -315,5 +316,3 @@ enum class Mode
     EXEC_TEST,
     SHOW_VERSION,
 };
-
-const string VERSION = "0.0.3";
