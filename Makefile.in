@@ -1,5 +1,5 @@
 PROJECT = procfetch
-VERSION = 0.0.3
+VERSION = @VERSION@
 DIST_DIR = dist
 
 TOPTARGETS := all run check gcov clean docs install uninstall dist

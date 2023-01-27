@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -o nounset
+
+VERSION=$(cat VERSION)
+
+echo "creating Makefile"
+sed "s/@VERSION@/${VERSION}/g" Makefile.in > Makefile
+
+echo "creating src/config.h"
+echo "#define VERSION \"${VERSION}\"" > src/config.h

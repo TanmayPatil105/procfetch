@@ -36,7 +36,7 @@ format:
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LIBS)
-main.o:  fetch.h color.h
+main.o:  fetch.h color.h config.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
 
