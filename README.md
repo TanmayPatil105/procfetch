@@ -85,6 +85,11 @@ $ ./uninstall.sh
 
 ## Usage
 
+- `-v` to show version
+```bash
+$ procfetch -v
+```
+
 - `-a` to change color of ascii_art
 ```bash
 $ procfetch -a cyan
