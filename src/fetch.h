@@ -308,3 +308,12 @@ class Crayon
         return escape_codes + s + RESET;
     }
 };
+
+enum class Mode
+{
+    NORMAL,
+    EXEC_TEST,
+    SHOW_VERSION,
+};
+
+const string VERSION = "0.0.3";
