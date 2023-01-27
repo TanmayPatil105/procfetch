@@ -12,17 +12,17 @@ void DisplayInfo();
  */
 int main(int argc, char *argv[])
 {
-    bool test_mode = false;
+    Mode mode = Mode::NORMAL;
     string color_name = "def"s;
     string distro_name = "def"s;
 
     int opt;
-    while ((opt = getopt(argc, argv, "ta:d:")) != -1)
+    while ((opt = getopt(argc, argv, "ta:d:v")) != -1)
     {
         switch (opt)
         {
         case 't':
-            test_mode = true;
+            mode = Mode::EXEC_TEST;
             break;
         case 'a':
             color_name = string(optarg);
@@ -30,20 +30,34 @@ int main(int argc, char *argv[])
         case 'd':
             distro_name = string(optarg);
             break;
+        case 'v':
+            mode = Mode::SHOW_VERSION;
+            break;
         default:
             return 1;
         }
     }
 
-    if (test_mode)
+    switch (mode)
     {
+    case Mode::NORMAL:
+        // no-op
+        break;
+    case Mode::EXEC_TEST:
         test_util();
         cout << "========================"s << endl
              << " All unit tests passed. "s << endl
              << "========================"s << endl;
         return 0;
+    case Mode::SHOW_VERSION:
+        cout << VERSION << endl;
+        return 0;
+    default:
+        // MUST NOT BE HERE
+        return 1;
     }
 
+    // Mode::NORMAL
     if (optind != argc)
     {
         cout << "Error: "s << argv[0] << ": unknown argument: "s << argv[optind]
