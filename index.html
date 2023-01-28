@@ -136,7 +136,7 @@ Manually</h2>
 Uninstallation</h1>
 <div class="fragment"><div class="line">$ chmod +x uninstall.sh</div>
 </div><!-- fragment --> <div class="fragment"><div class="line">$ ./uninstall.sh</div>
-</div><!-- fragment --><p><img src="./images/tty.gif" alt="" class="inline"/></p>
+</div><!-- fragment --><p><img src="./images/procfetch.gif" alt="" class="inline"/></p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md13"></a>
 Usage</h1>
@@ -154,8 +154,9 @@ Docker</h1>
 <div class="fragment"><div class="line">$ PROCFETCH=$HOME/procfetch</div>
 </div><!-- fragment --><p>Build Docker image</p>
 <div class="fragment"><div class="line">$ docker build -t procfetch .</div>
-</div><!-- fragment --><p>Start a container to build, test and run procfetch then discard it afterwards. The following will start a new container, drop into a shell, and then destroy the container after you exit:</p>
-<div class="fragment"><div class="line">$ docker run --rm -it -v $PROCFETCH:/procfetch -w /procfetch procfetch</div>
+</div><!-- fragment --><p>Build with Docker container </p><div class="fragment"><div class="line">$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make</div>
+</div><!-- fragment --><p>Run with Docker container </p><div class="fragment"><div class="line">$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make run</div>
+</div><!-- fragment --><p>Test with Docker container </p><div class="fragment"><div class="line">$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make check</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
 Contributing</h2>
 <p>Make sure reading <a href="https://github.com/TanmayPatil105/procfetch/blob/main/CONTRIBUTING.md">Contributing.md</a> before Contributing</p>
