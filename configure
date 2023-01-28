@@ -4,6 +4,9 @@ set -o nounset
 
 VERSION=$(cat VERSION)
 
+echo "creating Doxyfile"
+sed "s/@PROJECT_NUMBER@/${VERSION}/g" Doxyfile.in > Doxyfile
+
 echo "creating Makefile"
 sed "s/@VERSION@/${VERSION}/g" Makefile.in > Makefile
 
