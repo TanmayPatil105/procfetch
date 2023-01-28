@@ -33,11 +33,19 @@
 
 ## Prerequisites
 
-* GNU Make
-* GCC
-* ClangFormat
-* Doxygen
-* Graphviz
+for building
+
+* GNU Make - 4.3 or later
+* GCC - 11.3.0 or later
+
+for generating API documents
+
+* Doxygen - 1.9.1 or later
+* Graphviz -2.42.2 or later
+
+for contributing
+
+* ClangFormat - 14.0.0 or later
 
 ## Documentation
 
