@@ -41,7 +41,7 @@ for building
 for generating API documents
 
 * Doxygen - 1.9.1 or later
-* Graphviz -2.42.2 or later
+* Graphviz -2.43.0 or later
 
 for contributing
 
