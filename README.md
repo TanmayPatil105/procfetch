@@ -33,11 +33,19 @@
 
 ## Prerequisites
 
-* GNU Make
-* GCC
-* ClangFormat
-* Doxygen
-* Graphviz
+for building
+
+* GNU Make - 4.3 or later
+* GCC - 11.3.0 or later
+
+for generating API documents
+
+* Doxygen - 1.9.1 or later
+* Graphviz -2.43.0 or later
+
+for contributing
+
+* ClangFormat - 14.0.0 or later
 
 ## Documentation
 
@@ -113,19 +121,12 @@ Build Docker image
 $ docker build -t procfetch .
 ```
 
-Build with Docker container
-```sh
-$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make
-```
+Start a container to build, test and run procfetch then discard it afterwards.
+The following will start a new container, drop into a shell, and then destroy the 
+container after you exit:
 
-Run with Docker container
 ```sh
-$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make run
-```
-
-Test with Docker container
-```sh
-$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make check
+$ docker run --rm -it -v $PROCFETCH:/procfetch -w /procfetch procfetch
 ```
 
 ### Contributing
