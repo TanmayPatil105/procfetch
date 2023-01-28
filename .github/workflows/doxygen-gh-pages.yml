@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: configure
-        run: ./configure
       - uses: TanmayPatil105/doxygen-github-pages-action@v0.0.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
