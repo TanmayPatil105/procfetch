@@ -121,19 +121,12 @@ Build Docker image
 $ docker build -t procfetch .
 ```
 
-Build with Docker container
-```sh
-$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make
-```
+Start a container to build, test and run procfetch then discard it afterwards.
+The following will start a new container, drop into a shell, and then destroy the 
+container after you exit:
 
-Run with Docker container
 ```sh
-$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make run
-```
-
-Test with Docker container
-```sh
-$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make check
+$ docker run --rm -it -v $PROCFETCH:/procfetch -w /procfetch procfetch
 ```
 
 ### Contributing
