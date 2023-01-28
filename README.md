@@ -4,7 +4,7 @@
 ![](https://github.com/TanmayPatil105/procfetch/actions/workflows/doxygen-gh-pages.yml/badge.svg)
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/92677342/205502731-328ab040-1df7-4b1b-bfa2-c5b84adafb85.png" width="1000">
+<img src="./images/procfetch.gif" width="700" height="700">
 </p>
 
 #### procfetch is a command-line tool to fetch system information and display it on the screen. 
@@ -87,7 +87,6 @@ $ chmod +x uninstall.sh
 $ ./uninstall.sh
 ```
 
-![](./images/procfetch.gif)
 
 <hr/>
 
