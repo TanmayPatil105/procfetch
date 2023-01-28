@@ -9,3 +9,4 @@ docs/
 *.gcda
 *.gcno
 .vscode/
+Doxyfile
