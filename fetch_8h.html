@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -132,6 +133,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCrayon.html">Crayon</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:abe32f0d5cb967192e98c4790ad769bbf"><td class="memItemLeft" align="right" valign="top"><a id="abe32f0d5cb967192e98c4790ad769bbf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>expect</b>(want,  got,  msg)&#160;&#160;&#160;<a class="el" href="fetch_8h.html#aa810d9edd625731b99cadcac08787120">expect1</a>(want, got, msg, __FILE__, __LINE__)</td></tr>
+<tr class="separator:abe32f0d5cb967192e98c4790ad769bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a46c8a310cf4c094f8c80e1cb8dc1f911"><td class="memItemLeft" align="right" valign="top"><a id="a46c8a310cf4c094f8c80e1cb8dc1f911"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Mode</b> { <b>NORMAL</b>
@@ -185,9 +192,9 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>getColor</b> (strin
 <tr class="separator:aa0627648b948b2ee0ae4b3475bf73894"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75d79411d2a46aab2a7ef1ff8e23b65d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d">test_util</a> ()</td></tr>
 <tr class="separator:a75d79411d2a46aab2a7ef1ff8e23b65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf0ef22de70cb60f180d958d00eddc04"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:abf0ef22de70cb60f180d958d00eddc04"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="fetch_8h.html#abf0ef22de70cb60f180d958d00eddc04">expect</a> (const T &amp;want, const T &amp;got, const string &amp;msg)</td></tr>
-<tr class="separator:abf0ef22de70cb60f180d958d00eddc04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa810d9edd625731b99cadcac08787120"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa810d9edd625731b99cadcac08787120"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="fetch_8h.html#aa810d9edd625731b99cadcac08787120">expect1</a> (const T &amp;want, const T &amp;got, const string &amp;msg, const char *file, int line)</td></tr>
+<tr class="separator:aa810d9edd625731b99cadcac08787120"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ad590bc5922119d92bac6e19eb6a839bf"></a>
@@ -208,8 +215,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>getColor</b> (strin
 
 </div>
 </div>
-<a id="abf0ef22de70cb60f180d958d00eddc04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf0ef22de70cb60f180d958d00eddc04">&#9670;&nbsp;</a></span>expect()</h2>
+<a id="aa810d9edd625731b99cadcac08787120"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa810d9edd625731b99cadcac08787120">&#9670;&nbsp;</a></span>expect1()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,7 +224,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>getColor</b> (strin
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void expect </td>
+          <td class="memname">void expect1 </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>want</em>, </td>
@@ -232,7 +239,19 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>msg</em>&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -241,11 +260,13 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>tests that want and got are equal. Fails with the supplied failure message then halt. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Tests that want and got are equal. Fails with the supplied failure message, file and line then halt. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">want</td><td></td></tr>
     <tr><td class="paramname">got</td><td></td></tr>
     <tr><td class="paramname">msg</td><td></td></tr>
+    <tr><td class="paramname">file</td><td></td></tr>
+    <tr><td class="paramname">line</td><td></td></tr>
   </table>
   </dd>
 </dl>
