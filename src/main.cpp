@@ -45,9 +45,7 @@ int main(int argc, char *argv[])
         break;
     case Mode::EXEC_TEST:
         test_util();
-        cout << "========================"s << endl
-             << " All unit tests passed. "s << endl
-             << "========================"s << endl;
+        cout << Crayon{}.green().text("All unit tests passed."s) << endl;
         return 0;
     case Mode::SHOW_VERSION:
         cout << VERSION << endl;
