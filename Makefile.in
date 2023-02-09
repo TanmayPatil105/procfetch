@@ -15,6 +15,7 @@ clean:
 
 docs:
 	doxygen
+	cp -r images docs/html
 
 dist:
 	@if [ ! -d $(DIST_DIR)/$(PROJECT)-$(VERSION) ]; then\
