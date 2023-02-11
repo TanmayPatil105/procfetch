@@ -242,6 +242,7 @@ class Path
 class Crayon
 {
   private:
+    string symbol = "; ";
     string escape_codes;
     inline static map<string, string> m = {
         {"RED", RED},         {"GREEN", GREEN},   {"BLACK", BLACK},
@@ -307,6 +308,15 @@ class Crayon
     {
         escape_codes += YELLOW;
         return *this;
+    }
+    /**
+     * @brief Get the Symbol object
+     * 
+     * @return string 
+     */
+    string getSymbol()
+    {
+        return symbol;
     }
     /**
      * @param s

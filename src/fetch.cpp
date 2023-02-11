@@ -356,56 +356,56 @@ string getPackages()
     if (Path::of("/bin/dpkg"s).isExecutable())
     {
         auto c = Command::exec("dpkg -l"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" dpkg; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" dpkg") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/snap"s).isExecutable())
     {
         auto c = Command::exec("snap list"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" snap; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" snap") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/pacman"s).isExecutable())
     {
         auto c = Command::exec("pacman -Q"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" pacman; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" pacman") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/flatpak"s).isExecutable())
     {
         auto c = Command::exec("flatpak list"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" flatpak; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" flatpak") + Crayon{}.getSymbol();
     }
     if (Path::of("/var/lib/rpm"s).isExecutable())
     {
         auto c = Command::exec("rpm -qa"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" rpm; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" rpm") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/npm"s).isExecutable())
     {
         auto c = Command::exec("npm list"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" npm; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" npm") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/emerge"s).isExecutable()) // gentoo
     {
-        pkg += "not supported"s + red.text(" portage; ");
+        pkg += "not supported"s + red.text(" portage") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/xbps-install"s).isExecutable()) // void linux
     {
         auto c = Command::exec("flatpak list"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" xbps; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" xbps") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/dnf"s).isExecutable()) // fedora
     {
         auto c = Command::exec("dnf list installed"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" dnf; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" dnf") + Crayon{}.getSymbol();
     }
     if (Path::of("/bin/zypper"s).isExecutable()) // opensuse
     {
         auto c = Command::exec("zypper se --installed-only"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" zypper; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" zypper") + Crayon{}.getSymbol();
     }
     if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).isExecutable())
     {
         auto c = Command::exec("brew list | { tr '' '\n'; }"s);
-        pkg += to_string(c.getOutputLines()) + red.text(" brew; ");
+        pkg += to_string(c.getOutputLines()) + red.text(" brew") + Crayon{}.getSymbol();
     }
 
     return pkg;
