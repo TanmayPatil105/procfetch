@@ -410,7 +410,6 @@ string getPackages()
     }
 
     auto pkg = ""s;
-    auto delim = "; "s;
     for (auto p : pkgs)
     {
         pkg += p + Context::PACKAGE_DELIM;
