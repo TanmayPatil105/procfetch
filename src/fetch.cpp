@@ -2,6 +2,7 @@
  * @file
  */
 #include "fetch.h"
+string Context::PACKAGE_DELIM = "; "s;
 
 /**
  * @returns gets the username
@@ -412,7 +413,7 @@ string getPackages()
     auto delim = "; "s;
     for (auto p : pkgs)
     {
-        pkg += p + delim;
+        pkg += p + Context::PACKAGE_DELIM;
     }
 
     return pkg;
