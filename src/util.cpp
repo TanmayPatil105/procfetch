@@ -53,6 +53,8 @@ static void test_Crayon()
 
     style = Crayon{}.color("RED"s);
     expect("\033[0;31mHIJIKI\033[0;m"s, style.text("HIJIKI"), ""s);
+
+    expect("; "s, Crayon{}.getSymbol(), ""s);
 }
 
 /**
