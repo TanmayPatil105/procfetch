@@ -318,6 +318,12 @@ class Crayon
     }
 };
 
+class Context
+{
+  public:
+    static string PACKAGE_DELIM;
+};
+
 enum class Mode
 {
     NORMAL,
