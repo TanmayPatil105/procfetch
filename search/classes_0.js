@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['command_49',['Command',['../classCommand.html',1,'']]],
-  ['crayon_50',['Crayon',['../classCrayon.html',1,'']]]
+  ['command_50',['Command',['../classCommand.html',1,'']]],
+  ['context_51',['Context',['../classContext.html',1,'']]],
+  ['crayon_52',['Crayon',['../classCrayon.html',1,'']]]
 ];
