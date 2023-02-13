@@ -2,4 +2,4 @@
 ^\.github
 ^\.gitignore
 ^release_inst.md
-^procfetch_1\.0_all\.deb
+^packages/procfetch_1\.0_all\.deb
