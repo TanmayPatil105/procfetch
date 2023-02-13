@@ -414,6 +414,9 @@ string getPackages()
         pkgs.push_back(rec{"brew"s, c.getOutputLines()});
     }
 
+    sort(pkgs.begin(), pkgs.end(),
+         [](auto a, auto b) { return a.count > b.count; });
+
     auto red = Crayon{}.red();
     auto pkg = ""s;
     for (auto p : pkgs)
