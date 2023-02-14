@@ -3,7 +3,7 @@ VERSION = @VERSION@
 DIST_DIR = dist
 GIF_DIR = images
 
-TOPTARGETS := all run check gcov clean docs install uninstall dist
+TOPTARGETS := all run check gcov clean docs install uninstall dist gif
 SUBDIRS := src ascii
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
