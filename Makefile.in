@@ -1,6 +1,7 @@
 PROJECT = procfetch
 VERSION = @VERSION@
 DIST_DIR = dist
+GIF_DIR = images
 
 TOPTARGETS := all run check gcov clean docs install uninstall dist
 SUBDIRS := src ascii
@@ -27,3 +28,7 @@ dist:
 		cpio -dp $(DIST_DIR)/$(PROJECT)-$(VERSION)
 	tar -C$(DIST_DIR) -cf- $(PROJECT)-$(VERSION) |\
 		bzip2 -cz > $(DIST_DIR)/$(PROJECT)-$(VERSION).tar.bz2
+
+gif:
+	rm -f $(GIF_DIR)/procfetch.gif
+	vhs < procfetch.tape
