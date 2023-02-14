@@ -4,7 +4,8 @@ This instructions are described using the example of releasing version v0.1.2.
 
 ## Bump up version
 
-edit /VERSION
+1. edit /VERSION
+2. push to github
 
 ## Make a tag
 
