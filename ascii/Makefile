@@ -11,4 +11,4 @@ install:
 uninstall:
 	rm -rf $(DATADIR)
 
-.PHONY: all run check gcov clean docs install uninstall dist
+.PHONY: all run check gcov clean docs install uninstall dist gif
