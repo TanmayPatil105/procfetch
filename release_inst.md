@@ -5,6 +5,7 @@ This instructions are described using the example of releasing version v0.1.2.
 ## Bump up version
 
 1. edit /VERSION
+2. make gif
 2. push to github
 
 ## Make a tag
