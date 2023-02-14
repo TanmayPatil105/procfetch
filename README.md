@@ -47,6 +47,10 @@ for contributing
 
 * ClangFormat - 14.0.0 or later
 
+for generating gif
+
+* vhs - 0.2.0 or later
+
 ## Documentation
 
 See the [documentation](https://tanmaypatil105.github.io/procfetch/)
