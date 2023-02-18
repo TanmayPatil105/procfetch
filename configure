@@ -3,6 +3,31 @@
 set -o nounset
 
 VERSION=$(cat VERSION)
+CONFIG_BREW=OFF
+INSTALL_LIB_DIR="/usr/share/procfetch/ascii"
+
+#
+# parse options
+#
+
+if [[ $# -ge 2 && $1 == "-C" && $2 == "brew" ]]; then
+    shift 2
+    CONFIG_BREW=ON
+fi
+
+if [[ $# -ne 0 ]]; then
+    echo "Error: Invalid options or arguments"
+    echo "Usage: $0 [-C brew]"
+    exit 1
+fi
+
+#
+# main process
+#
+
+if [[ $CONFIG_BREW == "ON" ]]; then
+    INSTALL_LIB_DIR="${HOMEBREW_PREFIX:-}/procfetch/ascii"
+fi
 
 echo "creating Doxyfile"
 sed "s/@PROJECT_NUMBER@/${VERSION}/g" Doxyfile.in > Doxyfile
@@ -11,4 +36,6 @@ echo "creating Makefile"
 sed "s/@VERSION@/${VERSION}/g" Makefile.in > Makefile
 
 echo "creating src/config.h"
-echo "#define VERSION \"${VERSION}\"" > src/config.h
+sed -e "s/@VERSION@/\"${VERSION}\"/g" \
+    -e "s:@INSTALL_LIB_DIR@:\"${INSTALL_LIB_DIR}\":g" src/config.h.in > src/config.h
+
