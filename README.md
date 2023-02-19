@@ -110,6 +110,31 @@ $ procfetch -a cyan
 ```bash
 $ procfetch -d Manjaro
 ```
+
+- `-b` to display battery percentage
+```bash
+$ procfetch -b
+```
+
+## Customise
+
+Add the following lines to your `.bash_profile`, `.bashrc` or `.zshrc` to customise the `procfetch`
+
+```bash
+# print default ascii art of Manjaro
+alias procfetch="procfetch -d Manjaro"
+```
+
+```bash
+# print default ascii art of Kali with color cyan
+alias procfetch="procfetch -d Kali -a cyan"
+```
+
+```bash
+# print battery percentage
+alias procfetch="procfetch -b"
+```
+
 ## Docker
 
 Define environment variable `PROCFETCH` in the actual project home directory.
@@ -142,7 +167,4 @@ $ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make check
 ### Contributing
 
 Make sure reading [Contributing.md](https://github.com/TanmayPatil105/procfetch/blob/main/CONTRIBUTING.md) before Contributing
-
-#### Disclamer :
-Tried and tested on Debian, Ubuntu and ParrotOS.
 
