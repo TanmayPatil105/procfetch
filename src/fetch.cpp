@@ -445,11 +445,7 @@ bool isCharging(string path)
     string status;
     getline(fptr, status);
 
-    if (status == "Charging")
-    {
-        return true;
-    }
-    return false;
+    return status == "Charging";
 }
 
 /**
@@ -467,9 +463,9 @@ void print_bar(int battery)
     }
 
     int width = 50;
-    int pos = width * (float)battery / 100;
+    int pos = width * battery / 100.0;
 
-    cout << green.text(emoji) << green.text(to_string(battery) + "% ") << green.text("[");;
+    cout << emoji << green.text(to_string(battery) + "% ") << green.text("[");;
     for (int i = 0; i < width; i++) {
         if (i < pos) 
         {
