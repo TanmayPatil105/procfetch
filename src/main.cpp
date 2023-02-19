@@ -111,5 +111,8 @@ void DisplayInfo()
     }
 
     cout << title.text("Packages : ") << getPackages() << endl;
+
+    print_battery("/sys/class/power_supply/BAT0/capacity");
+
     cout << endl;
 }

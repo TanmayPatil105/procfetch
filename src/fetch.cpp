@@ -435,6 +435,76 @@ string getPackages()
 }
 
 /**
+ * @brief Utility to check if battery is charging or not
+ * @returns status of battery
+ */
+bool isCharging(string path)
+{
+    fstream fptr;
+    fptr.open(path, ios::in);
+    string status;
+    getline(fptr, status);
+
+    if (status == "Charging")
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @brief Utility to print battery perecentage bar
+ */
+void print_bar(int battery)
+{
+    auto red = Crayon{}.bright().red();
+    auto green = Crayon{}.bright().green();
+
+    string emoji = "\n🔋 ";
+    if (isCharging("/sys/class/power_supply/BAT0/status"))
+    {
+        emoji = "\n🔌 ";
+    }
+
+    int width = 50;
+    int pos = width * (float)battery / 100;
+
+    cout << green.text(emoji) << green.text(to_string(battery) + "% ") << green.text("[");;
+    for (int i = 0; i < width; i++) {
+        if (i < pos) 
+        {
+            cout << green.text("=");
+        }
+        else if (i == pos) 
+        {
+            cout << green.text(">");
+        }
+        else 
+        {
+            cout << red.text("-");
+        }
+    }
+    cout << green.text("]") << endl;
+
+    return;
+}
+
+/**
+ * @returns prints battery percentage bar
+ * @param path
+ */
+void print_battery(string path)
+{
+    fstream fptr;
+    fptr.open(path, ios::in);
+    string percent;
+    getline(fptr, percent);
+    print_bar(stoi(percent));
+
+    return;
+}
+
+/**
  * @param art
  * @param color_name
  */
