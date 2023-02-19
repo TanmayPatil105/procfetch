@@ -135,6 +135,15 @@ Functions</h2></td></tr>
 <tr class="separator:a1128630eae1fe9e3bb1236d06e0ee2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75d6ab52c4b1db30ff093894ac805f40"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#a75d6ab52c4b1db30ff093894ac805f40">getPackages</a> ()</td></tr>
 <tr class="separator:a75d6ab52c4b1db30ff093894ac805f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9d9f4e9d8dfb88c23c381c921f9728a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#ac9d9f4e9d8dfb88c23c381c921f9728a">isCharging</a> (string path)</td></tr>
+<tr class="memdesc:ac9d9f4e9d8dfb88c23c381c921f9728a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility to check if battery is charging or not.  <a href="fetch_8cpp.html#ac9d9f4e9d8dfb88c23c381c921f9728a">More...</a><br /></td></tr>
+<tr class="separator:ac9d9f4e9d8dfb88c23c381c921f9728a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2f0e361d0df93679a5d4e9da0b1408f"><td class="memItemLeft" align="right" valign="top"><a id="ae2f0e361d0df93679a5d4e9da0b1408f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#ae2f0e361d0df93679a5d4e9da0b1408f">print_bar</a> (int battery)</td></tr>
+<tr class="memdesc:ae2f0e361d0df93679a5d4e9da0b1408f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility to print battery perecentage bar. <br /></td></tr>
+<tr class="separator:ae2f0e361d0df93679a5d4e9da0b1408f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adceb91299f7cb7a10c81f85501c0317e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#adceb91299f7cb7a10c81f85501c0317e">print_battery</a> (string path)</td></tr>
+<tr class="separator:adceb91299f7cb7a10c81f85501c0317e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8760435a6d7f54b4983543d29b5bb722"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#a8760435a6d7f54b4983543d29b5bb722">print_process</a> (string art, string color_name)</td></tr>
 <tr class="separator:a8760435a6d7f54b4983543d29b5bb722"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6d5ed4efb6721304d00c1277bff90fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fetch_8cpp.html#ad6d5ed4efb6721304d00c1277bff90fd">print</a> (string color_name, string distro_name)</td></tr>
@@ -535,6 +544,27 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac9d9f4e9d8dfb88c23c381c921f9728a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9d9f4e9d8dfb88c23c381c921f9728a">&#9670;&nbsp;</a></span>isCharging()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isCharging </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Utility to check if battery is charging or not. </p>
+<dl class="section return"><dt>Returns</dt><dd>status of battery </dd></dl>
+
+</div>
+</div>
 <a id="ad6d5ed4efb6721304d00c1277bff90fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6d5ed4efb6721304d00c1277bff90fd">&#9670;&nbsp;</a></span>print()</h2>
 
@@ -564,6 +594,31 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">color_name</td><td></td></tr>
     <tr><td class="paramname">distro_name</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adceb91299f7cb7a10c81f85501c0317e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adceb91299f7cb7a10c81f85501c0317e">&#9670;&nbsp;</a></span>print_battery()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_battery </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>prints battery percentage bar </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td></td></tr>
   </table>
   </dd>
 </dl>
