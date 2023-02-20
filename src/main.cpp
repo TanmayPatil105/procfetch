@@ -3,7 +3,7 @@
  */
 #include "fetch.h"
 
-void DisplayInfo();
+void DisplayInfo(bool show_battery);
 
 /**
  * @returns
@@ -15,9 +15,10 @@ int main(int argc, char *argv[])
     Mode mode = Mode::NORMAL;
     string color_name = "def"s;
     string distro_name = "def"s;
+    bool show_battery = false;
 
     int opt;
-    while ((opt = getopt(argc, argv, "ta:d:v")) != -1)
+    while ((opt = getopt(argc, argv, "ta:d:vb")) != -1)
     {
         switch (opt)
         {
@@ -29,6 +30,9 @@ int main(int argc, char *argv[])
             break;
         case 'd':
             distro_name = string(optarg);
+            break;
+        case 'b':
+            show_battery = true;
             break;
         case 'v':
             mode = Mode::SHOW_VERSION;
@@ -64,15 +68,16 @@ int main(int argc, char *argv[])
     }
 
     print(color_name, distro_name);
-    DisplayInfo();
+    DisplayInfo(show_battery);
 
     return 0;
 }
 
 /**
  * @returns Displays Info
+ * @param show_battery
  */
-void DisplayInfo()
+void DisplayInfo(bool show_battery)
 {
     auto title = Crayon{}.bright().green();
     auto ye = Crayon{}.yellow();
@@ -112,7 +117,9 @@ void DisplayInfo()
 
     cout << title.text("Packages : ") << getPackages() << endl;
 
-    print_battery("/sys/class/power_supply/BAT0/capacity");
+    if (show_battery){
+        print_battery("/sys/class/power_supply/BAT0/capacity");
+    }
 
     cout << endl;
 }
