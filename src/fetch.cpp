@@ -506,7 +506,7 @@ void print_battery(string path)
  */
 void print_process(string art, string color_name)
 {
-    string path = "/usr/share/procfetch/ascii/" + art;
+    string path = LIB_DIR + "/ascii/"s + art;
     fstream fptr;
     fptr.open(path, ios::in);
     string txt;

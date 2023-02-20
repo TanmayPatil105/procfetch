@@ -1,2 +1,7 @@
-#define VERSION @VERSION@
-#define INSTALL_LIB_DIR @INSTALL_LIB_DIR@
+/**
+ * @file
+ */
+#pragma once
+
+#define VERSION "@VERSION@"
+#define LIB_DIR "@LIB_DIR@"

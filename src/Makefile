@@ -11,7 +11,7 @@ endif
 
 INSTALL = /usr/bin/install -c
 FORMATTER = clang-format -i
-BINDIR = /bin
+BIN_DIR = /bin
 
 all: $(TARGET)
 run: all
@@ -27,10 +27,10 @@ gcov:
 clean:
 	- rm -f $(TARGET) $(OBJS) *.gcov *.gcda *.gcno
 install: all
-	@echo "Installing $(BINDIR)/$(TARGET) ..."
-	$(INSTALL) $(TARGET) $(BINDIR)/$(TARGET)
+	@echo "Installing $(BIN_DIR)/$(TARGET) ..."
+	$(INSTALL) $(TARGET) $(BIN_DIR)/$(TARGET)
 uninstall:
-	- rm $(BINDIR)/$(TARGET)
+	- rm $(BIN_DIR)/$(TARGET)
 format:
 	$(FORMATTER) $(SRCS) *.h
 
