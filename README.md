@@ -118,7 +118,7 @@ $ procfetch -b
 
 ## Customise
 
-Add the following lines to your `.bash_profile`, `.bashrc` or `.zshrc` to customise the `procfetch`
+Add the following lines to your `.bash_profile`, `.bashrc` or `.zshrc` to customise `procfetch`
 
 ```bash
 # print default ascii art of Manjaro

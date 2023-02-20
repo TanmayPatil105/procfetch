@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     bool show_battery = false;
 
     int opt;
-    while ((opt = getopt(argc, argv, "ta:d:v:b")) != -1)
+    while ((opt = getopt(argc, argv, "ta:d:vb")) != -1)
     {
         switch (opt)
         {
