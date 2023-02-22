@@ -96,8 +96,13 @@ void DisplayInfo(bool show_battery)
     cout << title.text("RAM : ") << getRAM("/proc/meminfo") << endl;
     cout << title.text("shell : ") << getSHELL("/etc/passwd") << endl;
     cout << title.text("DE : ") << getDE() << endl;
-    cout << title.text("Resolution : ")
-         << getRES("/sys/class/graphics/fb0/modes") << endl;
+
+    if (resCheck())
+    {
+        cout << title.text("Resolution : ")
+             << getRES("/sys/class/graphics/fb0/modes") << endl;
+    }
+    
     cout << title.text("Theme : ") << getTheme() << endl;
     cout << title.text("Icons : ") << getIcons() << endl;
     cout << title.text("CPU : ") << getCPU("/proc/cpuinfo") << endl;
