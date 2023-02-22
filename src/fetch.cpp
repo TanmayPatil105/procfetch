@@ -239,6 +239,18 @@ string getDE()
 }
 
 /**
+ * @returns checks for Resolution file
+ */
+bool resCheck()
+{
+    if (Path::of("/sys/class/graphics/fb0/modes"s).isRegularFile())
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
  * @returns gets current Screen Resolution
  * @param path
  */
@@ -299,6 +311,18 @@ string getCPU(string path)
 }
 
 /**
+ * @returns checks for CPUtemp file
+ */
+bool CpuTempCheck()
+{
+    if (Path::of("/sys/class/thermal/thermal_zone1"s).isDirectory())
+    {
+        return true;
+    }
+    return false;
+}
+
+/**
  * @returns gets CPU temp
  * @param path
  */
@@ -309,18 +333,6 @@ int getCPUtemp(string path)
     string temp;
     getline(fptr, temp);
     return stoi(temp);
-}
-
-/**
- * @returns checks for CPUtemp file
- */
-bool CpuTempCheck()
-{
-    if (Path::of("/sys/class/thermal/thermal_zone1"s).isDirectory())
-    {
-        return true;
-    }
-    return false;
 }
 
 /**
