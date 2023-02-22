@@ -243,11 +243,7 @@ string getDE()
  */
 bool resCheck()
 {
-    if (Path::of("/sys/class/graphics/fb0/modes"s).isRegularFile())
-    {
-        return true;
-    }
-    return false;
+    return Path::of("/sys/class/graphics/fb0/modes"s).isRegularFile();
 }
 
 /**
@@ -315,11 +311,7 @@ string getCPU(string path)
  */
 bool CpuTempCheck()
 {
-    if (Path::of("/sys/class/thermal/thermal_zone1"s).isDirectory())
-    {
-        return true;
-    }
-    return false;
+    return Path::of("/sys/class/thermal/thermal_zone1"s).isDirectory();
 }
 
 /**
