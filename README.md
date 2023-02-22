@@ -66,31 +66,20 @@ $ brew install procfetch
 ```
 
 ### Manually
-```
-$ git clone https://github.com/TanmayPatil105/procfetch.git
+```bash
+$ git clone https://github.com/TanmayPatil105/procfetch.git; cd procfetch
  ```
+```bash
+$ ./configure
+```
+```bash
+$ sudo make install
+```
 
-```
-$ cd procfetch
-```
-
-```
-$ chmod +x install.sh
-```
-```
-$ ./install.sh
-```
-```
-$ sudo chmod +x /usr/bin/procfetch
-```
 ## Uninstallation
+```bash
+$ sudo make uninstall
 ```
-$ chmod +x uninstall.sh
-```
-```
-$ ./uninstall.sh
-```
-
 
 <hr/>
 
