@@ -1,14 +1,14 @@
 INSTALL = /usr/bin/install -c
-DATADIR = /usr/share/procfetch
+LIB_DIR = @LIB_DIR@
 
 all: 
 install:
-	@echo "Installing $(DATADIR)..."
-	mkdir -p $(DATADIR)/ascii
+	@echo "Installing $(LIB_DIR)..."
+	mkdir -p $(LIB_DIR)/ascii
 	for i in *.ascii; do             \
-		$(INSTALL) "$$i" $(DATADIR)/ascii ;\
+		$(INSTALL) "$$i" $(LIB_DIR)/ascii ;\
 	done
 uninstall:
-	rm -rf $(DATADIR)
+	rm -rf $(LIB_DIR)
 
 .PHONY: all run check gcov clean docs install uninstall dist gif
