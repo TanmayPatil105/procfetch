@@ -1,4 +1,4 @@
-INSTALL = /usr/bin/install -c
+INSTALL = /usr/bin/install -c -D
 LIB_DIR = @LIB_DIR@
 
 all: 

@@ -9,7 +9,7 @@ ifeq ($(COVERAGE_TEST), 1)
 	LIBS += -lgcov
 endif
 
-INSTALL = /usr/bin/install -c
+INSTALL = /usr/bin/install -c -D
 FORMATTER = clang-format -i
 BIN_DIR = @BIN_DIR@
 
