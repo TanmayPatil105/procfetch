@@ -4,6 +4,7 @@ set -o nounset
 
 VERSION=$(cat VERSION)
 CONFIG_BREW=OFF
+BIN_DIR="/bin"
 LIB_DIR="/usr/share/procfetch"
 
 #
@@ -26,12 +27,14 @@ fi
 #
 
 if [[ $CONFIG_BREW == "ON" ]]; then
+    BIN_DIR="${HOMEBREW_PREFIX:-}/bin"
     LIB_DIR="${HOMEBREW_PREFIX:-}/procfetch"
 fi
 
-for f in Makefile ascii/Makefile src/config.h Doxyfile
+for f in Makefile ascii/Makefile src/Makefile src/config.h Doxyfile
 do
     echo "creating $f"
     sed -e "s/@VERSION@/${VERSION}/g" \
+        -e "s:@BIN_DIR@:${BIN_DIR}:g" \
         -e "s:@LIB_DIR@:${LIB_DIR}:g" $f.in > $f
 done
