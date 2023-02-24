@@ -6,7 +6,7 @@ This instructions are described using the example of releasing version v0.1.2.
 
 1. edit /VERSION
 2. make gif
-2. push to github
+3. commit changes and push to github
 
 ## Make a tag
 
