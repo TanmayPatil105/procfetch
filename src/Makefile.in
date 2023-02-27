@@ -28,9 +28,9 @@ clean:
 	- rm -f $(TARGET) $(OBJS) *.gcov *.gcda *.gcno
 install: all
 	@echo "Installing $(BIN_DIR)/$(TARGET) ..."
-	$(INSTALL) $(TARGET) $(BIN_DIR)/$(TARGET)
+	$(INSTALL) $(TARGET) "$(BIN_DIR)/$(TARGET)"
 uninstall:
-	- rm $(BIN_DIR)/$(TARGET)
+	- rm "$(BIN_DIR)/$(TARGET)"
 format:
 	$(FORMATTER) $(SRCS) *.h
 

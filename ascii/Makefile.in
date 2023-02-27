@@ -4,11 +4,11 @@ LIB_DIR = @LIB_DIR@
 all: 
 install:
 	@echo "Installing $(LIB_DIR)..."
-	mkdir -p $(LIB_DIR)/ascii
-	for i in *.ascii; do             \
-		$(INSTALL) "$$i" $(LIB_DIR)/ascii ;\
+	mkdir -p "$(LIB_DIR)/ascii"
+	for f in *.ascii; do                            \
+		$(INSTALL) -m 644 "$$f" "$(LIB_DIR)/ascii" ;\
 	done
 uninstall:
-	rm -rf $(LIB_DIR)
+	rm -rf "$(LIB_DIR)"
 
 .PHONY: all run check gcov clean docs install uninstall dist gif
