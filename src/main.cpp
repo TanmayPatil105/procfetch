@@ -73,12 +73,25 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-/**
- * @returns Displays Info
- * @param show_battery
- */
-void DisplayInfo(bool show_battery)
-{
+struct {
+    string theme = "def"s;
+    string icons = "def"s;
+    string CPU = "def"s;
+    bool res_check_done =  false;
+    bool res_check = false;
+    string resolution;
+    bool cpu_temp_check_done = false;
+    bool cpu_temp_check = false;
+    int cpu_temp;
+    vector<string> gpus;
+    bool gpus_done = false;
+    string packages;
+    bool packages_done = false;
+} Info;
+
+
+void *thread_1(void *arg){
+    (void)arg;
     auto title = Crayon{}.bright().green();
     auto ye = Crayon{}.yellow();
     string username =
@@ -97,30 +110,90 @@ void DisplayInfo(bool show_battery)
     cout << title.text("shell : ") << getSHELL("/etc/passwd") << endl;
     cout << title.text("DE : ") << getDE() << endl;
 
-    if (resCheck())
+    while(!Info.res_check_done);
+    if (Info.res_check)
     {
         cout << title.text("Resolution : ")
-             << getRES("/sys/class/graphics/fb0/modes") << endl;
+            <<  Info.resolution << endl;
     }
-    
-    cout << title.text("Theme : ") << getTheme() << endl;
-    cout << title.text("Icons : ") << getIcons() << endl;
-    cout << title.text("CPU : ") << getCPU("/proc/cpuinfo") << endl;
 
-    if (CpuTempCheck())
+    while(Info.theme == "def"s);
+    cout << title.text("Theme : ") << Info.theme << endl;
+
+    while(Info.CPU == "def"s);
+    cout << title.text("Icons : ") << Info.icons << endl;
+
+    while(Info.CPU == "def"s);
+    cout << title.text("CPU : ") << Info.CPU << endl;
+
+    while(!Info.cpu_temp_check_done);
+    if (Info.cpu_temp_check)
     {
-        int temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
-        cout << title.text("CPU Temperature : ") << float(temp / 1000.0)
+        cout << title.text("CPU Temperature : ") << float(Info.cpu_temp / 1000.0)
              << " °C" << endl;
     }
 
-    vector<string> gpus = getGPU();
-    for (auto gpu : gpus)
+    while(!Info.gpus_done);
+    for (auto gpu : Info.gpus)
     {
         cout << title.text("GPU : ") << gpu << endl;
     }
 
-    cout << title.text("Packages : ") << getPackages() << endl;
+    return NULL;
+}
+
+
+void *thread_2(void *arg){
+    (void)arg;
+
+    if((Info.res_check = resCheck()))
+    {
+        Info.resolution = getRES("/sys/class/graphics/fb0/modes");
+    }
+
+    Info.res_check_done = true;
+    
+    Info.theme = getTheme();
+    Info.icons = getIcons();
+    Info.CPU = getCPU("/proc/cpuinfo");
+
+    if((Info.cpu_temp_check = CpuTempCheck()))
+    {
+        Info.cpu_temp = getCPUtemp("/sys/class/thermal/thermal_zone0/temp");
+    }
+
+    Info.cpu_temp_check_done = true;
+    
+    Info.gpus = getGPU();
+    Info.gpus_done =true;
+
+    return NULL;
+}
+
+void *thread_3(void *arg){
+    (void)arg;
+    Info.packages = getPackages();
+    Info.packages_done = true;
+    return NULL;
+}
+
+/**
+ * @returns Displays Info
+ * @param show_battery
+ */
+void DisplayInfo(bool show_battery)
+{
+    auto title = Crayon{}.bright().green();
+
+    pthread_t tid[3];
+    pthread_create(&tid[0], NULL, thread_1, NULL);
+    pthread_create(&tid[2], NULL, thread_3, NULL);
+    pthread_create(&tid[1], NULL, thread_2, NULL);
+    pthread_join(tid[0], NULL);
+    pthread_join(tid[2], NULL);
+    pthread_join(tid[1], NULL);
+
+    cout << title.text("Packages : ") << Info.packages << endl;
 
     if (show_battery){
         print_battery("/sys/class/power_supply/BAT0/capacity");

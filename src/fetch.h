@@ -16,6 +16,7 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include "pthread.h"
 
 using namespace std;
 
