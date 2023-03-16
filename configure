@@ -7,18 +7,28 @@ CONFIG_BREW=OFF
 BIN_DIR=/bin
 LIB_DIR=/share/procfetch
 
+function show_usage {
+    echo "Usage: $0 [--prefix=<prefix>]"
+    echo "       $0 --help"
+}
+
 #
 # parse options
 #
 
-if [[ $# -ge 1 && ${1%%=*} == --prefix ]]; then
-    PREFIX="${1##*=}"
-    shift
+if [[ $# -ge 1 ]]; then
+    if [[ ${1%%=*} == --prefix ]]; then
+        PREFIX="${1##*=}"
+        shift
+    elif [[ $1 == --help || $1 = -h ]]; then
+        show_usage
+        exit 0
+    fi
 fi
 
 if [[ $# -ne 0 ]]; then
     echo "Error: Invalid options or arguments"
-    echo "Usage: $0 [--prefix=<prefix>]"
+    show_usage
     exit 1
 fi
 
