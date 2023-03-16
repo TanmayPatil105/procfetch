@@ -11,19 +11,14 @@ LIB_DIR="/share/procfetch"
 # parse options
 #
 
-if [[ $# -ge 2 && $1 == "-C" && $2 == "brew" ]]; then
-    CONFIG_BREW=ON
-    shift 2
-elif [[ $# -ge 1 && ${1%%=*} == "--prefix" ]]; then
+if [[ $# -ge 1 && ${1%%=*} == "--prefix" ]]; then
     PREFIX=${1##*=}
     shift
 fi
 
 if [[ $# -ne 0 ]]; then
     echo "Error: Invalid options or arguments"
-    echo "Usage: $0"
-    echo "       $0 -C brew"    
-    echo "       $0 --prefix=<prefix>"
+    echo "Usage: $0 [--prefix=<prefix>]"
     exit 1
 fi
 
@@ -31,13 +26,8 @@ fi
 # main process
 #
 
-if [[ $CONFIG_BREW == "ON" ]]; then
-    BIN_DIR="${HOMEBREW_PREFIX:-}/bin"
-    LIB_DIR="${HOMEBREW_PREFIX:-}/procfetch"
-else
-    BIN_DIR="${PREFIX:-}${BIN_DIR}"
-    LIB_DIR="${PREFIX:-/usr}${LIB_DIR}"
-fi
+BIN_DIR="${PREFIX:-}${BIN_DIR}"
+LIB_DIR="${PREFIX:-/usr}${LIB_DIR}"
 
 for f in Makefile ascii/Makefile src/Makefile src/config.h Doxyfile
 do
