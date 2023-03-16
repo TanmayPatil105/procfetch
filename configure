@@ -2,17 +2,17 @@
 
 set -o nounset
 
-VERSION=$(cat VERSION)
+VERSION="$(cat VERSION)"
 CONFIG_BREW=OFF
-BIN_DIR="/bin"
-LIB_DIR="/share/procfetch"
+BIN_DIR=/bin
+LIB_DIR=/share/procfetch
 
 #
 # parse options
 #
 
-if [[ $# -ge 1 && ${1%%=*} == "--prefix" ]]; then
-    PREFIX=${1##*=}
+if [[ $# -ge 1 && ${1%%=*} == --prefix ]]; then
+    PREFIX="${1##*=}"
     shift
 fi
 
@@ -34,5 +34,5 @@ do
     echo "creating $f"
     sed -e "s/@VERSION@/${VERSION}/g" \
         -e "s:@BIN_DIR@:${BIN_DIR}:g" \
-        -e "s:@LIB_DIR@:${LIB_DIR}:g" $f.in > $f
+        -e "s:@LIB_DIR@:${LIB_DIR}:g" "$f.in" > "$f"
 done
