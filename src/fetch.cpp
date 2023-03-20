@@ -62,7 +62,7 @@ string getOS(string path)
  */
 string getHardwarePlatform()
 {
-    string s = Command::exec("uname -m"s).getOutput();
+    string s = Command::exec("uname -m"s)->getOutput();
     s = s.substr(0, s.find("\n"));
     return " " + s;
 }
@@ -265,9 +265,8 @@ string getRES(string path)
  */
 string getTheme()
 {
-    auto c =
-        Command::exec("gsettings get org.gnome.desktop.interface gtk-theme"s);
-    auto s = c.getOutput();
+    auto args = "gsettings get org.gnome.desktop.interface gtk-theme"s;
+    auto s = Command::exec(args)->getOutput();
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
@@ -276,9 +275,8 @@ string getTheme()
  */
 string getIcons()
 {
-    auto c =
-        Command::exec("gsettings get org.gnome.desktop.interface icon-theme"s);
-    auto s = c.getOutput();
+    auto args = "gsettings get org.gnome.desktop.interface icon-theme"s;
+    auto s = Command::exec(args)->getOutput();
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
@@ -333,8 +331,7 @@ int getCPUtemp(string path)
 vector<string> getGPU()
 {
     vector<string> gpu;
-    auto c = Command::exec("lspci | grep -E  \"VGA|3D|Display\"");
-    string igpu = c.getOutput();
+    string igpu = Command::exec("lspci | grep -E  \"VGA|3D|Display\"")->getOutput();
     int temp = 0, k = 0;
 
     for (size_t i = 0; i < igpu.size(); i++)
@@ -366,32 +363,32 @@ string getPackages()
     if (Path::of("/bin/dpkg"s).isExecutable())
     {
         auto c = Command::exec("dpkg -l"s);
-        pkgs.push_back(rec{"dpkg"s, c.getOutputLines()});
+        pkgs.push_back(rec{"dpkg"s, c->getOutputLines()});
     }
     if (Path::of("/bin/snap"s).isExecutable())
     {
         auto c = Command::exec("snap list"s);
-        pkgs.push_back(rec{"snap"s, c.getOutputLines()});
+        pkgs.push_back(rec{"snap"s, c->getOutputLines()});
     }
     if (Path::of("/bin/pacman"s).isExecutable())
     {
         auto c = Command::exec("pacman -Q"s);
-        pkgs.push_back(rec{"pacman"s, c.getOutputLines()});
+        pkgs.push_back(rec{"pacman"s, c->getOutputLines()});
     }
     if (Path::of("/bin/flatpak"s).isExecutable())
     {
         auto c = Command::exec("flatpak list"s);
-        pkgs.push_back(rec{"flatpak"s, c.getOutputLines()});
+        pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
     }
     if (Path::of("/var/lib/rpm"s).isExecutable())
     {
         auto c = Command::exec("rpm -qa"s);
-        pkgs.push_back(rec{"rpm"s, c.getOutputLines()});
+        pkgs.push_back(rec{"rpm"s, c->getOutputLines()});
     }
     if (Path::of("/bin/npm"s).isExecutable())
     {
         auto c = Command::exec("npm list"s);
-        pkgs.push_back(rec{"npm"s, c.getOutputLines()});
+        pkgs.push_back(rec{"npm"s, c->getOutputLines()});
     }
     if (Path::of("/bin/emerge"s).isExecutable()) // gentoo
     {
@@ -400,22 +397,22 @@ string getPackages()
     if (Path::of("/bin/xbps-install"s).isExecutable()) // void linux
     {
         auto c = Command::exec("flatpak list"s);
-        pkgs.push_back(rec{"xbps"s, c.getOutputLines()});
+        pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
     }
     if (Path::of("/bin/dnf"s).isExecutable()) // fedora
     {
         auto c = Command::exec("dnf list installed"s);
-        pkgs.push_back(rec{"dnf"s, c.getOutputLines()});
+        pkgs.push_back(rec{"dnf"s, c->getOutputLines()});
     }
     if (Path::of("/bin/zypper"s).isExecutable()) // opensuse
     {
         auto c = Command::exec("zypper se --installed-only"s);
-        pkgs.push_back(rec{"zypper"s, c.getOutputLines()});
+        pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
     }
     if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).isExecutable())
     {
         auto c = Command::exec("brew list | { tr '' '\n'; }"s);
-        pkgs.push_back(rec{"brew"s, c.getOutputLines()});
+        pkgs.push_back(rec{"brew"s, c->getOutputLines()});
     }
 
     sort(pkgs.begin(), pkgs.end(),

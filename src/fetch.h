@@ -127,9 +127,9 @@ class Command
      * @returns Command object for getting the results.
      * @throws runtime_error failed to popen(3)
      */
-    static Command exec(const string &cmd)
+    static Command* exec(const string &cmd)
     {
-        Command result = Command();
+        auto result = new Command();
 
         FILE *pipe = popen(cmd.c_str(), "r");
         if (!pipe)
@@ -142,14 +142,14 @@ class Command
         {
             if (c == '\n')
             {
-                result.lines += 1;
+                result->lines += 1;
             }
-            result.output += c;
+            result->output += c;
         }
         // Don't concise below 2 lines. It must be assigned to a variable for
         // macOS.
         int n = pclose(pipe);
-        result.exit_code = WEXITSTATUS(n);
+        result->exit_code = WEXITSTATUS(n);
 
         return result;
     }
