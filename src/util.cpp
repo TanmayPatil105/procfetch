@@ -16,6 +16,25 @@ static void test_Command()
     expect(1, c->getExitCode(), "Exit code"s);
 }
 
+static void test_Command_async()
+{
+    string out;
+    //    auto c =
+    Command::exec_async("ls Makefile"s, [&](auto c){
+        out = c->getOutput();
+    });
+    expect("Makefile\n"s, out, "out"s);
+    //expect(1, c->getOutputLines(), "getOutputLines()"s);
+
+    /*
+    c = Command::exec("true"s);
+    expect(0, c->getExitCode(), "Exit code"s);
+
+    c = Command::exec("false"s);
+    expect(1, c->getExitCode(), "Exit code"s);
+    */
+}
+
 static void test_Path()
 {
     // directory
@@ -64,5 +83,6 @@ void test_util()
 {
     test_Path();
     test_Command();
+    test_Command_async();    
     test_Crayon();
 }

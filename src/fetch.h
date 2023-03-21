@@ -16,6 +16,7 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
+#include <functional>
 
 using namespace std;
 
@@ -109,6 +110,9 @@ void expect1(const T &want, const T &got, const string &msg, const char *file,
  */
 class Command
 {
+public:
+    typedef std::function<void(Command *)> func_type;
+
   private:
     int exit_code;
     string output;
@@ -121,6 +125,34 @@ class Command
     }
 
   public:
+    static Command* exec_async(const string &cmd, const func_type & func) {
+        auto result = new Command();
+
+        FILE *pipe = popen(cmd.c_str(), "r");
+        if (!pipe)
+        {
+            throw runtime_error("popen failed: \""s + cmd + "\""s);
+        }
+
+        int c;
+        while ((c = fgetc(pipe)) != EOF)
+        {
+            if (c == '\n')
+            {
+                result->lines += 1;
+            }
+            result->output += c;
+        }
+        // Don't concise below 2 lines. It must be assigned to a variable for
+        // macOS.
+        int n = pclose(pipe);
+        result->exit_code = WEXITSTATUS(n);
+
+        func(result);
+
+        return result;
+    }
+    
     /**
      * Executes the specified command in a subshell.
      * @param cmd containing the command to call and its arguments
