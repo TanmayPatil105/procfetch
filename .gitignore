@@ -1,6 +1,8 @@
 /Makefile
 src/config.h
 src/procfetch
+src/Makefile
+ascii/Makefile
 *.o
 dist/
 docs/

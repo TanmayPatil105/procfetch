@@ -239,6 +239,14 @@ string getDE()
 }
 
 /**
+ * @returns checks for Resolution file
+ */
+bool resCheck()
+{
+    return Path::of("/sys/class/graphics/fb0/modes"s).isRegularFile();
+}
+
+/**
  * @returns gets current Screen Resolution
  * @param path
  */
@@ -299,6 +307,14 @@ string getCPU(string path)
 }
 
 /**
+ * @returns checks for CPUtemp file
+ */
+bool CpuTempCheck()
+{
+    return Path::of("/sys/class/thermal/thermal_zone1"s).isDirectory();
+}
+
+/**
  * @returns gets CPU temp
  * @param path
  */
@@ -309,18 +325,6 @@ int getCPUtemp(string path)
     string temp;
     getline(fptr, temp);
     return stoi(temp);
-}
-
-/**
- * @returns checks for CPUtemp file
- */
-bool CpuTempCheck()
-{
-    if (Path::of("/sys/class/thermal/thermal_zone1"s).isDirectory())
-    {
-        return true;
-    }
-    return false;
 }
 
 /**
@@ -435,12 +439,78 @@ string getPackages()
 }
 
 /**
+ * @brief Utility to check if battery is charging or not
+ * @returns status of battery
+ */
+bool isCharging(string path)
+{
+    fstream fptr;
+    fptr.open(path, ios::in);
+    string status;
+    getline(fptr, status);
+
+    return status == "Charging";
+}
+
+/**
+ * @brief Utility to print battery perecentage bar
+ */
+void print_bar(int battery)
+{
+    auto red = Crayon{}.bright().red();
+    auto green = Crayon{}.bright().green();
+
+    string emoji = "\n🔋 ";
+    if (isCharging("/sys/class/power_supply/BAT0/status"))
+    {
+        emoji = "\n🔌 ";
+    }
+
+    int width = 50;
+    int pos = width * battery / 100.0;
+
+    cout << emoji << green.text(to_string(battery) + "% ") << green.text("[");;
+    for (int i = 0; i < width; i++) {
+        if (i < pos) 
+        {
+            cout << green.text("=");
+        }
+        else if (i == pos) 
+        {
+            cout << green.text(">");
+        }
+        else 
+        {
+            cout << red.text("-");
+        }
+    }
+    cout << green.text("]") << endl;
+
+    return;
+}
+
+/**
+ * @returns prints battery percentage bar
+ * @param path
+ */
+void print_battery(string path)
+{
+    fstream fptr;
+    fptr.open(path, ios::in);
+    string percent;
+    getline(fptr, percent);
+    print_bar(stoi(percent));
+
+    return;
+}
+
+/**
  * @param art
  * @param color_name
  */
 void print_process(string art, string color_name)
 {
-    string path = "/usr/share/procfetch/ascii/" + art;
+    string path = LIB_DIR + "/ascii/"s + art;
     fstream fptr;
     fptr.open(path, ios::in);
     string txt;

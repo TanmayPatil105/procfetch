@@ -2,13 +2,47 @@
 
 set -o nounset
 
-VERSION=$(cat VERSION)
+VERSION="$(cat VERSION)"
+CONFIG_BREW=OFF
+BIN_DIR=/bin
+LIB_DIR=/share/procfetch
 
-echo "creating Doxyfile"
-sed "s/@PROJECT_NUMBER@/${VERSION}/g" Doxyfile.in > Doxyfile
+function show_usage {
+    echo "Usage: $0 [--prefix=<prefix>]"
+    echo "       $0 --help"
+}
 
-echo "creating Makefile"
-sed "s/@VERSION@/${VERSION}/g" Makefile.in > Makefile
+#
+# parse options
+#
 
-echo "creating src/config.h"
-echo "#define VERSION \"${VERSION}\"" > src/config.h
+if [[ $# -ge 1 ]]; then
+    if [[ ${1%%=*} == --prefix ]]; then
+        PREFIX="${1##*=}"
+        shift
+    elif [[ $1 == --help || $1 = -h ]]; then
+        show_usage
+        exit 0
+    fi
+fi
+
+if [[ $# -ne 0 ]]; then
+    echo "Error: Invalid options or arguments"
+    show_usage
+    exit 1
+fi
+
+#
+# main process
+#
+
+BIN_DIR="${PREFIX:-}${BIN_DIR}"
+LIB_DIR="${PREFIX:-/usr}${LIB_DIR}"
+
+for f in Makefile ascii/Makefile src/Makefile src/config.h Doxyfile
+do
+    echo "creating $f"
+    sed -e "s/@VERSION@/${VERSION}/g" \
+        -e "s:@BIN_DIR@:${BIN_DIR}:g" \
+        -e "s:@LIB_DIR@:${LIB_DIR}:g" "$f.in" > "$f"
+done

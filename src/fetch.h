@@ -41,6 +41,8 @@ string getSHELL(string path);
 
 string getDE();
 
+bool resCheck();
+
 string getRES(string path);
 
 string getTheme();
@@ -49,13 +51,15 @@ string getIcons();
 
 string getCPU(string path);
 
-int getCPUtemp(string path);
-
 bool CpuTempCheck();
+
+int getCPUtemp(string path);
 
 vector<string> getGPU();
 
 string getPackages();
+
+void print_battery(string path);
 
 void print(string color, string distro_name);
 
