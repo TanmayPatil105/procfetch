@@ -19,20 +19,25 @@ static void test_Command()
 static void test_Command_async()
 {
     string out;
-    //    auto c =
+    int lines;
+    int status[2];    
     Command::exec_async("ls Makefile"s, [&](auto c){
         out = c->getOutput();
+        lines = c->getOutputLines();
     });
-    expect("Makefile\n"s, out, "out"s);
-    //expect(1, c->getOutputLines(), "getOutputLines()"s);
+    Command::exec_async("true"s, [&](auto c){
+        status[0] = c->getExitCode();
+    });
+    Command::exec_async("false"s, [&](auto c){
+        status[1] = c->getExitCode();
+    });
 
-    /*
-    c = Command::exec("true"s);
-    expect(0, c->getExitCode(), "Exit code"s);
-
-    c = Command::exec("false"s);
-    expect(1, c->getExitCode(), "Exit code"s);
-    */
+    Command::wait();
+    
+    expect("Makefile\n"s, out, "getOutput()"s);
+    expect(1, lines, "getOutputLines()"s);
+    expect(0, status[0], "Exit code"s);
+    expect(1, status[1], "Exit code"s);
 }
 
 static void test_Path()
