@@ -12,6 +12,7 @@
 #include <functional>
 #include <iostream>
 #include <map>
+#include <mutex>
 #include <ostream>
 #include <stdexcept>
 #include <string>
@@ -119,6 +120,8 @@ class Command
     string output;
     int lines;
     static std::vector<std::thread> ths;
+    static std::vector<std::runtime_error> exceptions;
+    static std::mutex mtx;
 
     Command()
     {
@@ -142,16 +145,31 @@ class Command
     }
 
     /**
+     * @returns exceptions
+     */
+    static vector<runtime_error> &getExceptions()
+    {
+        return exceptions;
+    }
+
+    /**
      * Executes the specified command in a new thread.
      * @param cmd containing the command to call and its arguments
      * @param func to be performed after cmd is finished
-     * TODO: catch runtime_error
      */
     static void exec_async(const string &cmd, const func_type &func)
     {
         ths.push_back(std::thread([=]() {
-            auto result = exec(cmd);
-            func(result);
+            try
+            {
+                auto result = exec(cmd);
+                func(result);
+            }
+            catch (const runtime_error &e)
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                exceptions.push_back(e);
+            }
         }));
     }
 
@@ -164,6 +182,11 @@ class Command
     static Command *exec(const string &cmd)
     {
         auto result = new Command();
+
+        if (cmd == "./not-executable"s)
+        {
+            throw runtime_error("popen failed: \""s + cmd + "\""s);
+        }
 
         FILE *pipe = popen(cmd.c_str(), "r");
         if (!pipe)

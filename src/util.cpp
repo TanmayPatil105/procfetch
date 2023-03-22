@@ -16,6 +16,20 @@ static void test_Command()
     expect(1, c->getExitCode(), "Exit code"s);
 }
 
+static void test_Command_exception()
+{
+    int flow = 0;
+    try
+    {
+        Command::exec("./not-executable"s);
+    }
+    catch (const runtime_error &e)
+    {
+        flow |= 0b1;
+    }
+    expect(0b1, flow, "catch exception");
+}
+
 static void test_Command_async()
 {
     string out;
@@ -35,6 +49,18 @@ static void test_Command_async()
     expect(1, lines, "getOutputLines()"s);
     expect(0, status[0], "Exit code"s);
     expect(1, status[1], "Exit code"s);
+}
+
+static void test_Command_async_exception()
+{
+    int status = 0;
+
+    Command::exec_async("./not-executable"s,
+                        [&](auto c) { status = c->getExitCode(); });
+    Command::wait();
+    auto size = Command::getExceptions().size();
+
+    expect((size_t)1, size, "1 exception");
 }
 
 static void test_Path()
@@ -85,6 +111,8 @@ void test_util()
 {
     test_Path();
     test_Command();
+    test_Command_exception();
     test_Command_async();
+    test_Command_async_exception();
     test_Crayon();
 }

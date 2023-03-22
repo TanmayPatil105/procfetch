@@ -4,6 +4,8 @@
 #include "fetch.h"
 #include <mutex>
 std::vector<std::thread> Command::ths;
+std::vector<std::runtime_error> Command::exceptions;
+std::mutex Command::mtx;
 string Context::PACKAGE_DELIM = "; "s;
 
 /**
