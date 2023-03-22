@@ -3,7 +3,7 @@
  */
 #include "fetch.h"
 #include <mutex>
-std::vector <std::thread> Command::ths;
+std::vector<std::thread> Command::ths;
 string Context::PACKAGE_DELIM = "; "s;
 
 /**
@@ -333,7 +333,8 @@ int getCPUtemp(string path)
 vector<string> getGPU()
 {
     vector<string> gpu;
-    string igpu = Command::exec("lspci | grep -E  \"VGA|3D|Display\"")->getOutput();
+    string igpu =
+        Command::exec("lspci | grep -E  \"VGA|3D|Display\"")->getOutput();
     int temp = 0, k = 0;
 
     for (size_t i = 0; i < igpu.size(); i++)
@@ -387,7 +388,7 @@ string getPackages()
     if (Path::of("/bin/flatpak"s).isExecutable())
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);            
+            std::lock_guard<std::mutex> lock(mtx);
             pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
         });
     }
@@ -412,28 +413,28 @@ string getPackages()
     if (Path::of("/bin/xbps-install"s).isExecutable()) // void linux
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);            
+            std::lock_guard<std::mutex> lock(mtx);
             pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/dnf"s).isExecutable()) // fedora
     {
         Command::exec_async("dnf list installed"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);            
+            std::lock_guard<std::mutex> lock(mtx);
             pkgs.push_back(rec{"dnf"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/zypper"s).isExecutable()) // opensuse
     {
         Command::exec_async("zypper se --installed-only"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);            
+            std::lock_guard<std::mutex> lock(mtx);
             pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
         });
     }
     if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).isExecutable())
     {
         Command::exec_async("brew list | { tr '' '\n'; }"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);            
+            std::lock_guard<std::mutex> lock(mtx);
             pkgs.push_back(rec{"brew"s, c->getOutputLines()});
         });
     }
@@ -491,17 +492,18 @@ void print_bar(int battery)
     int width = 50;
     int pos = width * battery / 100.0;
 
-    cout << emoji << green.text(to_string(battery) + "% ") << green.text("[");;
-    for (int i = 0; i < width; i++) {
-        if (i < pos) 
+    cout << emoji << green.text(to_string(battery) + "% ") << green.text("[");
+    for (int i = 0; i < width; i++)
+    {
+        if (i < pos)
         {
             cout << green.text("=");
         }
-        else if (i == pos) 
+        else if (i == pos)
         {
             cout << green.text(">");
         }
-        else 
+        else
         {
             cout << red.text("-");
         }

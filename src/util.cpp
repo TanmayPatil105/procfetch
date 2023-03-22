@@ -20,20 +20,17 @@ static void test_Command_async()
 {
     string out;
     int lines;
-    int status[2];    
-    Command::exec_async("ls Makefile"s, [&](auto c){
+    int status[2];
+    Command::exec_async("ls Makefile"s, [&](auto c) {
         out = c->getOutput();
         lines = c->getOutputLines();
     });
-    Command::exec_async("true"s, [&](auto c){
-        status[0] = c->getExitCode();
-    });
-    Command::exec_async("false"s, [&](auto c){
-        status[1] = c->getExitCode();
-    });
+    Command::exec_async("true"s, [&](auto c) { status[0] = c->getExitCode(); });
+    Command::exec_async("false"s,
+                        [&](auto c) { status[1] = c->getExitCode(); });
 
     Command::wait();
-    
+
     expect("Makefile\n"s, out, "getOutput()"s);
     expect(1, lines, "getOutputLines()"s);
     expect(0, status[0], "Exit code"s);
@@ -88,6 +85,6 @@ void test_util()
 {
     test_Path();
     test_Command();
-    test_Command_async();    
+    test_Command_async();
     test_Crayon();
 }

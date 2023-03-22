@@ -9,15 +9,15 @@
 #include <cctype>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <ostream>
 #include <stdexcept>
 #include <string>
+#include <thread>
 #include <unistd.h>
 #include <vector>
-#include <functional>
-#include <thread>
 
 using namespace std;
 
@@ -111,7 +111,7 @@ void expect1(const T &want, const T &got, const string &msg, const char *file,
  */
 class Command
 {
-public:
+  public:
     typedef std::function<void(Command *)> func_type;
 
   private:
@@ -127,28 +127,32 @@ public:
     }
 
   public:
-    static void wait() {
-        for (auto &t : ths) {
-            if (t.joinable()) {
+    static void wait()
+    {
+        for (auto &t : ths)
+        {
+            if (t.joinable())
+            {
                 t.join();
             }
         }
     }
 
-    static void exec_async(const string &cmd, const func_type & func) {
-        ths.push_back(std::thread([=](){
+    static void exec_async(const string &cmd, const func_type &func)
+    {
+        ths.push_back(std::thread([=]() {
             auto result = exec(cmd);
             func(result);
         }));
     }
-    
+
     /**
      * Executes the specified command in a subshell.
      * @param cmd containing the command to call and its arguments
      * @returns Command object for getting the results.
      * @throws runtime_error failed to popen(3)
      */
-    static Command* exec(const string &cmd)
+    static Command *exec(const string &cmd)
     {
         auto result = new Command();
 
