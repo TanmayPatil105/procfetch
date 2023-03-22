@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <vector>
 #include <functional>
+#include <thread>
 
 using namespace std;
 
@@ -117,6 +118,7 @@ public:
     int exit_code;
     string output;
     int lines;
+    static std::vector<std::thread> ths;
 
     Command()
     {
@@ -125,32 +127,19 @@ public:
     }
 
   public:
-    static Command* exec_async(const string &cmd, const func_type & func) {
-        auto result = new Command();
-
-        FILE *pipe = popen(cmd.c_str(), "r");
-        if (!pipe)
-        {
-            throw runtime_error("popen failed: \""s + cmd + "\""s);
-        }
-
-        int c;
-        while ((c = fgetc(pipe)) != EOF)
-        {
-            if (c == '\n')
-            {
-                result->lines += 1;
+    static void wait() {
+        for (auto &t : ths) {
+            if (t.joinable()) {
+                t.join();
             }
-            result->output += c;
         }
-        // Don't concise below 2 lines. It must be assigned to a variable for
-        // macOS.
-        int n = pclose(pipe);
-        result->exit_code = WEXITSTATUS(n);
+    }
 
-        func(result);
-
-        return result;
+    static void exec_async(const string &cmd, const func_type & func) {
+        ths.push_back(std::thread([=](){
+            auto result = exec(cmd);
+            func(result);
+        }));
     }
     
     /**
