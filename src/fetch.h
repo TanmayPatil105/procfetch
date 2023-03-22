@@ -127,6 +127,9 @@ class Command
     }
 
   public:
+    /**
+     * Wait for all threads to be finished.
+     */
     static void wait()
     {
         for (auto &t : ths)
@@ -138,6 +141,12 @@ class Command
         }
     }
 
+    /**
+     * Executes the specified command in a new thread.
+     * @param cmd containing the command to call and its arguments
+     * @param func to be performed after cmd is finished
+     * TODO: catch runtime_error
+     */
     static void exec_async(const string &cmd, const func_type &func)
     {
         ths.push_back(std::thread([=]() {
@@ -147,7 +156,7 @@ class Command
     }
 
     /**
-     * Executes the specified command in a subshell.
+     * Executes the specified command.
      * @param cmd containing the command to call and its arguments
      * @returns Command object for getting the results.
      * @throws runtime_error failed to popen(3)
