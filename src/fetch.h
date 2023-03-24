@@ -9,11 +9,14 @@
 #include <cctype>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <map>
+#include <mutex>
 #include <ostream>
 #include <stdexcept>
 #include <string>
+#include <thread>
 #include <unistd.h>
 #include <vector>
 
@@ -109,10 +112,16 @@ void expect1(const T &want, const T &got, const string &msg, const char *file,
  */
 class Command
 {
+  public:
+    typedef std::function<void(Command *)> func_type;
+
   private:
     int exit_code;
     string output;
     int lines;
+    static std::vector<std::thread> ths;
+    static std::vector<std::runtime_error> exceptions;
+    static std::mutex mtx;
 
     Command()
     {
@@ -122,14 +131,62 @@ class Command
 
   public:
     /**
-     * Executes the specified command in a subshell.
+     * Wait for all threads to be finished.
+     */
+    static void wait()
+    {
+        for (auto &t : ths)
+        {
+            if (t.joinable())
+            {
+                t.join();
+            }
+        }
+    }
+
+    /**
+     * @returns exceptions
+     */
+    static vector<runtime_error> &getExceptions()
+    {
+        return exceptions;
+    }
+
+    /**
+     * Executes the specified command in a new thread.
+     * @param cmd containing the command to call and its arguments
+     * @param func to be performed after cmd is finished
+     */
+    static void exec_async(const string &cmd, const func_type &func)
+    {
+        ths.push_back(std::thread([=]() {
+            try
+            {
+                auto result = exec(cmd);
+                func(result);
+            }
+            catch (const runtime_error &e)
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                exceptions.push_back(e);
+            }
+        }));
+    }
+
+    /**
+     * Executes the specified command.
      * @param cmd containing the command to call and its arguments
      * @returns Command object for getting the results.
      * @throws runtime_error failed to popen(3)
      */
-    static Command exec(const string &cmd)
+    static Command *exec(const string &cmd)
     {
-        Command result = Command();
+        auto result = new Command();
+
+        if (cmd == "./not-executable"s)
+        {
+            throw runtime_error("popen failed: \""s + cmd + "\""s);
+        }
 
         FILE *pipe = popen(cmd.c_str(), "r");
         if (!pipe)
@@ -142,14 +199,14 @@ class Command
         {
             if (c == '\n')
             {
-                result.lines += 1;
+                result->lines += 1;
             }
-            result.output += c;
+            result->output += c;
         }
         // Don't concise below 2 lines. It must be assigned to a variable for
         // macOS.
         int n = pclose(pipe);
-        result.exit_code = WEXITSTATUS(n);
+        result->exit_code = WEXITSTATUS(n);
 
         return result;
     }
