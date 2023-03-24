@@ -64,6 +64,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classCommand-members.html">List of all members</a>  </div>
@@ -74,6 +75,12 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="fetch_8h_source.html">fetch.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a26162e2b508d20b7d50fd893bf8ff9c1"><td class="memItemLeft" align="right" valign="top"><a id="a26162e2b508d20b7d50fd893bf8ff9c1"></a>
+typedef std::function&lt; void(<a class="el" href="classCommand.html">Command</a> *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>func_type</b></td></tr>
+<tr class="separator:a26162e2b508d20b7d50fd893bf8ff9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5179f1c9a1893c499540bfc3e81d5a10"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">getOutput</a> ()</td></tr>
@@ -85,19 +92,25 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a5b7cdf0794953616c607db07f3388b02"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classCommand.html">Command</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommand.html#a5b7cdf0794953616c607db07f3388b02">exec</a> (const string &amp;cmd)</td></tr>
-<tr class="separator:a5b7cdf0794953616c607db07f3388b02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e005c33cacc63a0756ad50b9b50918e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommand.html#a8e005c33cacc63a0756ad50b9b50918e">wait</a> ()</td></tr>
+<tr class="separator:a8e005c33cacc63a0756ad50b9b50918e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afda92171af3d82e4a3cbe60497d28592"><td class="memItemLeft" align="right" valign="top">static vector&lt; runtime_error &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommand.html#afda92171af3d82e4a3cbe60497d28592">getExceptions</a> ()</td></tr>
+<tr class="separator:afda92171af3d82e4a3cbe60497d28592"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fe328bec813cdbf74f17bc1dba42a2f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommand.html#a0fe328bec813cdbf74f17bc1dba42a2f">exec_async</a> (const string &amp;cmd, const func_type &amp;func)</td></tr>
+<tr class="separator:a0fe328bec813cdbf74f17bc1dba42a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3260a4b17b87b69cb2928e0dc6d32ef"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classCommand.html">Command</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">exec</a> (const string &amp;cmd)</td></tr>
+<tr class="separator:ad3260a4b17b87b69cb2928e0dc6d32ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classCommand.html">Command</a> executes a command in a subshell(shell runs on a forked process).</p>
-<p>Sample code: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> c = <a class="code" href="classCommand.html#a5b7cdf0794953616c607db07f3388b02">Command::exec</a>(<span class="stringliteral">&quot;ls -l&quot;</span>);</div>
+<p>Sample code: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> c = <a class="code" href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">Command::exec</a>(<span class="stringliteral">&quot;ls -l&quot;</span>);</div>
 <div class="line"><span class="keywordflow">if</span> (c.getExitcode() == 0) {</div>
 <div class="line">    std::cout &lt;&lt; c.getOutput();</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassCommand_html_a5b7cdf0794953616c607db07f3388b02"><div class="ttname"><a href="classCommand.html#a5b7cdf0794953616c607db07f3388b02">Command::exec</a></div><div class="ttdeci">static Command exec(const string &amp;cmd)</div><div class="ttdef"><b>Definition:</b> fetch.h:130</div></div>
+<div class="ttc" id="aclassCommand_html_ad3260a4b17b87b69cb2928e0dc6d32ef"><div class="ttname"><a href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">Command::exec</a></div><div class="ttdeci">static Command * exec(const string &amp;cmd)</div><div class="ttdef"><b>Definition:</b> fetch.h:182</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5b7cdf0794953616c607db07f3388b02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b7cdf0794953616c607db07f3388b02">&#9670;&nbsp;</a></span>exec()</h2>
+<a id="ad3260a4b17b87b69cb2928e0dc6d32ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3260a4b17b87b69cb2928e0dc6d32ef">&#9670;&nbsp;</a></span>exec()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -106,7 +119,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classCommand.html">Command</a> Command::exec </td>
+          <td class="memname">static <a class="el" href="classCommand.html">Command</a>* Command::exec </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>cmd</em></td><td>)</td>
@@ -119,7 +132,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Executes the specified command in a subshell. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Executes the specified command. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cmd</td><td>containing the command to call and its arguments </td></tr>
   </table>
@@ -132,6 +145,75 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a0fe328bec813cdbf74f17bc1dba42a2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fe328bec813cdbf74f17bc1dba42a2f">&#9670;&nbsp;</a></span>exec_async()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Command::exec_async </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const func_type &amp;&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Executes the specified command in a new thread. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>containing the command to call and its arguments </td></tr>
+    <tr><td class="paramname">func</td><td>to be performed after cmd is finished </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afda92171af3d82e4a3cbe60497d28592"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afda92171af3d82e4a3cbe60497d28592">&#9670;&nbsp;</a></span>getExceptions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static vector&lt;runtime_error&gt;&amp; Command::getExceptions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>exceptions </dd></dl>
 
 </div>
 </div>
@@ -213,8 +295,35 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a id="a8e005c33cacc63a0756ad50b9b50918e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e005c33cacc63a0756ad50b9b50918e">&#9670;&nbsp;</a></span>wait()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Command::wait </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Wait for all threads to be finished. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="fetch_8h_source.html">fetch.h</a></li>
+<li>src/<a class="el" href="fetch_8cpp.html">fetch.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
