@@ -4,7 +4,6 @@ set -o nounset
 
 PROJECT=procfetch
 VERSION="$(cat VERSION)"
-CONFIG_BREW=OFF
 CXX=g++
 unset PREFIX
 BIN_DIR=/bin
