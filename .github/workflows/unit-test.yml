@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install GNU Getopt on macOS
-      if ${{ matrix.os == 'macos-latest' }}
+      if: ${{ matrix.os == 'macos-latest' }}
       run: |
         brew install gnu-getopt
     - name: configure
