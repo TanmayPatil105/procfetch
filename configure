@@ -9,6 +9,9 @@ unset PREFIX
 BIN_DIR=/bin
 LIB_DIR=/share/procfetch
 
+if [[ -d "/usr/local/opt/gnu-getopt/bin" ]]; then
+    PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+fi
 
 function show_usage {
     cat <<-EOF
