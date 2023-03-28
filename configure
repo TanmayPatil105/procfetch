@@ -35,6 +35,9 @@ EOF
 # parse options
 #
 
+help_option=0
+version_option=0
+
 parsed_arguments=$(getopt -n $0 -o hv --long help,version,prefix:,with-cxx: -- "$@")
 if [[ $? != 0 ]]; then
     show_usage 1
