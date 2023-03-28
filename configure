@@ -62,11 +62,11 @@ fi
 # main process
 #
 
-if [[ -v help_option ]]; then
+if [[ $help_option == 1 ]]; then
    show_usage 0
 fi
 
-if [[ -v version_option ]]; then
+if [[ $version_option == 1 ]]; then
     echo "$PROJECT configure $VERSION"
     exit 0
 fi
