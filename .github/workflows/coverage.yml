@@ -16,9 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: configure
-      run: ./configure
+      run: ./configure --enable-code-coverage
     - name: build
-      run: make COVERAGE_TEST=1
+      run: make -j
     - name: check
       run: make check
     - name: gcov
