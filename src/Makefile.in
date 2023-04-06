@@ -3,12 +3,8 @@ SRCS = fetch.cpp main.cpp util.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 CXX = @CXX@
-CXXFLAGS = -std=c++2a -Wall -Wextra --pedantic-errors
-
-ifeq ($(COVERAGE_TEST), 1)
-	CXXFLAGS += -fprofile-arcs -ftest-coverage -O0
-	LIBS += -lgcov
-endif
+CXXFLAGS = -std=c++2a -Wall -Wextra --pedantic-errors @CXXFLAGS@
+LIBS = @LIBS@
 
 INSTALL = /usr/bin/install -c -D
 FORMATTER = clang-format -i
