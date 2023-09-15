@@ -584,7 +584,7 @@ void print(string color_name, string distro_name)
                                       {"Archcraft", "archcraft.ascii"},
                                       {"Kali", "kali.ascii"},
                                       {"Parrot", "parrot.ascii"},
-                                      {"OpenSuse", "opensuse.ascii"},
+                                      {"openSUSE", "opensuse.ascii"},
                                       {"Linux Mint", "linuxmint.ascii"},
                                       {"EndeavourOS", "endeavouros.ascii"},
                                       {"Pop!_OS", "pop!_os.ascii"},
