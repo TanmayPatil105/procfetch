@@ -521,8 +521,22 @@ void print_bar(int battery)
  */
 void print_battery(string path)
 {
+    cout << "Inside print_battery!\n";
+    string dir_path = path;
+
+    for (const auto& entry : filesystem::directory_iterator(dir_path)) {
+        if (filesystem::is_directory(entry)) {
+            string filename = entry.path().filename().string();
+            if (filename.substr(0, 2) == "BA") {
+                cout << "Found folder starting with 'BA': " << filename << endl;
+                dir_path = dir_path + filename + "/capacity";
+                cout << "dir_path: " << dir_path << endl;
+            }
+        }
+    }
+
     fstream fptr;
-    fptr.open(path, ios::in);
+    fptr.open(dir_path, ios::in);
     string percent;
     getline(fptr, percent);
     print_bar(stoi(percent));
