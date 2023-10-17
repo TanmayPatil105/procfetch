@@ -251,6 +251,14 @@ bool resCheck()
 }
 
 /**
+ * @returns checks for Battery folder
+ */
+bool batteryCheck(string path)
+{
+    return Path::of(path).isDirectory();
+}
+
+/**
  * @returns gets current Screen Resolution
  * @param path
  */
@@ -480,13 +488,14 @@ bool isCharging(string path)
 /**
  * @brief Utility to print battery perecentage bar
  */
-void print_bar(int battery)
+void print_bar(string path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
 
     string emoji = "\n🔋 ";
-    if (isCharging("/sys/class/power_supply/BAT0/status"))
+    string status_path = path + "/status";
+    if (isCharging(status_path))
     {
         emoji = "\n🔌 ";
     }
@@ -521,25 +530,25 @@ void print_bar(int battery)
  */
 void print_battery(string path)
 {
-    cout << "Inside print_battery!\n";
     string dir_path = path;
+    string capacity_path = path;
 
     for (const auto& entry : filesystem::directory_iterator(dir_path)) {
-        if (filesystem::is_directory(entry)) {
+        if (batteryCheck(dir_path)) {
             string filename = entry.path().filename().string();
             if (filename.substr(0, 2) == "BA") {
-                cout << "Found folder starting with 'BA': " << filename << endl;
-                dir_path = dir_path + filename + "/capacity";
-                cout << "dir_path: " << dir_path << endl;
+                dir_path = dir_path + filename;
+                break;
             }
         }
     }
 
+    capacity_path = dir_path + "/capacity";
     fstream fptr;
-    fptr.open(dir_path, ios::in);
+    fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    print_bar(stoi(percent));
+    print_bar(dir_path, stoi(percent));
 
     return;
 }
