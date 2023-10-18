@@ -30,8 +30,8 @@ function show_usage {
 
 	Some influential environment variables:
 	  CXX       C++ compiler command
-      CXXFLAGS  C++ compiler flags
-      LIBS      libraries to pass to the linker, e.g. -l<library>
+	  CXXFLAGS  C++ compiler flags
+	  LIBS      libraries to pass to the linker, e.g. -l<library>
 EOF
     exit $1
 }
