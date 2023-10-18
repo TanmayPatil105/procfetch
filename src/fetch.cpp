@@ -488,7 +488,7 @@ bool isCharging(string path)
 /**
  * @brief Utility to print battery perecentage bar
  */
-void print_bar(string path, int battery)
+void printBar(string path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
@@ -528,7 +528,7 @@ void print_bar(string path, int battery)
  * @returns prints battery percentage bar
  * @param path
  */
-void print_battery(string path)
+void printBattery(string path)
 {
     string dir_path = path;
     string capacity_path = path;
@@ -548,7 +548,7 @@ void print_battery(string path)
     fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    print_bar(dir_path, stoi(percent));
+    printBar(dir_path, stoi(percent));
 
     return;
 }
@@ -557,7 +557,7 @@ void print_battery(string path)
  * @param art
  * @param color_name
  */
-void print_process(string art, string color_name)
+void printProcess(string art, string color_name)
 {
     string path = LIB_DIR + "/ascii/"s + art;
     fstream fptr;
@@ -635,12 +635,12 @@ void print(string color_name, string distro_name)
     {
         if (os.find(key) != string::npos)
         {
-            print_process(value, color_name);
+            printProcess(value, color_name);
             return;
         }
     }
 
-    print_process("linux.ascii", color_name);
+    printProcess("linux.ascii", color_name);
 
     return;
 }
