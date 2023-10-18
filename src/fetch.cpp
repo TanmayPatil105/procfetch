@@ -492,9 +492,9 @@ void printBar(string path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
-
-    string emoji = "\n🔋 ";
     string status_path = path + "/status";
+    string emoji = "\n🔋 ";
+
     if (isCharging(status_path))
     {
         emoji = "\n🔌 ";
@@ -533,10 +533,13 @@ void printBattery(string path)
     string dir_path = path;
     string capacity_path = path;
 
-    for (const auto& entry : filesystem::directory_iterator(dir_path)) {
-        if (batteryCheck(dir_path)) {
+    for (const auto& entry : filesystem::directory_iterator(dir_path)) 
+    {
+        if (batteryCheck(dir_path)) 
+        {
             string filename = entry.path().filename().string();
-            if (filename.substr(0, 2) == "BA") {
+            if (filename.substr(0, 2) == "BA") 
+            {
                 dir_path = dir_path + filename;
                 break;
             }

@@ -124,7 +124,7 @@ void DisplayInfo(bool show_battery)
 
     if (show_battery)
     {
-        print_battery("/sys/class/power_supply/");
+        printBattery("/sys/class/power_supply/");
     }
 
     cout << endl;
