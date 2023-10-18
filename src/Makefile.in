@@ -5,6 +5,7 @@ OBJS = $(SRCS:.cpp=.o)
 CXX = @CXX@
 CXXFLAGS = -std=c++2a -Wall -Wextra --pedantic-errors @CXXFLAGS@
 LIBS = @LIBS@
+LDFLAGS = -pthread
 
 INSTALL = /usr/bin/install -c -D
 FORMATTER = clang-format -i
@@ -32,7 +33,7 @@ format:
 	$(FORMATTER) $(SRCS) *.h
 
 $(TARGET): $(OBJS)
-	$(CXX) -o $@ $(OBJS) $(LIBS)
+	$(CXX) -o $@ $(OBJS) $(LIBS) $(LDFLAGS)
 main.o:  fetch.h color.h config.h
 fetch.o: fetch.h color.h
 util.o:  fetch.h color.h
