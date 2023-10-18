@@ -295,6 +295,19 @@ class Path
     {
         return path.string();
     }
+
+    /**
+     * @returns a vector containing elements at the given path
+     */
+    vector<string> getDirectoryContents()
+    {
+        vector<std::string> contents;
+        for (const auto& entry : filesystem::directory_iterator(path))
+        {
+            contents.push_back(entry.path().filename().string());
+        }
+        return contents;
+    }
 };
 
 /**

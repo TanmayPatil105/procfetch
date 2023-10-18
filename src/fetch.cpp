@@ -533,19 +533,18 @@ void printBattery(string path)
     string dir_path = path;
     string capacity_path = path;
 
-    for (const auto& entry : filesystem::directory_iterator(dir_path)) 
+    vector<string> contents = Path::of(path).getDirectoryContents();
+    for (const auto& it : contents)
     {
         if (batteryCheck(dir_path)) 
         {
-            string filename = entry.path().filename().string();
-            if (filename.substr(0, 2) == "BA") 
+            if (it.substr(0, 2) == "BA")
             {
-                dir_path = dir_path + filename;
+                dir_path = dir_path + "/" + it;
                 break;
             }
         }
     }
-
     capacity_path = dir_path + "/capacity";
     fstream fptr;
     fptr.open(capacity_path, ios::in);
