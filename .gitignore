@@ -12,3 +12,4 @@ docs/
 *.gcno
 .vscode/
 Doxyfile
+debian-package/
