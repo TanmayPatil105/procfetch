@@ -297,14 +297,14 @@ class Path
     }
 
     /**
-     * @returns a vector containing elements at the given path
+     * @returns a vector containing absolute paths to contents at the given path
      */
-    vector<string> getDirectoryContents()
+    vector<filesystem::path> getDirectoryContents()
     {
-        vector<std::string> contents;
+        vector<filesystem::path> contents;
         for (const auto& entry : filesystem::directory_iterator(path))
         {
-            contents.push_back(entry.path().filename().string());
+            contents.push_back(entry.path());
         }
         return contents;
     }

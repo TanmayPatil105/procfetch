@@ -533,14 +533,16 @@ void printBattery(string path)
     string dir_path = path;
     string capacity_path = path;
 
-    vector<string> contents = Path::of(path).getDirectoryContents();
+    vector<filesystem::path> contents = Path::of(path).getDirectoryContents();
+
     for (const auto& it : contents)
     {
         if (batteryCheck(dir_path)) 
         {
-            if (it.substr(0, 2) == "BA")
+            string last_folder_name = it.filename().string();
+            if (last_folder_name.substr(0, 2) == "BA")
             {
-                dir_path = dir_path + "/" + it;
+                dir_path = dir_path + "/" + last_folder_name;
                 break;
             }
         }
