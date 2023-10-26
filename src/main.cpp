@@ -102,7 +102,7 @@ void DisplayInfo(bool show_battery)
         cout << title.text("Resolution : ")
              << getRES("/sys/class/graphics/fb0/modes") << endl;
     }
-    
+
     cout << title.text("Theme : ") << getTheme() << endl;
     cout << title.text("Icons : ") << getIcons() << endl;
     cout << title.text("CPU : ") << getCPU("/proc/cpuinfo") << endl;
@@ -122,7 +122,8 @@ void DisplayInfo(bool show_battery)
 
     cout << title.text("Packages : ") << getPackages() << endl;
 
-    if (show_battery){
+    if (show_battery)
+    {
         print_battery("/sys/class/power_supply/BAT0/capacity");
     }
 

@@ -5,15 +5,62 @@
 
 static void test_Command()
 {
-    Command c = Command::exec("ls Makefile"s);
-    expect("Makefile\n"s, c.getOutput(), "getOutput()"s);
-    expect(1, c.getOutputLines(), "getOutputLines()"s);
+    auto c = Command::exec("ls Makefile"s);
+    expect("Makefile\n"s, c->getOutput(), "getOutput()"s);
+    expect(1, c->getOutputLines(), "getOutputLines()"s);
 
     c = Command::exec("true"s);
-    expect(0, c.getExitCode(), "Exit code"s);
+    expect(0, c->getExitCode(), "Exit code"s);
 
     c = Command::exec("false"s);
-    expect(1, c.getExitCode(), "Exit code"s);
+    expect(1, c->getExitCode(), "Exit code"s);
+}
+
+static void test_Command_exception()
+{
+    int flow = 0;
+    try
+    {
+        Command::exec("./not-executable"s);
+    }
+    catch (const runtime_error &e)
+    {
+        flow |= 0b1;
+    }
+    expect(0b1, flow, "catch exception");
+}
+
+static void test_Command_async()
+{
+    string out;
+    int lines;
+    int status[2];
+    Command::exec_async("ls Makefile"s, [&](auto c) {
+        out = c->getOutput();
+        lines = c->getOutputLines();
+    });
+    Command::exec_async("true"s, [&](auto c) { status[0] = c->getExitCode(); });
+    Command::exec_async("false"s,
+                        [&](auto c) { status[1] = c->getExitCode(); });
+
+    Command::wait();
+
+    expect("Makefile\n"s, out, "getOutput()"s);
+    expect(1, lines, "getOutputLines()"s);
+    expect(0, status[0], "Exit code"s);
+    expect(1, status[1], "Exit code"s);
+}
+
+static void test_Command_async_exception()
+{
+    int status = 0;
+
+    Command::exec_async("./not-executable"s,
+                        [&](auto c) { status = c->getExitCode(); });
+    Command::wait();
+    auto size = Command::getExceptions().size();
+
+    expect((size_t)1, size, "1 exception");
 }
 
 static void test_Path()
@@ -64,5 +111,8 @@ void test_util()
 {
     test_Path();
     test_Command();
+    test_Command_exception();
+    test_Command_async();
+    test_Command_async_exception();
     test_Crayon();
 }

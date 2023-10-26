@@ -2,39 +2,96 @@
 
 set -o nounset
 
+PROJECT=procfetch
 VERSION="$(cat VERSION)"
-CONFIG_BREW=OFF
+CXX=g++
+CXXFLAGS=${CXXFLAGS:-}
+LIBS=${LIBS:-}           
+unset PREFIX
 BIN_DIR=/bin
 LIB_DIR=/share/procfetch
 
+if [[ -d "/usr/local/opt/gnu-getopt/bin" ]]; then
+    PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+fi
+
 function show_usage {
-    echo "Usage: $0 [--prefix=<prefix>]"
-    echo "       $0 --help"
+    cat <<-EOF
+	\`$0' configures $PROJECT $VERSION to adapt to many kinds of systems.
+
+	Usage: $0 [OPTION]...
+
+	Options:
+	  -h, --help              display this help and exit.
+	  -v, --versoin           display version information and exit.
+	  --prefix=PREFIX         install files in PREFIX.
+	  --with-cxx=CXX          use CXX to compile (default=gcc).
+	  --enable-code-coverage  enable coverage testing
+
+	Some influential environment variables:
+	  CXX       C++ compiler command
+	  CXXFLAGS  C++ compiler flags
+	  LIBS      libraries to pass to the linker, e.g. -l<library>
+EOF
+    exit $1
 }
 
 #
 # parse options
 #
 
-if [[ $# -ge 1 ]]; then
-    if [[ ${1%%=*} == --prefix ]]; then
-        PREFIX="${1##*=}"
-        shift
-    elif [[ $1 == --help || $1 = -h ]]; then
-        show_usage
-        exit 0
-    fi
+help_option=0
+version_option=0
+code_coverage_option=0
+
+parsed_arguments=$(getopt -n $0 -o hv \
+                   --long help,version,prefix:,with-cxx:,enable-code-coverage -- "$@")
+if [[ $? != 0 ]]; then
+    show_usage 1
 fi
 
+eval set -- "$parsed_arguments"
+while true; do
+    case "$1" in
+        -h | --help     ) help_option=1          ; shift   ;;
+        -v | --version  ) version_option=1       ; shift   ;;
+             --prefix   ) PREFIX="$2"            ; shift 2 ;;
+             --with-cxx ) CXX="$2"               ; shift 2 ;;
+             --enable-code-coverage )
+                          code_coverage_option=1 ; shift   ;;
+        --) shift; break;;
+        *) echo "Error: Unknown option: $1"
+           show_usage 1;;
+    esac
+done
+
 if [[ $# -ne 0 ]]; then
-    echo "Error: Invalid options or arguments"
-    show_usage
-    exit 1
+    echo "Error: Invalid argument: $@"
+    show_usage 1
 fi
 
 #
 # main process
 #
+
+if [[ $help_option == 1 ]]; then
+   show_usage 0
+fi
+
+if [[ $version_option == 1 ]]; then
+    echo "$PROJECT configure $VERSION"
+    exit 0
+fi
+
+if [[ $code_coverage_option == 1 ]]; then
+    if [[ $CXX =~ clang\+\+ ]]; then    # for clang++
+        echo "Not implemented yet"
+        exit 1
+    else                                # for gcc
+        CXXFLAGS="-fprofile-arcs -ftest-coverage -O0"
+        LIBS="-lgcov"
+    fi
+fi
 
 BIN_DIR="${PREFIX:-}${BIN_DIR}"
 LIB_DIR="${PREFIX:-/usr}${LIB_DIR}"
@@ -43,6 +100,9 @@ for f in Makefile ascii/Makefile src/Makefile src/config.h Doxyfile
 do
     echo "creating $f"
     sed -e "s/@VERSION@/${VERSION}/g" \
+        -e "s/@CXX@/${CXX}/g" \
+        -e "s/@CXXFLAGS@/${CXXFLAGS}/g" \
+        -e "s/@LIBS@/${LIBS}/g" \
         -e "s:@BIN_DIR@:${BIN_DIR}:g" \
         -e "s:@LIB_DIR@:${LIB_DIR}:g" "$f.in" > "$f"
 done
