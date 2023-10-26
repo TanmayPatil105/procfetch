@@ -42,6 +42,13 @@ int main(int argc, char *argv[])
         }
     }
 
+    if (optind != argc)
+    {
+        cout << "Error: "s << argv[0] << ": unknown argument: "s << argv[optind]
+             << endl;
+        return 1;
+    }
+
     switch (mode)
     {
     case Mode::NORMAL:
@@ -60,13 +67,6 @@ int main(int argc, char *argv[])
     }
 
     // Mode::NORMAL
-    if (optind != argc)
-    {
-        cout << "Error: "s << argv[0] << ": unknown argument: "s << argv[optind]
-             << endl;
-        return 1;
-    }
-
     print(color_name, distro_name);
     DisplayInfo(show_battery);
 
