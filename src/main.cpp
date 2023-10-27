@@ -12,36 +12,7 @@ void DisplayInfo(bool show_battery);
  */
 int main(int argc, char *argv[])
 {
-    Mode mode = Mode::NORMAL;
-    string color_name = "def"s;
-    string distro_name = "def"s;
-    bool show_battery = false;
-
-    int opt;
-    while ((opt = getopt(argc, argv, "ta:d:vb")) != -1)
-    {
-        switch (opt)
-        {
-        case 't':
-            mode = Mode::EXEC_TEST;
-            break;
-        case 'a':
-            color_name = string(optarg);
-            break;
-        case 'd':
-            distro_name = string(optarg);
-            break;
-        case 'b':
-            show_battery = true;
-            break;
-        case 'v':
-            mode = Mode::SHOW_VERSION;
-            break;
-        default:
-            return 1;
-        }
-    }
-
+    auto options = Options(argc, argv);
     if (optind != argc)
     {
         cout << "Error: "s << argv[0] << ": unknown argument: "s << argv[optind]
@@ -49,7 +20,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    switch (mode)
+    switch (options.mode)
     {
     case Mode::NORMAL:
         // no-op
@@ -67,8 +38,8 @@ int main(int argc, char *argv[])
     }
 
     // Mode::NORMAL
-    print(color_name, distro_name);
-    DisplayInfo(show_battery);
+    print(options.color_name, options.distro_name);
+    DisplayInfo(options.show_battery);
 
     return 0;
 }

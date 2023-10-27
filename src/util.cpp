@@ -102,6 +102,80 @@ static void test_Crayon()
     expect("\033[0;31mHIJIKI\033[0;m"s, style.text("HIJIKI"), ""s);
 }
 
+static void testhelper_Options(int argc, const char *argv[], Options expect)
+{
+    optind = 1;
+    auto options = Options(argc, (char **)argv);
+
+    expect((int)expect.mode, (int)options.mode, "Options.mode"s);
+    expect(expect.color_name, options.color_name, "Options.color_name"s);
+    expect(expect.distro_name, options.distro_name, "Options.distro_name"s);
+    expect(expect.show_battery, options.show_battery, "Options.show_battery"s);
+}
+
+static void test_Options_default()
+{
+    int argc = 1;
+    const char *argv[] = {"procfetch", NULL};
+    Options expect;
+    expect.mode = Mode::NORMAL;
+    expect.color_name = "def"s;
+    expect.distro_name = "def"s;
+    expect.show_battery = false;
+
+    testhelper_Options(argc, argv, expect);
+}
+
+static void test_Options_full()
+{
+    int argc = 6;
+    const char *argv[] = {"procfetch", "-a", "cyan", "-d",
+                          "Manjaro",   "-b", NULL};
+    Options expect;
+    expect.mode = Mode::NORMAL;
+    expect.color_name = "cyan"s;
+    expect.distro_name = "Manjaro"s;
+    expect.show_battery = true;
+
+    testhelper_Options(argc, argv, expect);
+}
+
+static void test_Options_test()
+{
+    int argc = 2;
+    const char *argv[] = {"procfetch", "-t", NULL};
+
+    Options expect;
+    expect.mode = Mode::EXEC_TEST;
+    expect.color_name = "def"s;
+    expect.distro_name = "def"s;
+    expect.show_battery = false;
+
+    testhelper_Options(argc, argv, expect);
+}
+
+static void test_Options_version()
+{
+    int argc = 2;
+    const char *argv[] = {"procfetch", "-v", NULL};
+
+    Options expect;
+    expect.mode = Mode::SHOW_VERSION;
+    expect.color_name = "def"s;
+    expect.distro_name = "def"s;
+    expect.show_battery = false;
+
+    testhelper_Options(argc, argv, expect);
+}
+
+static void test_Options()
+{
+    test_Options_default();
+    test_Options_full();
+    test_Options_test();
+    test_Options_version();
+}
+
 /**
  * Tests belows.
  * * class Path
@@ -115,4 +189,5 @@ void test_util()
     test_Command_async();
     test_Command_async_exception();
     test_Crayon();
+    test_Options();
 }

@@ -391,3 +391,42 @@ enum class Mode
     EXEC_TEST,
     SHOW_VERSION,
 };
+
+class Options
+{
+  public:
+    Mode mode = Mode::NORMAL;
+    string color_name = "def"s;
+    string distro_name = "def"s;
+    bool show_battery = false;
+
+    Options(){};
+    Options(int argc, char *argv[])
+    {
+        int opt;
+        while ((opt = getopt(argc, argv, "ta:d:vb")) != -1)
+        {
+
+            switch (opt)
+            {
+            case 't':
+                mode = Mode::EXEC_TEST;
+                break;
+            case 'a':
+                color_name = string(optarg);
+                break;
+            case 'd':
+                distro_name = string(optarg);
+                break;
+            case 'b':
+                show_battery = true;
+                break;
+            case 'v':
+                mode = Mode::SHOW_VERSION;
+                break;
+            default:
+                exit(1);
+            }
+        }
+    }
+};
