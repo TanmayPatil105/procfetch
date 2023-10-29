@@ -2,7 +2,7 @@
 
 TREE='.'
 BINARY=procfetch
-VERSION=0.2.2
+VERSION=@VERSION@
 ARCHITECTURE=amd64
 
 
