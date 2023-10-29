@@ -374,6 +374,45 @@ $(function() {
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    EXEC_TEST,</div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    SHOW_VERSION,</div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;};</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
+<div class="line"><a name="l00395"></a><span class="lineno"><a class="line" href="classOptions.html">  395</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOptions.html">Options</a></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;{</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    Mode mode = Mode::NORMAL;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="keywordtype">string</span> color_name = <span class="stringliteral">&quot;def&quot;</span>s;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordtype">string</span> distro_name = <span class="stringliteral">&quot;def&quot;</span>s;</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    <span class="keywordtype">bool</span> show_battery = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <a class="code" href="classOptions.html">Options</a>(){};</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <a class="code" href="classOptions.html">Options</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    {</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;        <span class="keywordtype">int</span> opt;</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        <span class="keywordflow">while</span> ((opt = getopt(argc, argv, <span class="stringliteral">&quot;ta:d:vb&quot;</span>)) != -1)</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;        {</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;            <span class="keywordflow">switch</span> (opt)</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;            {</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;t&#39;</span>:</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                mode = Mode::EXEC_TEST;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;a&#39;</span>:</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;                color_name = string(optarg);</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;d&#39;</span>:</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;                distro_name = string(optarg);</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;b&#39;</span>:</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;                show_battery = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;v&#39;</span>:</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;                mode = Mode::SHOW_VERSION;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;            <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;                exit(1);</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;            }</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;        }</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    }</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;};</div>
 <div class="ttc" id="aclassCommand_html"><div class="ttname"><a href="classCommand.html">Command</a></div><div class="ttdef"><b>Definition:</b> fetch.h:114</div></div>
 <div class="ttc" id="aclassCommand_html_a0fe328bec813cdbf74f17bc1dba42a2f"><div class="ttname"><a href="classCommand.html#a0fe328bec813cdbf74f17bc1dba42a2f">Command::exec_async</a></div><div class="ttdeci">static void exec_async(const string &amp;cmd, const func_type &amp;func)</div><div class="ttdef"><b>Definition:</b> fetch.h:160</div></div>
 <div class="ttc" id="aclassCommand_html_a314e47b7b1733c4fbde4aa77f04fa42e"><div class="ttname"><a href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">Command::getOutputLines</a></div><div class="ttdeci">int getOutputLines()</div><div class="ttdef"><b>Definition:</b> fetch.h:225</div></div>
@@ -392,6 +431,7 @@ $(function() {
 <div class="ttc" id="aclassCrayon_html_aabf626c0efaf5363a6c8ee3aa48ddc12"><div class="ttname"><a href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">Crayon::color</a></div><div class="ttdeci">Crayon color(string color)</div><div class="ttdef"><b>Definition:</b> fetch.h:349</div></div>
 <div class="ttc" id="aclassCrayon_html_ab39cbd748948fe56fe5a2a1619d19f97"><div class="ttname"><a href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">Crayon::underscore</a></div><div class="ttdeci">Crayon underscore()</div><div class="ttdef"><b>Definition:</b> fetch.h:340</div></div>
 <div class="ttc" id="aclassCrayon_html_ab50e11ffb3f775b1ba7fc658b5486e29"><div class="ttname"><a href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon::Crayon</a></div><div class="ttdeci">Crayon()</div><div class="ttdef"><b>Definition:</b> fetch.h:325</div></div>
+<div class="ttc" id="aclassOptions_html"><div class="ttname"><a href="classOptions.html">Options</a></div><div class="ttdef"><b>Definition:</b> fetch.h:396</div></div>
 <div class="ttc" id="aclassPath_html"><div class="ttname"><a href="classPath.html">Path</a></div><div class="ttdef"><b>Definition:</b> fetch.h:243</div></div>
 <div class="ttc" id="aclassPath_html_a0d09f3c408fe6c5457fbecc224a88b65"><div class="ttname"><a href="classPath.html#a0d09f3c408fe6c5457fbecc224a88b65">Path::of</a></div><div class="ttdeci">static Path of(const string &amp;path)</div><div class="ttdef"><b>Definition:</b> fetch.h:259</div></div>
 <div class="ttc" id="aclassPath_html_a4bbd33a8136241ae61d67b92b7f105f7"><div class="ttname"><a href="classPath.html#a4bbd33a8136241ae61d67b92b7f105f7">Path::toString</a></div><div class="ttdeci">string toString()</div><div class="ttdef"><b>Definition:</b> fetch.h:294</div></div>
@@ -410,7 +450,7 @@ $(function() {
 <div class="ttc" id="afetch_8h_html_a6b5687ecd7db49ef10af5909892d6ce3"><div class="ttname"><a href="fetch_8h.html#a6b5687ecd7db49ef10af5909892d6ce3">getuser</a></div><div class="ttdeci">string getuser()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:14</div></div>
 <div class="ttc" id="afetch_8h_html_a73f2fe526cbdeb94007aabce5d5b080f"><div class="ttname"><a href="fetch_8h.html#a73f2fe526cbdeb94007aabce5d5b080f">print</a></div><div class="ttdeci">void print(string color, string distro_name)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:569</div></div>
 <div class="ttc" id="afetch_8h_html_a75d6ab52c4b1db30ff093894ac805f40"><div class="ttname"><a href="fetch_8h.html#a75d6ab52c4b1db30ff093894ac805f40">getPackages</a></div><div class="ttdeci">string getPackages()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:359</div></div>
-<div class="ttc" id="afetch_8h_html_a75d79411d2a46aab2a7ef1ff8e23b65d"><div class="ttname"><a href="fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d">test_util</a></div><div class="ttdeci">void test_util()</div><div class="ttdef"><b>Definition:</b> util.cpp:110</div></div>
+<div class="ttc" id="afetch_8h_html_a75d79411d2a46aab2a7ef1ff8e23b65d"><div class="ttname"><a href="fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d">test_util</a></div><div class="ttdeci">void test_util()</div><div class="ttdef"><b>Definition:</b> util.cpp:189</div></div>
 <div class="ttc" id="afetch_8h_html_a82cbf4d4e9927420fcf624439fad7ebf"><div class="ttname"><a href="fetch_8h.html#a82cbf4d4e9927420fcf624439fad7ebf">getUpTime</a></div><div class="ttdeci">string getUpTime(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:115</div></div>
 <div class="ttc" id="afetch_8h_html_a92893f60492e0d737c5a9fcc7d5fb4e4"><div class="ttname"><a href="fetch_8h.html#a92893f60492e0d737c5a9fcc7d5fb4e4">getCPU</a></div><div class="ttdeci">string getCPU(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:291</div></div>
 <div class="ttc" id="afetch_8h_html_aa810d9edd625731b99cadcac08787120"><div class="ttname"><a href="fetch_8h.html#aa810d9edd625731b99cadcac08787120">expect1</a></div><div class="ttdeci">void expect1(const T &amp;want, const T &amp;got, const string &amp;msg, const char *file, int line)</div><div class="ttdef"><b>Definition:</b> fetch.h:85</div></div>
