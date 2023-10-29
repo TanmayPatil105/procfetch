@@ -1,5 +1,5 @@
 Package: procfetch
-Version: 0.2.2
+Version: @VERSION@
 Architecture: all
 Maintainer: Tanmay
 Description: procfetch
