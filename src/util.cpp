@@ -102,6 +102,85 @@ static void test_Crayon()
     expect("\033[0;31mHIJIKI\033[0;m"s, style.text("HIJIKI"), ""s);
 }
 
+static void testhelper_Options(string msg, int argc, const char *argv[],
+                               Options expect, int expect_optind)
+{
+    optind = 1;
+    auto options = Options(argc, (char **)argv);
+
+    expect((int)expect.mode, (int)options.mode, msg + ": Options.mode"s);
+    expect(expect.color_name, options.color_name,
+           msg + ": Options.color_name"s);
+    expect(expect.distro_name, options.distro_name,
+           msg + ": Options.distro_name"s);
+    expect(expect.show_battery, options.show_battery,
+           msg + ": Options.show_battery"s);
+    expect(expect_optind, optind, msg + ": optind"s);
+}
+
+static void test_Options_default()
+{
+    int argc = 1;
+    const char *argv[] = {"procfetch", NULL};
+    Options expect;
+    expect.mode = Mode::NORMAL;
+    expect.color_name = "def"s;
+    expect.distro_name = "def"s;
+    expect.show_battery = false;
+
+    testhelper_Options("default", argc, argv, expect, 1);
+}
+
+static void test_Options_full()
+{
+    int argc = 6;
+    const char *argv[] = {"procfetch", "-a", "cyan", "-d",
+                          "Manjaro",   "-b", "arg",  NULL};
+    Options expect;
+    expect.mode = Mode::NORMAL;
+    expect.color_name = "cyan"s;
+    expect.distro_name = "Manjaro"s;
+    expect.show_battery = true;
+
+    testhelper_Options("full", argc, argv, expect, 6); // remains last "arg"
+}
+
+static void test_Options_test()
+{
+    int argc = 2;
+    const char *argv[] = {"procfetch", "-t", NULL};
+
+    Options expect;
+    expect.mode = Mode::EXEC_TEST;
+    expect.color_name = "def"s;
+    expect.distro_name = "def"s;
+    expect.show_battery = false;
+
+    testhelper_Options("test", argc, argv, expect, 2);
+}
+
+static void test_Options_version()
+{
+    int argc = 2;
+    const char *argv[] = {"procfetch", "-v", NULL};
+
+    Options expect;
+    expect.mode = Mode::SHOW_VERSION;
+    expect.color_name = "def"s;
+    expect.distro_name = "def"s;
+    expect.show_battery = false;
+
+    testhelper_Options("version", argc, argv, expect, 2);
+}
+
+static void test_Options()
+{
+    test_Options_default();
+    test_Options_full();
+    test_Options_test();
+    test_Options_version();
+}
+
 /**
  * Tests belows.
  * * class Path
@@ -115,4 +194,5 @@ void test_util()
     test_Command_async();
     test_Command_async_exception();
     test_Crayon();
+    test_Options();
 }
