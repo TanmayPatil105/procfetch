@@ -13,6 +13,8 @@ LIB_DIR=/share/procfetch
 
 if [[ -d "/usr/local/opt/gnu-getopt/bin" ]]; then
     PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+elif [[ -d "/opt/homebrew/opt/gnu-getopt/bin" ]]; then
+    PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 fi
 
 function show_usage {

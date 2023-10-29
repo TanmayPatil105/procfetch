@@ -35,8 +35,14 @@
 
 for building
 
+* GNU getopt - 2.37.2 or later
 * GNU Make - 4.3 or later
 * GCC - 11.3.0 or later
+
+for macOS, You can install gnu-getopt by runnning the following command.
+```
+$ brew install gnu-getopt
+```
 
 for generating API documents
 
