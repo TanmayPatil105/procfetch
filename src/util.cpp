@@ -88,6 +88,11 @@ static void test_Path()
     expect(false, p.isRegularFile(), "test -f "s + p.toString());
     expect(false, p.isExecutable(), "test -x "s + p.toString());
     expect(false, p.isDirectory(), "test -d "s + p.toString());
+
+    // directory is not empty
+    p = Path::of("/bin"s);
+    vector<filesystem::path> directoryContents = p.getDirectoryContents();
+    expect(true, !directoryContents.empty(), "Directory is not empty");
 }
 
 static void test_Crayon()

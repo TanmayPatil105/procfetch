@@ -62,7 +62,7 @@ vector<string> getGPU();
 
 string getPackages();
 
-void print_battery(string path);
+void printBattery(string path);
 
 void print(string color, string distro_name);
 
@@ -294,6 +294,19 @@ class Path
     string toString()
     {
         return path.string();
+    }
+
+    /**
+     * @returns a vector containing absolute paths to contents at the given path
+     */
+    vector<filesystem::path> getDirectoryContents()
+    {
+        vector<filesystem::path> contents;
+        for (const auto& entry : filesystem::directory_iterator(path))
+        {
+            contents.push_back(entry.path());
+        }
+        return contents;
     }
 };
 

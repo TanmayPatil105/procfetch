@@ -251,6 +251,14 @@ bool resCheck()
 }
 
 /**
+ * @returns checks for Battery folder
+ */
+bool batteryCheck(string path)
+{
+    return Path::of(path).isDirectory();
+}
+
+/**
  * @returns gets current Screen Resolution
  * @param path
  */
@@ -480,13 +488,14 @@ bool isCharging(string path)
 /**
  * @brief Utility to print battery perecentage bar
  */
-void print_bar(int battery)
+void printBar(string path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
-
+    string status_path = path + "/status";
     string emoji = "\n🔋 ";
-    if (isCharging("/sys/class/power_supply/BAT0/status"))
+
+    if (isCharging(status_path))
     {
         emoji = "\n🔌 ";
     }
@@ -519,13 +528,31 @@ void print_bar(int battery)
  * @returns prints battery percentage bar
  * @param path
  */
-void print_battery(string path)
+void printBattery(string path)
 {
+    string dir_path = path;
+    string capacity_path = path;
+
+    vector<filesystem::path> contents = Path::of(path).getDirectoryContents();
+
+    for (const auto& it : contents)
+    {
+        if (batteryCheck(dir_path)) 
+        {
+            string last_folder_name = it.filename().string();
+            if (last_folder_name.substr(0, 2) == "BA")
+            {
+                dir_path = dir_path + "/" + last_folder_name;
+                break;
+            }
+        }
+    }
+    capacity_path = dir_path + "/capacity";
     fstream fptr;
-    fptr.open(path, ios::in);
+    fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    print_bar(stoi(percent));
+    printBar(dir_path, stoi(percent));
 
     return;
 }
@@ -534,7 +561,7 @@ void print_battery(string path)
  * @param art
  * @param color_name
  */
-void print_process(string art, string color_name)
+void printProcess(string art, string color_name)
 {
     string path = LIB_DIR + "/ascii/"s + art;
     fstream fptr;
@@ -612,12 +639,12 @@ void print(string color_name, string distro_name)
     {
         if (os.find(key) != string::npos)
         {
-            print_process(value, color_name);
+            printProcess(value, color_name);
             return;
         }
     }
 
-    print_process("linux.ascii", color_name);
+    printProcess("linux.ascii", color_name);
 
     return;
 }
