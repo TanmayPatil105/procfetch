@@ -55,7 +55,7 @@ static void test_Command_async2()
 {
     string out;
     int lines;
-    auto cmd = Path::of("/usr/bin/ls"s);
+    auto cmd = Path::of("/bin/ls"s);
 
     Command::exec_async(cmd, "Makefile"s, [&](auto c) {
         out = c->getOutput();
