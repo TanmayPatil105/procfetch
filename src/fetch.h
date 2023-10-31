@@ -125,6 +125,15 @@ class Path
     }
 
     /**
+     * @returns the filename of the path.
+     */
+    Path getFilename()
+    {
+        filesystem::path p = this->path.filename();
+        return Path(p, filesystem::status(p));
+    }
+
+    /**
      * @returns exists and is a regular file
      */
     bool isRegularFile()

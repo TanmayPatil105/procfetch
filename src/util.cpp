@@ -104,6 +104,12 @@ static void test_Path()
     expect(false, p.isRegularFile(), "test -f "s + p.toString());
     expect(false, p.isExecutable(), "test -x "s + p.toString());
     expect(false, p.isDirectory(), "test -d "s + p.toString());
+
+    // getFilename()
+    expect("bar.txt"s, Path::of("/foo/bar.txt").getFilename().toString(),
+           "file"s);
+    expect("etc"s, Path::of("/etc").getFilename().toString(), "directory"s);
+    expect(""s, Path::of("/foo/bar/").getFilename().toString(), "none"s);
 }
 
 static void test_Crayon()
