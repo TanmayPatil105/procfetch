@@ -51,6 +51,22 @@ static void test_Command_async()
     expect(1, status[1], "Exit code"s);
 }
 
+static void test_Command_async2()
+{
+    string out;
+    int lines;
+    auto cmd = Path::of("/usr/bin/ls"s);
+
+    Command::exec_async(cmd, "Makefile"s, [&](auto c) {
+        out = c->getOutput();
+        lines = c->getOutputLines();
+    });
+    Command::wait();
+
+    expect("Makefile\n"s, out, "getOutput()"s);
+    expect(1, lines, "getOutputLines()"s);
+}
+
 static void test_Command_async_exception()
 {
     int status = 0;
@@ -192,6 +208,7 @@ void test_util()
     test_Command();
     test_Command_exception();
     test_Command_async();
+    test_Command_async2();
     test_Command_async_exception();
     test_Crayon();
     test_Options();
