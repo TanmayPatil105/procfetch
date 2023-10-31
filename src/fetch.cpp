@@ -433,11 +433,14 @@ string getPackages()
             pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
         });
     }
-    if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).isExecutable())
+
+    Path cmd = Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s);
+    if (cmd.isExecutable())
     {
-        Command::exec_async("brew list | { tr '' '\n'; }"s, [&](auto c) {
+        Command::exec_async(cmd, "list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"brew"s, c->getOutputLines()});
+            pkgs.push_back(
+                rec{cmd.getFilename().toString(), c->getOutputLines()});
         });
     }
 

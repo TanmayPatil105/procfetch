@@ -51,6 +51,22 @@ static void test_Command_async()
     expect(1, status[1], "Exit code"s);
 }
 
+static void test_Command_async2()
+{
+    string out;
+    int lines;
+    auto cmd = Path::of("/bin/ls"s);
+
+    Command::exec_async(cmd, "Makefile"s, [&](auto c) {
+        out = c->getOutput();
+        lines = c->getOutputLines();
+    });
+    Command::wait();
+
+    expect("Makefile\n"s, out, "getOutput()"s);
+    expect(1, lines, "getOutputLines()"s);
+}
+
 static void test_Command_async_exception()
 {
     int status = 0;
@@ -88,6 +104,12 @@ static void test_Path()
     expect(false, p.isRegularFile(), "test -f "s + p.toString());
     expect(false, p.isExecutable(), "test -x "s + p.toString());
     expect(false, p.isDirectory(), "test -d "s + p.toString());
+
+    // getFilename()
+    expect("bar.txt"s, Path::of("/foo/bar.txt").getFilename().toString(),
+           "file"s);
+    expect("etc"s, Path::of("/etc").getFilename().toString(), "directory"s);
+    expect(""s, Path::of("/foo/bar/").getFilename().toString(), "none"s);
 }
 
 static void test_Crayon()
@@ -192,6 +214,7 @@ void test_util()
     test_Command();
     test_Command_exception();
     test_Command_async();
+    test_Command_async2();
     test_Command_async_exception();
     test_Crayon();
     test_Options();

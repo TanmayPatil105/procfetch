@@ -100,6 +100,76 @@ void expect1(const T &want, const T &got, const string &msg, const char *file,
 #define expect(want, got, msg) expect1(want, got, msg, __FILE__, __LINE__)
 
 /**
+ * A Path represents a path.
+ */
+class Path
+{
+  private:
+    filesystem::path path;
+    filesystem::file_status status;
+
+    Path(filesystem::path path, filesystem::file_status status)
+    {
+        this->path = path;
+        this->status = status;
+    }
+
+  public:
+    /**
+     * @returns Path object
+     * @param path
+     */
+    static Path of(const string &path)
+    {
+        return Path(filesystem::path(path), filesystem::status(path));
+    }
+
+    /**
+     * @returns the filename of the path.
+     */
+    Path getFilename()
+    {
+        filesystem::path p = this->path.filename();
+        return Path(p, filesystem::status(p));
+    }
+
+    /**
+     * @returns exists and is a regular file
+     */
+    bool isRegularFile()
+    {
+        return filesystem::is_regular_file(status);
+    }
+
+    /**
+     * @returns exists and is a executable(or searchable)
+     */
+    bool isExecutable()
+    {
+        if (status.permissions() == filesystem::perms::unknown)
+            return false;
+        return (status.permissions() & filesystem::perms::others_exec) !=
+               filesystem::perms::none;
+    }
+
+    /**
+     * @returns exists and is a directory
+     */
+    bool isDirectory()
+    {
+        return filesystem::is_directory(status);
+    }
+
+    /**
+     * @returns readable reprsentation for dev.
+     */
+    string toString() const
+    {
+        return path.string();
+    }
+};
+
+/**
  * Command executes a command in a subshell(shell runs on a forked process).
  *
  * Sample code:
@@ -174,6 +244,18 @@ class Command
     }
 
     /**
+     * Executes the specified command in a new thread.
+     * @param cmd containing the command
+     * @param arg arguments
+     * @param func to be performed after cmd is finished
+     */
+    static void exec_async(const Path &cmd, const string &arg,
+                           const func_type &func)
+    {
+        exec_async(cmd.toString() + " " + arg, func);
+    }
+
+    /**
      * Executes the specified command.
      * @param cmd containing the command to call and its arguments
      * @returns Command object for getting the results.
@@ -233,67 +315,6 @@ class Command
     int getExitCode()
     {
         return exit_code;
-    }
-};
-
-/**
- * A Path represents a path.
- */
-class Path
-{
-  private:
-    filesystem::path path;
-    filesystem::file_status status;
-
-    Path(filesystem::path path, filesystem::file_status status)
-    {
-        this->path = path;
-        this->status = status;
-    }
-
-  public:
-    /**
-     * @returns Path object
-     * @param path
-     */
-    static Path of(const string &path)
-    {
-        return Path(filesystem::path(path), filesystem::status(path));
-    }
-
-    /**
-     * @returns exists and is a regular file
-     */
-    bool isRegularFile()
-    {
-        return filesystem::is_regular_file(status);
-    }
-
-    /**
-     * @returns exists and is a executable(or searchable)
-     */
-    bool isExecutable()
-    {
-        if (status.permissions() == filesystem::perms::unknown)
-            return false;
-        return (status.permissions() & filesystem::perms::others_exec) !=
-               filesystem::perms::none;
-    }
-
-    /**
-     * @returns exists and is a directory
-     */
-    bool isDirectory()
-    {
-        return filesystem::is_directory(status);
-    }
-
-    /**
-     * @returns readable reprsentation for dev.
-     */
-    string toString()
-    {
-        return path.string();
     }
 };
 
