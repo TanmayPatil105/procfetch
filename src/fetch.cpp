@@ -411,13 +411,6 @@ string getPackages()
             pkgs.push_back(rec{"rpm"s, c->getOutputLines()});
         });
     }
-    if (Path::of("/bin/npm"s).isExecutable())
-    {
-        Command::exec_async("npm list"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"npm"s, c->getOutputLines()});
-        });
-    }
     if (Path::of("/bin/emerge"s).isExecutable()) // gentoo
     {
         pkgs.push_back(rec{"portage"s, -1});
