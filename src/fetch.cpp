@@ -422,13 +422,6 @@ string getPackages()
             pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
         });
     }
-    if (Path::of("/bin/dnf"s).isExecutable()) // fedora
-    {
-        Command::exec_async("dnf list installed"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"dnf"s, c->getOutputLines()});
-        });
-    }
     if (Path::of("/bin/zypper"s).isExecutable()) // opensuse
     {
         Command::exec_async("zypper se --installed-only"s, [&](auto c) {
