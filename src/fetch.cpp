@@ -251,14 +251,6 @@ bool resCheck()
 }
 
 /**
- * @returns checks for Battery folder
- */
-bool batteryCheck(string path)
-{
-    return Path::of(path).isDirectory();
-}
-
-/**
  * @returns gets current Screen Resolution
  * @param path
  */
