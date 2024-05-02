@@ -441,11 +441,14 @@ string getPackages()
             pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
         });
     }
-    if (Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s).isExecutable())
+
+    Path cmd = Path::of("/home/linuxbrew/.linuxbrew/bin/brew"s);
+    if (cmd.isExecutable())
     {
-        Command::exec_async("brew list | { tr '' '\n'; }"s, [&](auto c) {
+        Command::exec_async(cmd, "list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"brew"s, c->getOutputLines()});
+            pkgs.push_back(
+                rec{cmd.getFilename().toString(), c->getOutputLines()});
         });
     }
 
@@ -530,31 +533,30 @@ void printBar(string path, int battery)
  */
 void printBattery(string path)
 {
-    string dir_path = path;
-    string capacity_path = path;
+    string dir_path = ""s;
+    string capacity_path;
 
-    vector<filesystem::path> contents = Path::of(path).getDirectoryContents();
+    vector<Path> contents = Path::of(path).getDirectoryContents();
 
-    for (const auto& it : contents)
+    for (auto &dir : contents)
     {
-        if (batteryCheck(dir_path)) 
+        dir_path = dir.toString();
+        if (dir.isDirectory() && dir_path.substr(0, 2) == "BA")
         {
-            string last_folder_name = it.filename().string();
-            if (last_folder_name.substr(0, 2) == "BA")
-            {
-                dir_path = dir_path + "/" + last_folder_name;
-                break;
-            }
+            break;
         }
     }
+
+    /* we don't have battery information */
+    if (dir_path == ""s)
+        return;
+
     capacity_path = dir_path + "/capacity";
     fstream fptr;
     fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    printBar(dir_path, stoi(percent));
-
-    return;
+    printBar(capacity_path, stoi(percent));
 }
 
 /**
