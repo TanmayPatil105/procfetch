@@ -12,4 +12,5 @@ docs/
 *.gcno
 .vscode/
 Doxyfile
+build-deb.sh
 debian-package/

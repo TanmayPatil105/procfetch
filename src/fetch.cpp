@@ -239,7 +239,17 @@ string getSHELL(string path)
  */
 string getDE()
 {
-    return getenv("XDG_CURRENT_DESKTOP");
+    const char *de;
+
+    de = getenv("XDG_CURRENT_DESKTOP");
+    if (de != nullptr)
+        return de;
+
+    de = getenv("XDG_SESSION_DESKTOP");
+    if (de != nullptr)
+        return de;
+
+    return "";
 }
 
 /**
