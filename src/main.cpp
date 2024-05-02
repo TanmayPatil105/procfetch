@@ -53,7 +53,7 @@ void DisplayInfo(bool show_battery)
     auto title = Crayon{}.bright().green();
     auto ye = Crayon{}.yellow();
     string username =
-        ye.text(getuser()) + "@" + ye.text(gethostname("/etc/hostname"));
+        ye.text(getuser()) + "@" + ye.text(gethostname("/proc/sys/kernel/hostname"));
     cout << Crayon{}.underscore().text(username) << endl;
     cout << endl;
 
