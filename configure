@@ -13,6 +13,8 @@ LIB_DIR=/share/procfetch
 
 if [[ -d "/usr/local/opt/gnu-getopt/bin" ]]; then
     PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+elif [[ -d "/opt/homebrew/opt/gnu-getopt/bin" ]]; then
+    PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 fi
 
 function show_usage {
@@ -96,7 +98,8 @@ fi
 BIN_DIR="${PREFIX:-}${BIN_DIR}"
 LIB_DIR="${PREFIX:-/usr}${LIB_DIR}"
 
-for f in Makefile ascii/Makefile src/Makefile src/config.h Doxyfile
+for f in Makefile ascii/Makefile src/Makefile src/config.h \
+         Doxyfile build-deb.sh debian/control
 do
     echo "creating $f"
     sed -e "s/@VERSION@/${VERSION}/g" \
@@ -106,3 +109,5 @@ do
         -e "s:@BIN_DIR@:${BIN_DIR}:g" \
         -e "s:@LIB_DIR@:${LIB_DIR}:g" "$f.in" > "$f"
 done
+
+chmod +x build-deb.sh
