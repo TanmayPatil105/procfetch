@@ -380,35 +380,40 @@ string getPackages()
     {
         Command::exec_async("dpkg -l"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"dpkg"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"dpkg"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/snap"s).isExecutable())
     {
         Command::exec_async("snap list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"snap"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"snap"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/pacman"s).isExecutable())
     {
         Command::exec_async("pacman -Q"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"pacman"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"pacman"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/flatpak"s).isExecutable())
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
         });
     }
     if (Path::of("/var/lib/rpm"s).isExecutable())
     {
         Command::exec_async("rpm -qa"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"rpm"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"rpm"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/emerge"s).isExecutable()) // gentoo
@@ -419,14 +424,16 @@ string getPackages()
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/zypper"s).isExecutable()) // opensuse
     {
         Command::exec_async("zypper se --installed-only"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
         });
     }
 
@@ -435,8 +442,9 @@ string getPackages()
     {
         Command::exec_async(cmd, "list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(
-                rec{cmd.getFilename().toString(), c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(
+                    rec{cmd.getFilename().toString(), c->getOutputLines()});
         });
     }
 
