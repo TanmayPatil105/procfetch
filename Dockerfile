@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends \
-            sudo \
+            adduser sudo \
             make g++ gdb \
             clang-format \
             doxygen graphviz &&\
@@ -14,5 +14,5 @@ RUN apt-get update &&\
 RUN adduser --disabled-password --gecos '' user
 RUN echo 'user ALL=(root) NOPASSWD:ALL' > /etc/sudoers.d/user
 
-USER user
 WORKDIR /home/user
+USER user
