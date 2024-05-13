@@ -380,8 +380,8 @@ string getPackages()
     {
         Command::exec_async("dpkg -l"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
-                pkgs.push_back(rec{"dpkg"s, c->getOutputLines()});
+            if (c->getOutputLines() > 5)
+                pkgs.push_back(rec{"dpkg"s, c->getOutputLines() - 5});
         });
     }
     if (Path::of("/bin/snap"s).isExecutable())
