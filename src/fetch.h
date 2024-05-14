@@ -7,9 +7,11 @@
 #include "config.h"
 #include <algorithm>
 #include <cctype>
+#include <cerrno>
 #include <filesystem>
 #include <fstream>
 #include <functional>
+#include <format>
 #include <iostream>
 #include <map>
 #include <mutex>
