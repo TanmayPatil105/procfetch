@@ -33,29 +33,31 @@
 
 ## Prerequisites
 
+The following versions or newer are required.
+
 for building
 
-* GNU getopt - 2.37.2 or later
-* GNU Make - 4.3 or later
-* GCC - 11.3.0 or later
+* GNU getopt - 2.37.2
+* GNU Make - 4.3
+* GCC - 13.2.0 or Clang - 15.0.0
 
 for macOS, You can install gnu-getopt by runnning the following command.
-```
+```bash
 $ brew install gnu-getopt
 ```
 
 for generating API documents
 
-* Doxygen - 1.9.1 or later
-* Graphviz -2.43.0 or later
+* Doxygen - 1.9.1
+* Graphviz -2.43.0
 
 for contributing
 
-* ClangFormat - 14.0.0 or later
+* ClangFormat - 14.0.0
 
 for generating gif
 
-* vhs - 0.2.0 or later
+* vhs - 0.2.0
 
 ## Documentation
 
