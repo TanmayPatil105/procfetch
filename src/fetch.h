@@ -68,6 +68,8 @@ void print_battery(string path);
 
 void print(string color, string distro_name);
 
+void test_fetch();
+
 // util.cpp
 
 string getColor(string);

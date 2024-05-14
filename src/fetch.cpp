@@ -639,3 +639,13 @@ void print(string color_name, string distro_name)
 
     return;
 }
+
+void test_getuser() 
+{
+    expect(string(getenv("USER")), getuser(), "getuser"s);
+}
+
+void test_fetch()
+{
+    test_getuser();
+}

@@ -4,6 +4,7 @@
 #include "fetch.h"
 
 void DisplayInfo(bool show_battery);
+void test_suite();
 
 /**
  * @returns
@@ -26,7 +27,7 @@ int main(int argc, char *argv[])
         // no-op
         break;
     case Mode::EXEC_TEST:
-        test_util();
+        test_suite();
         cout << Crayon{}.green().text("All unit tests passed."s) << endl;
         return 0;
     case Mode::SHOW_VERSION:
@@ -99,4 +100,9 @@ void DisplayInfo(bool show_battery)
     }
 
     cout << endl;
+}
+
+void test_suite() {
+    test_fetch();
+    test_util();
 }
