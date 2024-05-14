@@ -23,7 +23,7 @@ jobs:
       run: |
         brew install gnu-getopt
     - name: configure
-      run: ./configure
+      run: ./configure --with-cxx=clang++
     - name: build
       run: make
     - name: check
