@@ -8,9 +8,9 @@ std::vector<std::runtime_error> Command::exceptions;
 std::mutex Command::mtx;
 string Context::PACKAGE_DELIM = "; "s;
 
-#include <unistd.h>
-#include <string.h>
 #include <pwd.h>
+#include <string.h>
+#include <unistd.h>
 /**
  * @returns gets the username
  * @throws runtime_error failed to get username
@@ -18,8 +18,10 @@ string Context::PACKAGE_DELIM = "; "s;
 string getuser()
 {
     auto *p = getpwuid(getuid());
-    if (p == NULL) {
-        throw runtime_error(format("Could not get struct passwd: {}", strerror(errno)));
+    if (p == NULL)
+    {
+        throw runtime_error(
+            format("Could not get struct passwd: {}", strerror(errno)));
     }
 
     return p->pw_name;

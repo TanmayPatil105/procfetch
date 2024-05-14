@@ -9,9 +9,9 @@
 #include <cctype>
 #include <cerrno>
 #include <filesystem>
+#include <format>
 #include <fstream>
 #include <functional>
-#include <format>
 #include <iostream>
 #include <map>
 #include <mutex>
