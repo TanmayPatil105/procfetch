@@ -102,7 +102,8 @@ void DisplayInfo(bool show_battery)
     cout << endl;
 }
 
-void test_suite() {
+void test_suite()
+{
     test_fetch();
     test_util();
 }
