@@ -498,7 +498,7 @@ void print_bar(int battery)
         emoji = "\n🔌 ";
     }
 
-    int width = 50;
+    int width = 40;
     int pos = width * battery / 100.0;
 
     cout << emoji << green.text(to_string(battery) + "% ") << green.text("[");
