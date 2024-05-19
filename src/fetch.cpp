@@ -151,8 +151,8 @@ string getRAM(string path)
 {
     fstream fptr;
     fptr.open(path, ios::in);
-    string line, sub, shmem;
-    string total, free;
+    string line, sub;
+    string total, avail;
     while (fptr)
     {
         getline(fptr, line);
@@ -161,16 +161,13 @@ string getRAM(string path)
         {
             total = line;
         }
-        if (sub == "MemAvailable")
+        else if (sub == "MemAvailable")
         {
-            free = line;
-        }
-        if (sub == "Buffers")
-        {
-            shmem = line;
+            avail = line;
             break;
         }
     }
+
     size_t i;
     for (i = 0; i < total.size(); i++)
     {
@@ -181,32 +178,22 @@ string getRAM(string path)
     }
     total = total.substr(i);
     total = total.substr(0, total.find(" "));
-    for (i = 0; i < free.size(); i++)
+
+    for (i = 0; i < avail.size(); i++)
     {
-        if (isdigit(free[i]))
+        if (isdigit(avail[i]))
         {
             break;
         }
     }
-    free = free.substr(i);
-    free = free.substr(0, free.find(" "));
-
-    for (i = 0; i < shmem.size(); i++)
-    {
-        if (isdigit(shmem[i]))
-        {
-            break;
-        }
-    }
-
-    shmem = shmem.substr(i);
-    shmem = shmem.substr(0, shmem.find(" "));
+    avail = avail.substr(i);
+    avail = avail.substr(0, avail.find(" "));
 
     int memTotal = stoi(total);
-    int memFree = stoi(free);
-    int memAvail = (memTotal - memFree) - stoi(shmem);
+    int memAvail = stoi(avail);
+    int memUsed = memTotal - memAvail;
 
-    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) +
+    return to_string(memUsed / 1024) + "MiB / " + to_string(memTotal / 1024) +
            "MiB";
 }
 
