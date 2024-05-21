@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['test_5futil_53',['test_util',['../fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d',1,'test_util():&#160;util.cpp'],['../util_8cpp.html#a75d79411d2a46aab2a7ef1ff8e23b65d',1,'test_util():&#160;util.cpp']]],
-  ['text_54',['text',['../classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625',1,'Crayon']]],
-  ['tostring_55',['toString',['../classPath.html#ab8d8bb2665c65fee9880254fe2277938',1,'Path']]]
+  ['test_5futil_54',['test_util',['../fetch_8h.html#a75d79411d2a46aab2a7ef1ff8e23b65d',1,'test_util():&#160;util.cpp'],['../util_8cpp.html#a75d79411d2a46aab2a7ef1ff8e23b65d',1,'test_util():&#160;util.cpp']]],
+  ['text_55',['text',['../classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625',1,'Crayon']]],
+  ['tostring_56',['toString',['../classPath.html#ab8d8bb2665c65fee9880254fe2277938',1,'Path']]]
 ];
