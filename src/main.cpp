@@ -95,7 +95,7 @@ void DisplayInfo(bool show_battery)
 
     if (show_battery)
     {
-        print_battery("/sys/class/power_supply/BAT0/capacity");
+        printBattery("/sys/class/power_supply/");
     }
 
     cout << endl;

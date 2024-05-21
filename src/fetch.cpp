@@ -474,13 +474,14 @@ bool isCharging(string path)
 /**
  * @brief Utility to print battery perecentage bar
  */
-void print_bar(int battery)
+void printBar(string path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
-
+    string status_path = path + "/status";
     string emoji = "\n🔋 ";
-    if (isCharging("/sys/class/power_supply/BAT0/status"))
+
+    if (isCharging(status_path))
     {
         emoji = "\n🔌 ";
     }
@@ -513,22 +514,40 @@ void print_bar(int battery)
  * @returns prints battery percentage bar
  * @param path
  */
-void print_battery(string path)
+void printBattery(string path)
 {
+    string dir_path = ""s;
+    string capacity_path;
+
+    vector<Path> contents = Path::of(path).getDirectoryContents();
+
+    for (auto &dir : contents)
+    {
+        if (dir.isDirectory() &&
+            dir.getFilename().toString().substr(0, 2) == "BA")
+        {
+            dir_path = dir.toString();
+            break;
+        }
+    }
+
+    /* we don't have battery information */
+    if (dir_path == ""s)
+        return;
+
+    capacity_path = dir_path + "/capacity";
     fstream fptr;
-    fptr.open(path, ios::in);
+    fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    print_bar(stoi(percent));
-
-    return;
+    printBar(capacity_path, stoi(percent));
 }
 
 /**
  * @param art
  * @param color_name
  */
-void print_process(string art, string color_name)
+void printProcess(string art, string color_name)
 {
     string path = LIB_DIR + "/ascii/"s + art;
     fstream fptr;
@@ -606,12 +625,12 @@ void print(string color_name, string distro_name)
     {
         if (os.find(key) != string::npos)
         {
-            print_process(value, color_name);
+            printProcess(value, color_name);
             return;
         }
     }
 
-    print_process("linux.ascii", color_name);
+    printProcess("linux.ascii", color_name);
 
     return;
 }
