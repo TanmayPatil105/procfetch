@@ -108,9 +108,11 @@ static void test_Path()
     // directory is not empty
     p = Path::of("/bin"s);
     vector<Path> directoryContents = p.getDirectoryContents();
-    expect(true, !Path::of("/bin"s).getDirectoryContents().empty(), "Directory is not empty");
+    expect(true, !Path::of("/bin"s).getDirectoryContents().empty(),
+           "Directory is not empty");
     expect(true, Path::of("/bin/ls"s).getDirectoryContents().empty(), "file");
-    expect(true, Path::of("/non_existent_dir"s).getDirectoryContents().empty(), "file");
+    expect(true, Path::of("/non_existent_dir"s).getDirectoryContents().empty(),
+           "file");
 
     // getFilename()
     expect("bar.txt"s, Path::of("/foo/bar.txt").getFilename().toString(),

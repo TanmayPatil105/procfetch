@@ -523,9 +523,10 @@ void printBattery(string path)
 
     for (auto &dir : contents)
     {
-        dir_path = dir.toString();
-        if (dir.isDirectory() && dir_path.substr(0, 2) == "BA")
+        if (dir.isDirectory() &&
+            dir.getFilename().toString().substr(0, 2) == "BA")
         {
+            dir_path = dir.toString();
             break;
         }
     }
