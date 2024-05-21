@@ -3,6 +3,7 @@ src/config.h
 src/procfetch
 src/Makefile
 ascii/Makefile
+debian/control
 *.o
 dist/
 docs/
@@ -12,4 +13,5 @@ docs/
 *.gcno
 .vscode/
 Doxyfile
+build-deb.sh
 debian-package/

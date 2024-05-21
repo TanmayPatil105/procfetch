@@ -151,8 +151,8 @@ string getRAM(string path)
 {
     fstream fptr;
     fptr.open(path, ios::in);
-    string line, sub, shmem;
-    string total, free;
+    string line, sub;
+    string total, avail;
     while (fptr)
     {
         getline(fptr, line);
@@ -161,16 +161,13 @@ string getRAM(string path)
         {
             total = line;
         }
-        if (sub == "MemAvailable")
+        else if (sub == "MemAvailable")
         {
-            free = line;
-        }
-        if (sub == "Buffers")
-        {
-            shmem = line;
+            avail = line;
             break;
         }
     }
+
     size_t i;
     for (i = 0; i < total.size(); i++)
     {
@@ -181,32 +178,22 @@ string getRAM(string path)
     }
     total = total.substr(i);
     total = total.substr(0, total.find(" "));
-    for (i = 0; i < free.size(); i++)
+
+    for (i = 0; i < avail.size(); i++)
     {
-        if (isdigit(free[i]))
+        if (isdigit(avail[i]))
         {
             break;
         }
     }
-    free = free.substr(i);
-    free = free.substr(0, free.find(" "));
-
-    for (i = 0; i < shmem.size(); i++)
-    {
-        if (isdigit(shmem[i]))
-        {
-            break;
-        }
-    }
-
-    shmem = shmem.substr(i);
-    shmem = shmem.substr(0, shmem.find(" "));
+    avail = avail.substr(i);
+    avail = avail.substr(0, avail.find(" "));
 
     int memTotal = stoi(total);
-    int memFree = stoi(free);
-    int memAvail = (memTotal - memFree) - stoi(shmem);
+    int memAvail = stoi(avail);
+    int memUsed = memTotal - memAvail;
 
-    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) +
+    return to_string(memUsed / 1024) + "MiB / " + to_string(memTotal / 1024) +
            "MiB";
 }
 
@@ -239,7 +226,17 @@ string getSHELL(string path)
  */
 string getDE()
 {
-    return getenv("XDG_CURRENT_DESKTOP");
+    const char *de;
+
+    de = getenv("XDG_CURRENT_DESKTOP");
+    if (de != nullptr)
+        return de;
+
+    de = getenv("XDG_SESSION_DESKTOP");
+    if (de != nullptr)
+        return de;
+
+    return "";
 }
 
 /**
@@ -370,42 +367,40 @@ string getPackages()
     {
         Command::exec_async("dpkg -l"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"dpkg"s, c->getOutputLines()});
+            if (c->getOutputLines() > 5)
+                pkgs.push_back(rec{"dpkg"s, c->getOutputLines() - 5});
         });
     }
     if (Path::of("/bin/snap"s).isExecutable())
     {
         Command::exec_async("snap list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"snap"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"snap"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/pacman"s).isExecutable())
     {
         Command::exec_async("pacman -Q"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"pacman"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"pacman"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/flatpak"s).isExecutable())
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
         });
     }
     if (Path::of("/var/lib/rpm"s).isExecutable())
     {
         Command::exec_async("rpm -qa"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"rpm"s, c->getOutputLines()});
-        });
-    }
-    if (Path::of("/bin/npm"s).isExecutable())
-    {
-        Command::exec_async("npm list"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"npm"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"rpm"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/emerge"s).isExecutable()) // gentoo
@@ -416,21 +411,16 @@ string getPackages()
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
-        });
-    }
-    if (Path::of("/bin/dnf"s).isExecutable()) // fedora
-    {
-        Command::exec_async("dnf list installed"s, [&](auto c) {
-            std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"dnf"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
         });
     }
     if (Path::of("/bin/zypper"s).isExecutable()) // opensuse
     {
         Command::exec_async("zypper se --installed-only"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
         });
     }
 
@@ -439,8 +429,9 @@ string getPackages()
     {
         Command::exec_async(cmd, "list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            pkgs.push_back(
-                rec{cmd.getFilename().toString(), c->getOutputLines()});
+            if (c->getOutputLines() > 0)
+                pkgs.push_back(
+                    rec{cmd.getFilename().toString(), c->getOutputLines()});
         });
     }
 
@@ -495,7 +486,7 @@ void printBar(string path, int battery)
         emoji = "\n🔌 ";
     }
 
-    int width = 50;
+    int width = 40;
     int pos = width * battery / 100.0;
 
     cout << emoji << green.text(to_string(battery) + "% ") << green.text("[");
