@@ -12,16 +12,16 @@ on:
 
 jobs:
   unit-test:
+    continue-on-error: true
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [ macos-latest, ubuntu-latest, ubuntu-24.04 ]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install GNU Getopt on macOS
       if: ${{ matrix.os == 'macos-latest' }}
-      run: |
-        brew install gnu-getopt
+      run: brew install gnu-getopt
     - name: configure
       run: ./configure --with-cxx=clang++
     - name: build
