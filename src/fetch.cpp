@@ -162,8 +162,8 @@ string getRAM(string path)
 {
     fstream fptr;
     fptr.open(path, ios::in);
-    string line, sub, shmem;
-    string total, free;
+    string line, sub;
+    string total, avail;
     while (fptr)
     {
         getline(fptr, line);
@@ -172,16 +172,13 @@ string getRAM(string path)
         {
             total = line;
         }
-        if (sub == "MemAvailable")
+        else if (sub == "MemAvailable")
         {
-            free = line;
-        }
-        if (sub == "Buffers")
-        {
-            shmem = line;
+            avail = line;
             break;
         }
     }
+
     size_t i;
     for (i = 0; i < total.size(); i++)
     {
@@ -192,32 +189,22 @@ string getRAM(string path)
     }
     total = total.substr(i);
     total = total.substr(0, total.find(" "));
-    for (i = 0; i < free.size(); i++)
+
+    for (i = 0; i < avail.size(); i++)
     {
-        if (isdigit(free[i]))
+        if (isdigit(avail[i]))
         {
             break;
         }
     }
-    free = free.substr(i);
-    free = free.substr(0, free.find(" "));
-
-    for (i = 0; i < shmem.size(); i++)
-    {
-        if (isdigit(shmem[i]))
-        {
-            break;
-        }
-    }
-
-    shmem = shmem.substr(i);
-    shmem = shmem.substr(0, shmem.find(" "));
+    avail = avail.substr(i);
+    avail = avail.substr(0, avail.find(" "));
 
     int memTotal = stoi(total);
-    int memFree = stoi(free);
-    int memAvail = (memTotal - memFree) - stoi(shmem);
+    int memAvail = stoi(avail);
+    int memUsed = memTotal - memAvail;
 
-    return to_string(memAvail / 1024) + "MiB / " + to_string(memTotal / 1024) +
+    return to_string(memUsed / 1024) + "MiB / " + to_string(memTotal / 1024) +
            "MiB";
 }
 
@@ -498,18 +485,19 @@ bool isCharging(string path)
 /**
  * @brief Utility to print battery perecentage bar
  */
-void print_bar(int battery)
+void printBar(string path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
-
+    string status_path = path + "/status";
     string emoji = "\n🔋 ";
-    if (isCharging("/sys/class/power_supply/BAT0/status"))
+
+    if (isCharging(status_path))
     {
         emoji = "\n🔌 ";
     }
 
-    int width = 50;
+    int width = 40;
     int pos = width * battery / 100.0;
 
     cout << emoji << green.text(to_string(battery) + "% ") << green.text("[");
@@ -537,22 +525,40 @@ void print_bar(int battery)
  * @returns prints battery percentage bar
  * @param path
  */
-void print_battery(string path)
+void printBattery(string path)
 {
+    string dir_path = ""s;
+    string capacity_path;
+
+    vector<Path> contents = Path::of(path).getDirectoryContents();
+
+    for (auto &dir : contents)
+    {
+        if (dir.isDirectory() &&
+            dir.getFilename().toString().substr(0, 2) == "BA")
+        {
+            dir_path = dir.toString();
+            break;
+        }
+    }
+
+    /* we don't have battery information */
+    if (dir_path == ""s)
+        return;
+
+    capacity_path = dir_path + "/capacity";
     fstream fptr;
-    fptr.open(path, ios::in);
+    fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    print_bar(stoi(percent));
-
-    return;
+    printBar(capacity_path, stoi(percent));
 }
 
 /**
  * @param art
  * @param color_name
  */
-void print_process(string art, string color_name)
+void printProcess(string art, string color_name)
 {
     string path = LIB_DIR + "/ascii/"s + art;
     fstream fptr;
@@ -630,12 +636,12 @@ void print(string color_name, string distro_name)
     {
         if (os.find(key) != string::npos)
         {
-            print_process(value, color_name);
+            printProcess(value, color_name);
             return;
         }
     }
 
-    print_process("linux.ascii", color_name);
+    printProcess("linux.ascii", color_name);
 
     return;
 }
