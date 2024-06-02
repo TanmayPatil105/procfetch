@@ -21,7 +21,7 @@ string getuser()
     if (p == NULL)
     {
         throw runtime_error(
-            format("Could not get struct passwd: {}", strerror(errno)));
+            "Could not get struct passwd: "s + strerror(errno));
     }
 
     return p->pw_name;
