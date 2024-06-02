@@ -15,7 +15,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-24.04 ]
+        os: [ macos-latest, ubuntu-latest, ubuntu-24.04 ]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
