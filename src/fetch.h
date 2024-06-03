@@ -7,6 +7,7 @@
 #include "config.h"
 #include <algorithm>
 #include <cctype>
+#include <cerrno>
 #include <filesystem>
 #include <fstream>
 #include <functional>
@@ -65,6 +66,8 @@ string getPackages();
 void printBattery(string path);
 
 void print(string color, string distro_name);
+
+void test_fetch();
 
 // util.cpp
 

@@ -3,7 +3,7 @@ SRCS = fetch.cpp main.cpp util.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 CXX = @CXX@
-CXXFLAGS = -std=c++2a -Wall -Wextra --pedantic-errors @CXXFLAGS@
+CXXFLAGS = -std=c++17 -Wall -Wextra --pedantic-errors @CXXFLAGS@
 LIBS = @LIBS@
 LDFLAGS = -pthread
 

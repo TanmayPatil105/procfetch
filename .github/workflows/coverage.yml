@@ -1,4 +1,4 @@
-name: Coverage Testing
+name: Coverage Testing on public beta of Ubuntu 24.04
 
 on:
   push:
@@ -12,9 +12,9 @@ on:
 
 jobs:
   coverage-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: configure
       run: ./configure --enable-code-coverage
     - name: build
