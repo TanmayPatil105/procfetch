@@ -26,10 +26,6 @@ int main(int argc, char *argv[])
     case Mode::NORMAL:
         // no-op
         break;
-    case Mode::EXEC_TEST:
-        test_suite();
-        cout << Crayon{}.green().text("All unit tests passed."s) << endl;
-        return 0;
     case Mode::SHOW_VERSION:
         cout << VERSION << endl;
         return 0;
@@ -100,10 +96,4 @@ void DisplayInfo(bool show_battery)
     }
 
     cout << endl;
-}
-
-void test_suite()
-{
-    test_fetch();
-    test_util();
 }
