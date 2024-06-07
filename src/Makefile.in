@@ -23,7 +23,7 @@ build-test:	$(TESTS)
 check: build-test
 	./$(TEST_TARGET)
 gcov:
-	gcov $(SRCS)
+	gcov $(TESTS)
 clean:
 	- rm -f $(TARGET) $(OBJS) $(TEST_TARGET) $(TEST_OBJS) *.gcov *.gcda *.gcno
 install: all
