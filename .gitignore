@@ -1,6 +1,7 @@
 /Makefile
 src/config.h
 src/procfetch
+src/test
 src/Makefile
 ascii/Makefile
 debian/control

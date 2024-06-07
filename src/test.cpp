@@ -1,7 +1,59 @@
-/**
+/*
  * @file
  */
+#include "color.h"
 #include "fetch.h"
+
+/**
+ * Tests that want and got are equal.
+ * Fails with the supplied failure message, file and line then halt.
+ * @param want
+ * @param got
+ * @param msg
+ * @param file
+ * @param line
+ */
+template <typename T>
+void expect1(const T &want, const T &got, const string &msg, const char *file,
+             int line)
+{
+    if (want == got)
+        return;
+
+    if (msg.length() != 0)
+        cout << file << ":"s << line << ": Error: "s << msg << " want ("s
+             << want << "), but got ("s << got << ")"s << endl;
+    else
+        cout << file << ":"s << line << ": Error: want ("s << want
+             << "), but got ("s << got << ")"s << endl;
+
+    exit(1);
+}
+#define expect(want, got, msg) expect1(want, got, msg, __FILE__, __LINE__)
+
+/*
+ * .---------------------------------------------.
+ * |                FETCH TESTS                  |
+ * '---------------------------------------------'
+ */
+static void test_getuser()
+{
+    expect(string(getenv("USER")), getuser(), "getuser"s);
+}
+
+/*
+ * Test fetch functions
+ */
+static void test_fetch()
+{
+    test_getuser();
+}
+
+/*
+ * .---------------------------------------------.
+ * |                UTILS TESTS                  |
+ * '---------------------------------------------'
+ */
 
 static void test_Command()
 {
@@ -176,20 +228,6 @@ static void test_Options_full()
     testhelper_Options("full", argc, argv, expect, 6); // remains last "arg"
 }
 
-static void test_Options_test()
-{
-    int argc = 2;
-    const char *argv[] = {"procfetch", "-t", NULL};
-
-    Options expect;
-    expect.mode = Mode::EXEC_TEST;
-    expect.color_name = "def"s;
-    expect.distro_name = "def"s;
-    expect.show_battery = false;
-
-    testhelper_Options("test", argc, argv, expect, 2);
-}
-
 static void test_Options_version()
 {
     int argc = 2;
@@ -208,7 +246,6 @@ static void test_Options()
 {
     test_Options_default();
     test_Options_full();
-    test_Options_test();
     test_Options_version();
 }
 
@@ -217,7 +254,7 @@ static void test_Options()
  * * class Path
  * * class Command
  */
-void test_util()
+static void test_util()
 {
     test_Path();
     test_Command();
@@ -227,4 +264,12 @@ void test_util()
     test_Command_async_exception();
     test_Crayon();
     test_Options();
+}
+
+int main()
+{
+    test_fetch();
+    test_util();
+
+    cout << Crayon{}.green().text("All unit tests passed."s) << endl;
 }
