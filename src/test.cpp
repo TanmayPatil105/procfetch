@@ -272,4 +272,6 @@ int main()
     test_util();
 
     cout << Crayon{}.green().text("All unit tests passed."s) << endl;
+
+    return 0;
 }
