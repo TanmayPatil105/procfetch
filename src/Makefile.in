@@ -1,11 +1,16 @@
 TARGET = procfetch
-SRCS = fetch.cpp main.cpp util.cpp
+SRCS = fetch.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 CXX = @CXX@
 CXXFLAGS = -std=c++17 -Wall -Wextra --pedantic-errors @CXXFLAGS@
 LIBS = @LIBS@
 LDFLAGS = -pthread
+
+TEST_TARGET = test
+TEST_SRCS = test.cpp fetch.cpp
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)
+TEST_LDFLAGS = $(LDFLAGS) -no-pie
 
 INSTALL = /usr/bin/install -c -D
 FORMATTER = clang-format -i
@@ -14,28 +19,27 @@ BIN_DIR = @BIN_DIR@
 all: $(TARGET)
 run: all
 	./$(TARGET)
-check: all
-	@if test -f not_existence; then \
-		echo "Error: It is assumed that file 'not_existence' DOES NOT exist." ;\
-		false ;\
-	fi
-	./$(TARGET) -t
+build-test:	$(TEST_TARGET)
+check: build-test
+	./$(TEST_TARGET)
 gcov:
-	gcov $(SRCS)
+	gcov $(TEST_TARGET)
 clean:
-	- rm -f $(TARGET) $(OBJS) *.gcov *.gcda *.gcno
+	- rm -f $(TARGET) $(OBJS) $(TEST_TARGET) $(TEST_OBJS) *.gcov *.gcda *.gcno
 install: all
 	@echo "Installing $(BIN_DIR)/$(TARGET) ..."
 	$(INSTALL) $(TARGET) "$(BIN_DIR)/$(TARGET)"
 uninstall:
 	- rm "$(BIN_DIR)/$(TARGET)"
 format:
-	$(FORMATTER) $(SRCS) *.h
+	$(FORMATTER) $(SRCS) $(TEST_TARGET) *.h
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LIBS) $(LDFLAGS)
+$(TEST_TARGET): $(TEST_OBJS)
+	$(CXX) -o $@ $(TEST_OBJS) $(LIBS) $(TEST_LDFLAGS)
 main.o:  fetch.h color.h config.h
 fetch.o: fetch.h color.h
-util.o:  fetch.h color.h
+test.o: fetch.h color.h
 
-.PHONY: all run check gcov clean docs install uninstall dist format gif
+.PHONY: all run check gcov clean docs install uninstall dist format gif build-test

@@ -20,8 +20,7 @@ string getuser()
     auto *p = getpwuid(getuid());
     if (p == NULL)
     {
-        throw runtime_error(
-            "Could not get struct passwd: "s + strerror(errno));
+        throw runtime_error("Could not get struct passwd: "s + strerror(errno));
     }
 
     return p->pw_name;
@@ -644,14 +643,4 @@ void print(string color_name, string distro_name)
     printProcess("linux.ascii", color_name);
 
     return;
-}
-
-void test_getuser()
-{
-    expect(string(getenv("USER")), getuser(), "getuser"s);
-}
-
-void test_fetch()
-{
-    test_getuser();
 }
