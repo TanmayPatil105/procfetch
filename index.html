@@ -129,19 +129,22 @@ Documentation</h1>
 <h1><a class="anchor" id="autotoc_md9"></a>
 Installation</h1>
 <h2><a class="anchor" id="autotoc_md10"></a>
+For Debian, Ubuntu, Mint etc..</h2>
+<p>Download .deb packages from <a href="https://github.com/TanmayPatil105/procfetch/releases/latest">release</a> page.</p>
+<h2><a class="anchor" id="autotoc_md11"></a>
 Brew</h2>
 <div class="fragment"><div class="line">$ brew tap TanmayPatil105/tap</div>
 </div><!-- fragment --> <div class="fragment"><div class="line">$ brew install procfetch</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
 Manually</h2>
 <div class="fragment"><div class="line">$ git clone https://github.com/TanmayPatil105/procfetch.git; cd procfetch</div>
 </div><!-- fragment --> <div class="fragment"><div class="line">$ ./configure</div>
 </div><!-- fragment --> <div class="fragment"><div class="line">$ sudo make install</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md12"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md13"></a>
 Uninstallation</h1>
 <div class="fragment"><div class="line">$ sudo make uninstall</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Usage</h1>
 <ul>
 <li><code>-v</code> to show version <div class="fragment"><div class="line">$ procfetch -v</div>
@@ -153,7 +156,7 @@ Usage</h1>
 <li><code>-b</code> to display battery percentage <div class="fragment"><div class="line">$ procfetch -b</div>
 </div><!-- fragment --></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md14"></a>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Customise</h1>
 <p>Add the following lines to your <code>.bash_profile</code>, <code>.bashrc</code> or <code>.zshrc</code> to customise <code>procfetch</code></p>
 <div class="fragment"><div class="line"># print default ascii art of Manjaro</div>
@@ -162,7 +165,7 @@ Customise</h1>
 <div class="line">alias procfetch=&quot;procfetch -d Kali -a cyan&quot;</div>
 </div><!-- fragment --><div class="fragment"><div class="line"># print battery percentage</div>
 <div class="line">alias procfetch=&quot;procfetch -b&quot;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md16"></a>
 Docker</h1>
 <p>Define environment variable <code>PROCFETCH</code> in the actual project home directory.</p>
 <div class="fragment"><div class="line">$ PROCFETCH=$HOME/procfetch</div>
@@ -171,7 +174,7 @@ Docker</h1>
 </div><!-- fragment --><p>Build with Docker container </p><div class="fragment"><div class="line">$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make</div>
 </div><!-- fragment --><p>Run with Docker container </p><div class="fragment"><div class="line">$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make run</div>
 </div><!-- fragment --><p>Test with Docker container </p><div class="fragment"><div class="line">$ docker run --rm -v $PROCFETCH:/procfetch -w /procfetch procfetch make check</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
 Contributing</h2>
 <p>Make sure reading <a href="https://github.com/TanmayPatil105/procfetch/blob/main/CONTRIBUTING.md">Contributing.md</a> before Contributing </p>
 </div></div><!-- PageDoc -->
