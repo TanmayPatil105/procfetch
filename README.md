@@ -65,6 +65,9 @@ See the [documentation](https://tanmaypatil105.github.io/procfetch/)
 
 ## Installation
 
+### For Debian, Ubuntu, Mint etc..
+Download .deb packages from [release](https://github.com/TanmayPatil105/procfetch/releases/latest) page.
+
 ### Brew
 ```
 $ brew tap TanmayPatil105/tap
