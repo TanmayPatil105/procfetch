@@ -246,195 +246,196 @@ $(function() {
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            {</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                <span class="keyword">auto</span> result = exec(cmd);</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                func(result);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            }</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            <span class="keywordflow">catch</span> (<span class="keyword">const</span> runtime_error &amp;e)</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            {</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;                std::lock_guard&lt;std::mutex&gt; lock(mtx);</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;                exceptions.push_back(e);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            }</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        }));</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classCommand.html#a53429828cf2d954e496dd828f18feb04">  240</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classCommand.html#a53429828cf2d954e496dd828f18feb04">exec_async</a>(<span class="keyword">const</span> <a class="code" href="classPath.html">Path</a> &amp;cmd, <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;arg,</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                           <span class="keyword">const</span> func_type &amp;func)</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        exec_async(cmd.<a class="code" href="classPath.html#ab8d8bb2665c65fee9880254fe2277938">toString</a>() + <span class="stringliteral">&quot; &quot;</span> + arg, func);</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    }</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="line" href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">  252</a></span>&#160;    <span class="keyword">static</span> <a class="code" href="classCommand.html">Command</a> *<a class="code" href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">exec</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;cmd)</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    {</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keyword">auto</span> result = <span class="keyword">new</span> <a class="code" href="classCommand.html">Command</a>();</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <span class="keywordflow">if</span> (cmd == <span class="stringliteral">&quot;./not-executable&quot;</span>s)</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        {</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;popen failed: \&quot;&quot;</span>s + cmd + <span class="stringliteral">&quot;\&quot;&quot;</span>s);</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        }</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        FILE *pipe = popen(cmd.c_str(), <span class="stringliteral">&quot;r&quot;</span>);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="keywordflow">if</span> (!pipe)</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        {</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;popen failed: \&quot;&quot;</span>s + cmd + <span class="stringliteral">&quot;\&quot;&quot;</span>s);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        }</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordtype">int</span> c;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordflow">while</span> ((c = fgetc(pipe)) != EOF)</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        {</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;\n&#39;</span>)</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            {</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;                result-&gt;lines += 1;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            }</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            result-&gt;output += c;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        }</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="comment">// Don&#39;t concise below 2 lines. It must be assigned to a variable for</span></div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="comment">// macOS.</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keywordtype">int</span> n = pclose(pipe);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        result-&gt;exit_code = WEXITSTATUS(n);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    }</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno"><a class="line" href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">  287</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">getOutput</a>()</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    {</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    }</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
-<div class="line"><a name="l00295"></a><span class="lineno"><a class="line" href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">  295</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">getOutputLines</a>()</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    {</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <span class="keywordflow">return</span> lines;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    }</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno"><a class="line" href="classCommand.html#a41a0a3360bdfddabfff631ef713b898b">  303</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classCommand.html#a41a0a3360bdfddabfff631ef713b898b">getExitCode</a>()</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    {</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordflow">return</span> exit_code;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    }</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;};</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno"><a class="line" href="classCrayon.html">  312</a></span>&#160;<span class="keyword">class </span><a class="code" href="classCrayon.html">Crayon</a></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;{</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordtype">string</span> escape_codes;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keyword">inline</span> <span class="keyword">static</span> map&lt;string, string&gt; m = {</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        {<span class="stringliteral">&quot;RED&quot;</span>, RED},         {<span class="stringliteral">&quot;GREEN&quot;</span>, GREEN},   {<span class="stringliteral">&quot;BLACK&quot;</span>, BLACK},</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        {<span class="stringliteral">&quot;YELLOW&quot;</span>, YELLOW},   {<span class="stringliteral">&quot;BLUE&quot;</span>, BLUE},     {<span class="stringliteral">&quot;MAGENTA&quot;</span>, MAGENTA},</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        {<span class="stringliteral">&quot;CYAN&quot;</span>, CYAN},       {<span class="stringliteral">&quot;WHITE&quot;</span>, WHITE},   {<span class="stringliteral">&quot;BBLACK&quot;</span>, BBLACK},</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        {<span class="stringliteral">&quot;BGRAY&quot;</span>, BGRAY},     {<span class="stringliteral">&quot;BRED&quot;</span>, BRED},     {<span class="stringliteral">&quot;BGREEN&quot;</span>, BGREEN},</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        {<span class="stringliteral">&quot;BYELLOW&quot;</span>, BYELLOW}, {<span class="stringliteral">&quot;BBLUE&quot;</span>, BBLUE},   {<span class="stringliteral">&quot;BMAGENTA&quot;</span>, BMAGENTA},</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        {<span class="stringliteral">&quot;BCYAN&quot;</span>, BCYAN},     {<span class="stringliteral">&quot;BWHITE&quot;</span>, BWHITE},</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    };</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> getColor(<span class="keywordtype">string</span> s)</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    {</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        <span class="keywordflow">return</span> m[s];</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    }</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00334"></a><span class="lineno"><a class="line" href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">  334</a></span>&#160;    <a class="code" href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon</a>()</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    {</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        escape_codes = <span class="stringliteral">&quot;&quot;</span>s;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    }</div>
-<div class="line"><a name="l00341"></a><span class="lineno"><a class="line" href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">  341</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">bright</a>()</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        escape_codes += BRIGHT;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    }</div>
-<div class="line"><a name="l00349"></a><span class="lineno"><a class="line" href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">  349</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">underscore</a>()</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    {</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        escape_codes += UNDERSCORE;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    }</div>
-<div class="line"><a name="l00358"></a><span class="lineno"><a class="line" href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">  358</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">color</a>(<span class="keywordtype">string</span> color)</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    {</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        escape_codes += getColor(color);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    }</div>
-<div class="line"><a name="l00364"></a><span class="lineno"><a class="line" href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">  364</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">red</a>()</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    {</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        escape_codes += RED;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    }</div>
-<div class="line"><a name="l00370"></a><span class="lineno"><a class="line" href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">  370</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">green</a>()</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    {</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        escape_codes += GREEN;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    }</div>
-<div class="line"><a name="l00376"></a><span class="lineno"><a class="line" href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">  376</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">yellow</a>()</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    {</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        escape_codes += YELLOW;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    }</div>
-<div class="line"><a name="l00385"></a><span class="lineno"><a class="line" href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">  385</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">text</a>(<span class="keywordtype">string</span> s)</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    {</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <span class="keywordflow">return</span> escape_codes + s + RESET;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    }</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;};</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160; </div>
-<div class="line"><a name="l00391"></a><span class="lineno"><a class="line" href="classContext.html">  391</a></span>&#160;<span class="keyword">class </span><a class="code" href="classContext.html">Context</a></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;{</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> PACKAGE_DELIM;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;};</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160; </div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="keyword">enum class</span> Mode</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;{</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    NORMAL,</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    SHOW_VERSION,</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;};</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
-<div class="line"><a name="l00403"></a><span class="lineno"><a class="line" href="classOptions.html">  403</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOptions.html">Options</a></div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;{</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    Mode mode = Mode::NORMAL;</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="keywordtype">string</span> color_name = <span class="stringliteral">&quot;def&quot;</span>s;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keywordtype">string</span> distro_name = <span class="stringliteral">&quot;def&quot;</span>s;</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="keywordtype">bool</span> show_battery = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    <a class="code" href="classOptions.html">Options</a>(){};</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <a class="code" href="classOptions.html">Options</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    {</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;        <span class="keywordtype">int</span> opt;</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        <span class="keywordflow">while</span> ((opt = getopt(argc, argv, <span class="stringliteral">&quot;a:d:vb&quot;</span>)) != -1)</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        {</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;            <span class="keywordflow">switch</span> (opt)</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;            {</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;a&#39;</span>:</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;                color_name = string(optarg);</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;d&#39;</span>:</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;                distro_name = string(optarg);</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;b&#39;</span>:</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;                show_battery = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;v&#39;</span>:</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;                mode = Mode::SHOW_VERSION;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;            <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;                exit(1);</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;            }</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;        }</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    }</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;};</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;                <span class="keyword">delete</span> result;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            }</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            <span class="keywordflow">catch</span> (<span class="keyword">const</span> runtime_error &amp;e)</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            {</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;                std::lock_guard&lt;std::mutex&gt; lock(mtx);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;                exceptions.push_back(e);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        }));</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
+<div class="line"><a name="l00241"></a><span class="lineno"><a class="line" href="classCommand.html#a53429828cf2d954e496dd828f18feb04">  241</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classCommand.html#a53429828cf2d954e496dd828f18feb04">exec_async</a>(<span class="keyword">const</span> <a class="code" href="classPath.html">Path</a> &amp;cmd, <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;arg,</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                           <span class="keyword">const</span> func_type &amp;func)</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    {</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        exec_async(cmd.<a class="code" href="classPath.html#ab8d8bb2665c65fee9880254fe2277938">toString</a>() + <span class="stringliteral">&quot; &quot;</span> + arg, func);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    }</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
+<div class="line"><a name="l00253"></a><span class="lineno"><a class="line" href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">  253</a></span>&#160;    <span class="keyword">static</span> <a class="code" href="classCommand.html">Command</a> *<a class="code" href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">exec</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;cmd)</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="keyword">auto</span> result = <span class="keyword">new</span> <a class="code" href="classCommand.html">Command</a>();</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        <span class="keywordflow">if</span> (cmd == <span class="stringliteral">&quot;./not-executable&quot;</span>s)</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;popen failed: \&quot;&quot;</span>s + cmd + <span class="stringliteral">&quot;\&quot;&quot;</span>s);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        }</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        FILE *pipe = popen(cmd.c_str(), <span class="stringliteral">&quot;r&quot;</span>);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        <span class="keywordflow">if</span> (!pipe)</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        {</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;popen failed: \&quot;&quot;</span>s + cmd + <span class="stringliteral">&quot;\&quot;&quot;</span>s);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        }</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordtype">int</span> c;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keywordflow">while</span> ((c = fgetc(pipe)) != EOF)</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        {</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;\n&#39;</span>)</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            {</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;                result-&gt;lines += 1;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            result-&gt;output += c;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        }</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="comment">// Don&#39;t concise below 2 lines. It must be assigned to a variable for</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="comment">// macOS.</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keywordtype">int</span> n = pclose(pipe);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        result-&gt;exit_code = WEXITSTATUS(n);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    }</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
+<div class="line"><a name="l00288"></a><span class="lineno"><a class="line" href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">  288</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">getOutput</a>()</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    {</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    }</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">  296</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">getOutputLines</a>()</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    {</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <span class="keywordflow">return</span> lines;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    }</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="classCommand.html#a41a0a3360bdfddabfff631ef713b898b">  304</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classCommand.html#a41a0a3360bdfddabfff631ef713b898b">getExitCode</a>()</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    {</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="keywordflow">return</span> exit_code;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    }</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;};</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="classCrayon.html">  313</a></span>&#160;<span class="keyword">class </span><a class="code" href="classCrayon.html">Crayon</a></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;{</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordtype">string</span> escape_codes;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keyword">inline</span> <span class="keyword">static</span> map&lt;string, string&gt; m = {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        {<span class="stringliteral">&quot;RED&quot;</span>, RED},         {<span class="stringliteral">&quot;GREEN&quot;</span>, GREEN},   {<span class="stringliteral">&quot;BLACK&quot;</span>, BLACK},</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        {<span class="stringliteral">&quot;YELLOW&quot;</span>, YELLOW},   {<span class="stringliteral">&quot;BLUE&quot;</span>, BLUE},     {<span class="stringliteral">&quot;MAGENTA&quot;</span>, MAGENTA},</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        {<span class="stringliteral">&quot;CYAN&quot;</span>, CYAN},       {<span class="stringliteral">&quot;WHITE&quot;</span>, WHITE},   {<span class="stringliteral">&quot;BBLACK&quot;</span>, BBLACK},</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        {<span class="stringliteral">&quot;BGRAY&quot;</span>, BGRAY},     {<span class="stringliteral">&quot;BRED&quot;</span>, BRED},     {<span class="stringliteral">&quot;BGREEN&quot;</span>, BGREEN},</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        {<span class="stringliteral">&quot;BYELLOW&quot;</span>, BYELLOW}, {<span class="stringliteral">&quot;BBLUE&quot;</span>, BBLUE},   {<span class="stringliteral">&quot;BMAGENTA&quot;</span>, BMAGENTA},</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        {<span class="stringliteral">&quot;BCYAN&quot;</span>, BCYAN},     {<span class="stringliteral">&quot;BWHITE&quot;</span>, BWHITE},</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    };</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> getColor(<span class="keywordtype">string</span> s)</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    {</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        <span class="keywordflow">return</span> m[s];</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    }</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00335"></a><span class="lineno"><a class="line" href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">  335</a></span>&#160;    <a class="code" href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon</a>()</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    {</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        escape_codes = <span class="stringliteral">&quot;&quot;</span>s;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    }</div>
+<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">  342</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">bright</a>()</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    {</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        escape_codes += BRIGHT;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    }</div>
+<div class="line"><a name="l00350"></a><span class="lineno"><a class="line" href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">  350</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">underscore</a>()</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    {</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        escape_codes += UNDERSCORE;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    }</div>
+<div class="line"><a name="l00359"></a><span class="lineno"><a class="line" href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">  359</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">color</a>(<span class="keywordtype">string</span> color)</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    {</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        escape_codes += getColor(color);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    }</div>
+<div class="line"><a name="l00365"></a><span class="lineno"><a class="line" href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">  365</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">red</a>()</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    {</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        escape_codes += RED;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    }</div>
+<div class="line"><a name="l00371"></a><span class="lineno"><a class="line" href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">  371</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">green</a>()</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    {</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        escape_codes += GREEN;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    }</div>
+<div class="line"><a name="l00377"></a><span class="lineno"><a class="line" href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">  377</a></span>&#160;    <a class="code" href="classCrayon.html">Crayon</a> <a class="code" href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">yellow</a>()</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    {</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        escape_codes += YELLOW;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    }</div>
+<div class="line"><a name="l00386"></a><span class="lineno"><a class="line" href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">  386</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">text</a>(<span class="keywordtype">string</span> s)</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    {</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        <span class="keywordflow">return</span> escape_codes + s + RESET;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    }</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;};</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
+<div class="line"><a name="l00392"></a><span class="lineno"><a class="line" href="classContext.html">  392</a></span>&#160;<span class="keyword">class </span><a class="code" href="classContext.html">Context</a></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;{</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">string</span> PACKAGE_DELIM;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;};</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="keyword">enum class</span> Mode</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;{</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    NORMAL,</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    SHOW_VERSION,</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;};</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
+<div class="line"><a name="l00404"></a><span class="lineno"><a class="line" href="classOptions.html">  404</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOptions.html">Options</a></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;{</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    Mode mode = Mode::NORMAL;</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keywordtype">string</span> color_name = <span class="stringliteral">&quot;def&quot;</span>s;</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="keywordtype">string</span> distro_name = <span class="stringliteral">&quot;def&quot;</span>s;</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <span class="keywordtype">bool</span> show_battery = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160; </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <a class="code" href="classOptions.html">Options</a>(){};</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <a class="code" href="classOptions.html">Options</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    {</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        <span class="keywordtype">int</span> opt;</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        <span class="keywordflow">while</span> ((opt = getopt(argc, argv, <span class="stringliteral">&quot;a:d:vb&quot;</span>)) != -1)</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        {</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;            <span class="keywordflow">switch</span> (opt)</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;            {</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;a&#39;</span>:</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;                color_name = string(optarg);</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;d&#39;</span>:</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;                distro_name = string(optarg);</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;b&#39;</span>:</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;                show_battery = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;v&#39;</span>:</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;                mode = Mode::SHOW_VERSION;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;            <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;                exit(1);</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;            }</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;        }</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    }</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;};</div>
 <div class="ttc" id="aclassCommand_html"><div class="ttname"><a href="classCommand.html">Command</a></div><div class="ttdef"><b>Definition:</b> fetch.h:172</div></div>
 <div class="ttc" id="aclassCommand_html_a0fe328bec813cdbf74f17bc1dba42a2f"><div class="ttname"><a href="classCommand.html#a0fe328bec813cdbf74f17bc1dba42a2f">Command::exec_async</a></div><div class="ttdeci">static void exec_async(const string &amp;cmd, const func_type &amp;func)</div><div class="ttdef"><b>Definition:</b> fetch.h:218</div></div>
-<div class="ttc" id="aclassCommand_html_a314e47b7b1733c4fbde4aa77f04fa42e"><div class="ttname"><a href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">Command::getOutputLines</a></div><div class="ttdeci">int getOutputLines()</div><div class="ttdef"><b>Definition:</b> fetch.h:295</div></div>
-<div class="ttc" id="aclassCommand_html_a41a0a3360bdfddabfff631ef713b898b"><div class="ttname"><a href="classCommand.html#a41a0a3360bdfddabfff631ef713b898b">Command::getExitCode</a></div><div class="ttdeci">int getExitCode()</div><div class="ttdef"><b>Definition:</b> fetch.h:303</div></div>
-<div class="ttc" id="aclassCommand_html_a5179f1c9a1893c499540bfc3e81d5a10"><div class="ttname"><a href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">Command::getOutput</a></div><div class="ttdeci">string getOutput()</div><div class="ttdef"><b>Definition:</b> fetch.h:287</div></div>
-<div class="ttc" id="aclassCommand_html_a53429828cf2d954e496dd828f18feb04"><div class="ttname"><a href="classCommand.html#a53429828cf2d954e496dd828f18feb04">Command::exec_async</a></div><div class="ttdeci">static void exec_async(const Path &amp;cmd, const string &amp;arg, const func_type &amp;func)</div><div class="ttdef"><b>Definition:</b> fetch.h:240</div></div>
+<div class="ttc" id="aclassCommand_html_a314e47b7b1733c4fbde4aa77f04fa42e"><div class="ttname"><a href="classCommand.html#a314e47b7b1733c4fbde4aa77f04fa42e">Command::getOutputLines</a></div><div class="ttdeci">int getOutputLines()</div><div class="ttdef"><b>Definition:</b> fetch.h:296</div></div>
+<div class="ttc" id="aclassCommand_html_a41a0a3360bdfddabfff631ef713b898b"><div class="ttname"><a href="classCommand.html#a41a0a3360bdfddabfff631ef713b898b">Command::getExitCode</a></div><div class="ttdeci">int getExitCode()</div><div class="ttdef"><b>Definition:</b> fetch.h:304</div></div>
+<div class="ttc" id="aclassCommand_html_a5179f1c9a1893c499540bfc3e81d5a10"><div class="ttname"><a href="classCommand.html#a5179f1c9a1893c499540bfc3e81d5a10">Command::getOutput</a></div><div class="ttdeci">string getOutput()</div><div class="ttdef"><b>Definition:</b> fetch.h:288</div></div>
+<div class="ttc" id="aclassCommand_html_a53429828cf2d954e496dd828f18feb04"><div class="ttname"><a href="classCommand.html#a53429828cf2d954e496dd828f18feb04">Command::exec_async</a></div><div class="ttdeci">static void exec_async(const Path &amp;cmd, const string &amp;arg, const func_type &amp;func)</div><div class="ttdef"><b>Definition:</b> fetch.h:241</div></div>
 <div class="ttc" id="aclassCommand_html_a8e005c33cacc63a0756ad50b9b50918e"><div class="ttname"><a href="classCommand.html#a8e005c33cacc63a0756ad50b9b50918e">Command::wait</a></div><div class="ttdeci">static void wait()</div><div class="ttdef"><b>Definition:</b> fetch.h:194</div></div>
-<div class="ttc" id="aclassCommand_html_ad3260a4b17b87b69cb2928e0dc6d32ef"><div class="ttname"><a href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">Command::exec</a></div><div class="ttdeci">static Command * exec(const string &amp;cmd)</div><div class="ttdef"><b>Definition:</b> fetch.h:252</div></div>
+<div class="ttc" id="aclassCommand_html_ad3260a4b17b87b69cb2928e0dc6d32ef"><div class="ttname"><a href="classCommand.html#ad3260a4b17b87b69cb2928e0dc6d32ef">Command::exec</a></div><div class="ttdeci">static Command * exec(const string &amp;cmd)</div><div class="ttdef"><b>Definition:</b> fetch.h:253</div></div>
 <div class="ttc" id="aclassCommand_html_afda92171af3d82e4a3cbe60497d28592"><div class="ttname"><a href="classCommand.html#afda92171af3d82e4a3cbe60497d28592">Command::getExceptions</a></div><div class="ttdeci">static vector&lt; runtime_error &gt; &amp; getExceptions()</div><div class="ttdef"><b>Definition:</b> fetch.h:208</div></div>
-<div class="ttc" id="aclassContext_html"><div class="ttname"><a href="classContext.html">Context</a></div><div class="ttdef"><b>Definition:</b> fetch.h:392</div></div>
-<div class="ttc" id="aclassCrayon_html"><div class="ttname"><a href="classCrayon.html">Crayon</a></div><div class="ttdef"><b>Definition:</b> fetch.h:313</div></div>
-<div class="ttc" id="aclassCrayon_html_a118e286440aa67bcca97aea4f5856ded"><div class="ttname"><a href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">Crayon::yellow</a></div><div class="ttdeci">Crayon yellow()</div><div class="ttdef"><b>Definition:</b> fetch.h:376</div></div>
-<div class="ttc" id="aclassCrayon_html_a29fb5b6777cda07f4af7227ba6c99625"><div class="ttname"><a href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">Crayon::text</a></div><div class="ttdeci">string text(string s)</div><div class="ttdef"><b>Definition:</b> fetch.h:385</div></div>
-<div class="ttc" id="aclassCrayon_html_a47fb69fa9dfc8e495cd799057a8bd6c2"><div class="ttname"><a href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">Crayon::bright</a></div><div class="ttdeci">Crayon bright()</div><div class="ttdef"><b>Definition:</b> fetch.h:341</div></div>
-<div class="ttc" id="aclassCrayon_html_a57ef86754f1e3f4be7a3c171d43b0619"><div class="ttname"><a href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">Crayon::red</a></div><div class="ttdeci">Crayon red()</div><div class="ttdef"><b>Definition:</b> fetch.h:364</div></div>
-<div class="ttc" id="aclassCrayon_html_a86d6fdfad59b3712367e00d1daa4bc28"><div class="ttname"><a href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">Crayon::green</a></div><div class="ttdeci">Crayon green()</div><div class="ttdef"><b>Definition:</b> fetch.h:370</div></div>
-<div class="ttc" id="aclassCrayon_html_aabf626c0efaf5363a6c8ee3aa48ddc12"><div class="ttname"><a href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">Crayon::color</a></div><div class="ttdeci">Crayon color(string color)</div><div class="ttdef"><b>Definition:</b> fetch.h:358</div></div>
-<div class="ttc" id="aclassCrayon_html_ab39cbd748948fe56fe5a2a1619d19f97"><div class="ttname"><a href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">Crayon::underscore</a></div><div class="ttdeci">Crayon underscore()</div><div class="ttdef"><b>Definition:</b> fetch.h:349</div></div>
-<div class="ttc" id="aclassCrayon_html_ab50e11ffb3f775b1ba7fc658b5486e29"><div class="ttname"><a href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon::Crayon</a></div><div class="ttdeci">Crayon()</div><div class="ttdef"><b>Definition:</b> fetch.h:334</div></div>
-<div class="ttc" id="aclassOptions_html"><div class="ttname"><a href="classOptions.html">Options</a></div><div class="ttdef"><b>Definition:</b> fetch.h:404</div></div>
+<div class="ttc" id="aclassContext_html"><div class="ttname"><a href="classContext.html">Context</a></div><div class="ttdef"><b>Definition:</b> fetch.h:393</div></div>
+<div class="ttc" id="aclassCrayon_html"><div class="ttname"><a href="classCrayon.html">Crayon</a></div><div class="ttdef"><b>Definition:</b> fetch.h:314</div></div>
+<div class="ttc" id="aclassCrayon_html_a118e286440aa67bcca97aea4f5856ded"><div class="ttname"><a href="classCrayon.html#a118e286440aa67bcca97aea4f5856ded">Crayon::yellow</a></div><div class="ttdeci">Crayon yellow()</div><div class="ttdef"><b>Definition:</b> fetch.h:377</div></div>
+<div class="ttc" id="aclassCrayon_html_a29fb5b6777cda07f4af7227ba6c99625"><div class="ttname"><a href="classCrayon.html#a29fb5b6777cda07f4af7227ba6c99625">Crayon::text</a></div><div class="ttdeci">string text(string s)</div><div class="ttdef"><b>Definition:</b> fetch.h:386</div></div>
+<div class="ttc" id="aclassCrayon_html_a47fb69fa9dfc8e495cd799057a8bd6c2"><div class="ttname"><a href="classCrayon.html#a47fb69fa9dfc8e495cd799057a8bd6c2">Crayon::bright</a></div><div class="ttdeci">Crayon bright()</div><div class="ttdef"><b>Definition:</b> fetch.h:342</div></div>
+<div class="ttc" id="aclassCrayon_html_a57ef86754f1e3f4be7a3c171d43b0619"><div class="ttname"><a href="classCrayon.html#a57ef86754f1e3f4be7a3c171d43b0619">Crayon::red</a></div><div class="ttdeci">Crayon red()</div><div class="ttdef"><b>Definition:</b> fetch.h:365</div></div>
+<div class="ttc" id="aclassCrayon_html_a86d6fdfad59b3712367e00d1daa4bc28"><div class="ttname"><a href="classCrayon.html#a86d6fdfad59b3712367e00d1daa4bc28">Crayon::green</a></div><div class="ttdeci">Crayon green()</div><div class="ttdef"><b>Definition:</b> fetch.h:371</div></div>
+<div class="ttc" id="aclassCrayon_html_aabf626c0efaf5363a6c8ee3aa48ddc12"><div class="ttname"><a href="classCrayon.html#aabf626c0efaf5363a6c8ee3aa48ddc12">Crayon::color</a></div><div class="ttdeci">Crayon color(string color)</div><div class="ttdef"><b>Definition:</b> fetch.h:359</div></div>
+<div class="ttc" id="aclassCrayon_html_ab39cbd748948fe56fe5a2a1619d19f97"><div class="ttname"><a href="classCrayon.html#ab39cbd748948fe56fe5a2a1619d19f97">Crayon::underscore</a></div><div class="ttdeci">Crayon underscore()</div><div class="ttdef"><b>Definition:</b> fetch.h:350</div></div>
+<div class="ttc" id="aclassCrayon_html_ab50e11ffb3f775b1ba7fc658b5486e29"><div class="ttname"><a href="classCrayon.html#ab50e11ffb3f775b1ba7fc658b5486e29">Crayon::Crayon</a></div><div class="ttdeci">Crayon()</div><div class="ttdef"><b>Definition:</b> fetch.h:335</div></div>
+<div class="ttc" id="aclassOptions_html"><div class="ttname"><a href="classOptions.html">Options</a></div><div class="ttdef"><b>Definition:</b> fetch.h:405</div></div>
 <div class="ttc" id="aclassPath_html"><div class="ttname"><a href="classPath.html">Path</a></div><div class="ttdef"><b>Definition:</b> fetch.h:76</div></div>
 <div class="ttc" id="aclassPath_html_a0d09f3c408fe6c5457fbecc224a88b65"><div class="ttname"><a href="classPath.html#a0d09f3c408fe6c5457fbecc224a88b65">Path::of</a></div><div class="ttdeci">static Path of(const string &amp;path)</div><div class="ttdef"><b>Definition:</b> fetch.h:92</div></div>
 <div class="ttc" id="aclassPath_html_a60ea760e4e08a78095066bd8ec35cf24"><div class="ttname"><a href="classPath.html#a60ea760e4e08a78095066bd8ec35cf24">Path::getDirectoryContents</a></div><div class="ttdeci">vector&lt; Path &gt; getDirectoryContents()</div><div class="ttdef"><b>Definition:</b> fetch.h:144</div></div>
@@ -446,26 +447,26 @@ $(function() {
 <div class="ttc" id="acolor_8h_html"><div class="ttname"><a href="color_8h.html">color.h</a></div></div>
 <div class="ttc" id="aconfig_8h_html"><div class="ttname"><a href="config_8h.html">config.h</a></div></div>
 <div class="ttc" id="afetch_8h_html_a0a639fbbc083bf3eb0369107cf8f81f0"><div class="ttname"><a href="fetch_8h.html#a0a639fbbc083bf3eb0369107cf8f81f0">gethostname</a></div><div class="ttdeci">string gethostname(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:33</div></div>
-<div class="ttc" id="afetch_8h_html_a1128630eae1fe9e3bb1236d06e0ee2ad"><div class="ttname"><a href="fetch_8h.html#a1128630eae1fe9e3bb1236d06e0ee2ad">getGPU</a></div><div class="ttdeci">vector&lt; string &gt; getGPU()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:342</div></div>
-<div class="ttc" id="afetch_8h_html_a137cf1b5bc2ff92acf6894b757c6afac"><div class="ttname"><a href="fetch_8h.html#a137cf1b5bc2ff92acf6894b757c6afac">printBattery</a></div><div class="ttdeci">void printBattery(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:527</div></div>
+<div class="ttc" id="afetch_8h_html_a1128630eae1fe9e3bb1236d06e0ee2ad"><div class="ttname"><a href="fetch_8h.html#a1128630eae1fe9e3bb1236d06e0ee2ad">getGPU</a></div><div class="ttdeci">vector&lt; string &gt; getGPU()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:351</div></div>
+<div class="ttc" id="afetch_8h_html_a137cf1b5bc2ff92acf6894b757c6afac"><div class="ttname"><a href="fetch_8h.html#a137cf1b5bc2ff92acf6894b757c6afac">printBattery</a></div><div class="ttdeci">void printBattery(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:538</div></div>
 <div class="ttc" id="afetch_8h_html_a1623dc7669afbcd773a5ec3bbdded603"><div class="ttname"><a href="fetch_8h.html#a1623dc7669afbcd773a5ec3bbdded603">getHardwarePlatform</a></div><div class="ttdeci">string getHardwarePlatform()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:77</div></div>
-<div class="ttc" id="afetch_8h_html_a350c5b6d645880c96109c15e8c628502"><div class="ttname"><a href="fetch_8h.html#a350c5b6d645880c96109c15e8c628502">resCheck</a></div><div class="ttdeci">bool resCheck()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:255</div></div>
-<div class="ttc" id="afetch_8h_html_a47b30181adfedeffc9ade4461b60dc2a"><div class="ttname"><a href="fetch_8h.html#a47b30181adfedeffc9ade4461b60dc2a">getDE</a></div><div class="ttdeci">string getDE()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:237</div></div>
-<div class="ttc" id="afetch_8h_html_a4a87b41bb8b7e8e0ae28581ed2028a9d"><div class="ttname"><a href="fetch_8h.html#a4a87b41bb8b7e8e0ae28581ed2028a9d">getRES</a></div><div class="ttdeci">string getRES(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:264</div></div>
+<div class="ttc" id="afetch_8h_html_a350c5b6d645880c96109c15e8c628502"><div class="ttname"><a href="fetch_8h.html#a350c5b6d645880c96109c15e8c628502">resCheck</a></div><div class="ttdeci">bool resCheck()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:258</div></div>
+<div class="ttc" id="afetch_8h_html_a47b30181adfedeffc9ade4461b60dc2a"><div class="ttname"><a href="fetch_8h.html#a47b30181adfedeffc9ade4461b60dc2a">getDE</a></div><div class="ttdeci">string getDE()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:240</div></div>
+<div class="ttc" id="afetch_8h_html_a4a87b41bb8b7e8e0ae28581ed2028a9d"><div class="ttname"><a href="fetch_8h.html#a4a87b41bb8b7e8e0ae28581ed2028a9d">getRES</a></div><div class="ttdeci">string getRES(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:267</div></div>
 <div class="ttc" id="afetch_8h_html_a4f6fddf4be974fd932704e831a5c60d1"><div class="ttname"><a href="fetch_8h.html#a4f6fddf4be974fd932704e831a5c60d1">getOS</a></div><div class="ttdeci">string getOS(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:46</div></div>
 <div class="ttc" id="afetch_8h_html_a6b5687ecd7db49ef10af5909892d6ce3"><div class="ttname"><a href="fetch_8h.html#a6b5687ecd7db49ef10af5909892d6ce3">getuser</a></div><div class="ttdeci">string getuser()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:18</div></div>
-<div class="ttc" id="afetch_8h_html_a73f2fe526cbdeb94007aabce5d5b080f"><div class="ttname"><a href="fetch_8h.html#a73f2fe526cbdeb94007aabce5d5b080f">print</a></div><div class="ttdeci">void print(string color, string distro_name)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:592</div></div>
-<div class="ttc" id="afetch_8h_html_a75d6ab52c4b1db30ff093894ac805f40"><div class="ttname"><a href="fetch_8h.html#a75d6ab52c4b1db30ff093894ac805f40">getPackages</a></div><div class="ttdeci">string getPackages()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:366</div></div>
-<div class="ttc" id="afetch_8h_html_a82cbf4d4e9927420fcf624439fad7ebf"><div class="ttname"><a href="fetch_8h.html#a82cbf4d4e9927420fcf624439fad7ebf">getUpTime</a></div><div class="ttdeci">string getUpTime(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:125</div></div>
-<div class="ttc" id="afetch_8h_html_a92893f60492e0d737c5a9fcc7d5fb4e4"><div class="ttname"><a href="fetch_8h.html#a92893f60492e0d737c5a9fcc7d5fb4e4">getCPU</a></div><div class="ttdeci">string getCPU(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:298</div></div>
-<div class="ttc" id="afetch_8h_html_aaed77d38be492b2328719483f8bdd685"><div class="ttname"><a href="fetch_8h.html#aaed77d38be492b2328719483f8bdd685">getRAM</a></div><div class="ttdeci">string getRAM(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:160</div></div>
-<div class="ttc" id="afetch_8h_html_ac0cfc567ca2b179ab3a2c5f1ece9626f"><div class="ttname"><a href="fetch_8h.html#ac0cfc567ca2b179ab3a2c5f1ece9626f">getTheme</a></div><div class="ttdeci">string getTheme()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:277</div></div>
-<div class="ttc" id="afetch_8h_html_ad590bc5922119d92bac6e19eb6a839bf"><div class="ttname"><a href="fetch_8h.html#ad590bc5922119d92bac6e19eb6a839bf">CpuTempCheck</a></div><div class="ttdeci">bool CpuTempCheck()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:321</div></div>
-<div class="ttc" id="afetch_8h_html_ad6591b01491d114d0f4380a62f9bd458"><div class="ttname"><a href="fetch_8h.html#ad6591b01491d114d0f4380a62f9bd458">getKernel</a></div><div class="ttdeci">string getKernel(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:112</div></div>
-<div class="ttc" id="afetch_8h_html_ae4d5547f076db6b472a7ae88da2bccc2"><div class="ttname"><a href="fetch_8h.html#ae4d5547f076db6b472a7ae88da2bccc2">getHost</a></div><div class="ttdeci">string getHost(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:88</div></div>
-<div class="ttc" id="afetch_8h_html_af2aa8ad92d7543a36ff1ed2ac81b35e6"><div class="ttname"><a href="fetch_8h.html#af2aa8ad92d7543a36ff1ed2ac81b35e6">getCPUtemp</a></div><div class="ttdeci">int getCPUtemp(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:330</div></div>
-<div class="ttc" id="afetch_8h_html_afa41229b134f4682d48af16ec8f84b3d"><div class="ttname"><a href="fetch_8h.html#afa41229b134f4682d48af16ec8f84b3d">getIcons</a></div><div class="ttdeci">string getIcons()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:287</div></div>
-<div class="ttc" id="afetch_8h_html_affc4f0a4183f37fcc72d75432ca2d829"><div class="ttname"><a href="fetch_8h.html#affc4f0a4183f37fcc72d75432ca2d829">getSHELL</a></div><div class="ttdeci">string getSHELL(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:214</div></div>
+<div class="ttc" id="afetch_8h_html_a73f2fe526cbdeb94007aabce5d5b080f"><div class="ttname"><a href="fetch_8h.html#a73f2fe526cbdeb94007aabce5d5b080f">print</a></div><div class="ttdeci">void print(string color, string distro_name)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:603</div></div>
+<div class="ttc" id="afetch_8h_html_a75d6ab52c4b1db30ff093894ac805f40"><div class="ttname"><a href="fetch_8h.html#a75d6ab52c4b1db30ff093894ac805f40">getPackages</a></div><div class="ttdeci">string getPackages()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:377</div></div>
+<div class="ttc" id="afetch_8h_html_a82cbf4d4e9927420fcf624439fad7ebf"><div class="ttname"><a href="fetch_8h.html#a82cbf4d4e9927420fcf624439fad7ebf">getUpTime</a></div><div class="ttdeci">string getUpTime(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:128</div></div>
+<div class="ttc" id="afetch_8h_html_a92893f60492e0d737c5a9fcc7d5fb4e4"><div class="ttname"><a href="fetch_8h.html#a92893f60492e0d737c5a9fcc7d5fb4e4">getCPU</a></div><div class="ttdeci">string getCPU(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:307</div></div>
+<div class="ttc" id="afetch_8h_html_aaed77d38be492b2328719483f8bdd685"><div class="ttname"><a href="fetch_8h.html#aaed77d38be492b2328719483f8bdd685">getRAM</a></div><div class="ttdeci">string getRAM(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:163</div></div>
+<div class="ttc" id="afetch_8h_html_ac0cfc567ca2b179ab3a2c5f1ece9626f"><div class="ttname"><a href="fetch_8h.html#ac0cfc567ca2b179ab3a2c5f1ece9626f">getTheme</a></div><div class="ttdeci">string getTheme()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:280</div></div>
+<div class="ttc" id="afetch_8h_html_ad590bc5922119d92bac6e19eb6a839bf"><div class="ttname"><a href="fetch_8h.html#ad590bc5922119d92bac6e19eb6a839bf">CpuTempCheck</a></div><div class="ttdeci">bool CpuTempCheck()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:330</div></div>
+<div class="ttc" id="afetch_8h_html_ad6591b01491d114d0f4380a62f9bd458"><div class="ttname"><a href="fetch_8h.html#ad6591b01491d114d0f4380a62f9bd458">getKernel</a></div><div class="ttdeci">string getKernel(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:115</div></div>
+<div class="ttc" id="afetch_8h_html_ae4d5547f076db6b472a7ae88da2bccc2"><div class="ttname"><a href="fetch_8h.html#ae4d5547f076db6b472a7ae88da2bccc2">getHost</a></div><div class="ttdeci">string getHost(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:91</div></div>
+<div class="ttc" id="afetch_8h_html_af2aa8ad92d7543a36ff1ed2ac81b35e6"><div class="ttname"><a href="fetch_8h.html#af2aa8ad92d7543a36ff1ed2ac81b35e6">getCPUtemp</a></div><div class="ttdeci">int getCPUtemp(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:339</div></div>
+<div class="ttc" id="afetch_8h_html_afa41229b134f4682d48af16ec8f84b3d"><div class="ttname"><a href="fetch_8h.html#afa41229b134f4682d48af16ec8f84b3d">getIcons</a></div><div class="ttdeci">string getIcons()</div><div class="ttdef"><b>Definition:</b> fetch.cpp:293</div></div>
+<div class="ttc" id="afetch_8h_html_affc4f0a4183f37fcc72d75432ca2d829"><div class="ttname"><a href="fetch_8h.html#affc4f0a4183f37fcc72d75432ca2d829">getSHELL</a></div><div class="ttdeci">string getSHELL(string path)</div><div class="ttdef"><b>Definition:</b> fetch.cpp:217</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
