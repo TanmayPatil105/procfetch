@@ -76,7 +76,10 @@ string getOS(string path)
  */
 string getHardwarePlatform()
 {
-    string s = Command::exec("uname -m"s)->getOutput();
+    auto cmd = Command::exec("uname -m"s);
+    string s = cmd->getOutput();
+    delete cmd;
+
     s = s.substr(0, s.find("\n"));
     return " " + s;
 }
@@ -277,7 +280,10 @@ string getRES(string path)
 string getTheme()
 {
     auto args = "gsettings get org.gnome.desktop.interface gtk-theme"s;
-    auto s = Command::exec(args)->getOutput();
+    auto cmd = Command::exec(args);
+    auto s = cmd->getOutput();
+    delete cmd;
+
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
@@ -287,7 +293,10 @@ string getTheme()
 string getIcons()
 {
     auto args = "gsettings get org.gnome.desktop.interface icon-theme"s;
-    auto s = Command::exec(args)->getOutput();
+    auto cmd = Command::exec(args);
+    auto s = cmd->getOutput();
+    delete cmd;
+
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
@@ -342,8 +351,9 @@ int getCPUtemp(string path)
 vector<string> getGPU()
 {
     vector<string> gpu;
-    string igpu =
-        Command::exec("lspci | grep -E  \"VGA|3D|Display\"")->getOutput();
+    auto cmd = Command::exec("lspci | grep -E  \"VGA|3D|Display\"");
+    string igpu = cmd->getOutput();
+    delete cmd;
     int temp = 0, k = 0;
 
     for (size_t i = 0; i < igpu.size(); i++)
@@ -357,6 +367,7 @@ vector<string> getGPU()
             k++;
         }
     }
+
     return gpu;
 }
 

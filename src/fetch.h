@@ -222,6 +222,7 @@ class Command
             {
                 auto result = exec(cmd);
                 func(result);
+                delete result;
             }
             catch (const runtime_error &e)
             {
