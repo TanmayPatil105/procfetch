@@ -57,10 +57,10 @@ void DisplayInfo(bool show_battery)
 
     cout << title.text("OS") << delim << getOS("/etc/os-release")
          << getHardwarePlatform() << endl;
-    cout << title.text("Host") << delim << getHost("/sys/devices/virtual/dmi/id/")
-         << endl;
-    cout << title.text("Kernel") << delim << getKernel("/proc/sys/kernel/osrelease")
-         << endl;
+    cout << title.text("Host") << delim
+         << getHost("/sys/devices/virtual/dmi/id/") << endl;
+    cout << title.text("Kernel") << delim
+         << getKernel("/proc/sys/kernel/osrelease") << endl;
     cout << title.text("UpTime") << delim << getUpTime("/proc/uptime") << endl;
     cout << title.text("RAM") << delim << getRAM("/proc/meminfo") << endl;
     cout << title.text("shell") << delim << getSHELL("/etc/passwd") << endl;
