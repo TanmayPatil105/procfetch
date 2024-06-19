@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
  */
 void DisplayInfo(bool show_battery)
 {
-    string delim = " : "s;
+    string delim = ": "s;
     auto title = Crayon{}.bright().green();
     auto ye = Crayon{}.yellow();
     string username = ye.text(getuser()) + "@" +
