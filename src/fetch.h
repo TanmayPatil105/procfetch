@@ -5,6 +5,7 @@
 
 #include "color.h"
 #include "config.h"
+#include <sys/errno.h>
 #include <algorithm>
 #include <cctype>
 #include <cerrno>
@@ -187,6 +188,45 @@ class Command
         lines = 0;
     }
 
+    static void func1(string cmd, int out, int err)
+    {
+        char** argv = split(cmd);
+        dup2(out, fileno(stdout)); // TODO: returns -1 if error occured
+        dup2(err, fileno(stderr)); // TODO: returns -1 if error occured
+        execvp(argv[0], argv); // TODO: error
+        cout << "Debug: cannot execute: " << strerror(errno) << ": " << argv[0] << endl;
+    }
+
+    static char** split(string cmd) {
+        vector<string> v;
+
+        string token;
+        for(char c : cmd) {
+            if (c == ' ') {
+                v.push_back(token);
+                token = "";
+                continue;
+            }
+            token += c;
+        }
+        v.push_back(token);
+
+        char **argv = (char **)calloc(v.size() + 1, sizeof(char *)); // +1 for the terminating NULL pointer 
+        if (argv == NULL) {
+            cout << "Debug: cannot calloc" << endl;
+        }
+        char **p = argv;
+        for (string s : v) {
+            if((*p = strdup(s.c_str())) == NULL) {
+                cout << "Debug: cannot strdup" << endl;
+            }
+            p++;
+        }
+        *p = (char *)0; // terminated by a NULL pointer
+
+        return argv;
+    }
+
   public:
     /**
      * Wait for all threads to be finished.
@@ -252,20 +292,43 @@ class Command
     static Command *exec(const string &cmd)
     {
         auto result = new Command();
+        int out_fd[2], err_fd[2];
+        pid_t pid;
 
-        if (cmd == "./not-executable"s)
-        {
-            throw runtime_error("popen failed: \""s + cmd + "\""s);
+        if(pipe(out_fd) == -1) {
+            cout << "Debug: cannot create pipe";
+        }
+        if(pipe(err_fd) == -1) {
+            cout << "Debug: cannot create pipe";
         }
 
-        FILE *pipe = popen(cmd.c_str(), "r");
-        if (!pipe)
-        {
-            throw runtime_error("popen failed: \""s + cmd + "\""s);
+        if ((pid = fork()) < 0) {
+            // TODO: error
+            cout << "Debug: cannot fork";
+            exit(1);
+        } else if (pid == 0) { // child
+            // TODO: error handling
+            close(out_fd[0]);
+            close(err_fd[0]);
+            func1(cmd, out_fd[1], err_fd[1]);
+            // return nullptr;
+            exit(1);
+        }
+
+        // parent
+        close(out_fd[1]);
+        close(err_fd[1]);
+        FILE* out = fdopen(out_fd[0], "r"); // TODO: error
+        if (out == NULL) {
+            cout << "Debug: cannot fdopen";
+        }
+        FILE* err = fdopen(err_fd[0], "r"); // TODO: error
+        if (err == NULL) {
+            cout << "Debug: cannot fdopen";
         }
 
         int c;
-        while ((c = fgetc(pipe)) != EOF)
+        while ((c = fgetc(out)) != EOF)
         {
             if (c == '\n')
             {
@@ -273,10 +336,16 @@ class Command
             }
             result->output += c;
         }
-        // Don't concise below 2 lines. It must be assigned to a variable for
-        // macOS.
-        int n = pclose(pipe);
-        result->exit_code = WEXITSTATUS(n);
+
+        int status;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status)) {
+            result->exit_code = WEXITSTATUS(status) ;
+        } else {
+            cout << "Debug: status: " << status;
+            exit(1);
+            // TODO: error
+        }
 
         return result;
     }
