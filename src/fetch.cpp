@@ -495,11 +495,10 @@ bool isCharging(string path)
 /**
  * @brief Utility to print battery perecentage bar
  */
-void printBar(string path, int battery)
+void printBar(string status_path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
-    string status_path = path + "/status";
     string emoji = "\n🔋 ";
 
     if (isCharging(status_path))
@@ -539,6 +538,7 @@ void printBattery(string path)
 {
     string dir_path = ""s;
     string capacity_path;
+    string status_path;
 
     vector<Path> contents = Path::of(path).getDirectoryContents();
 
@@ -557,11 +557,12 @@ void printBattery(string path)
         return;
 
     capacity_path = dir_path + "/capacity";
+    status_path = dir_path + "/status";
     fstream fptr;
     fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    printBar(capacity_path, stoi(percent));
+    printBar(status_path, stoi(percent));
 }
 
 /**
