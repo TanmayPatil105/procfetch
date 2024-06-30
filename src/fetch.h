@@ -5,7 +5,10 @@
 
 #include "color.h"
 #include "config.h"
+//#include <stdio.h>
+#include <string.h>
 #include <sys/errno.h>
+#include <sys/wait.h>
 #include <algorithm>
 #include <cctype>
 #include <cerrno>
@@ -188,15 +191,6 @@ class Command
         lines = 0;
     }
 
-    static void func1(string cmd, int out, int err)
-    {
-        char** argv = split(cmd);
-        dup2(out, fileno(stdout)); // TODO: returns -1 if error occured
-        dup2(err, fileno(stderr)); // TODO: returns -1 if error occured
-        execvp(argv[0], argv); // TODO: error
-        cout << "Debug: cannot execute: " << strerror(errno) << ": " << argv[0] << endl;
-    }
-
     static char** split(string cmd) {
         vector<string> v;
 
@@ -296,35 +290,49 @@ class Command
         pid_t pid;
 
         if(pipe(out_fd) == -1) {
-            cout << "Debug: cannot create pipe";
+            throw runtime_error("pipe failed");
         }
         if(pipe(err_fd) == -1) {
-            cout << "Debug: cannot create pipe";
+            throw runtime_error("pipe failed");
         }
 
         if ((pid = fork()) < 0) {
-            // TODO: error
-            cout << "Debug: cannot fork";
-            exit(1);
+            throw runtime_error("fork faliled");
         } else if (pid == 0) { // child
-            // TODO: error handling
-            close(out_fd[0]);
-            close(err_fd[0]);
-            func1(cmd, out_fd[1], err_fd[1]);
-            // return nullptr;
-            exit(1);
+            if(close(out_fd[0]) == -1) {
+                throw runtime_error("close failed");
+            }
+            if(close(err_fd[0]) == -1) {
+                throw runtime_error("close failed");
+            }
+            if (dup2(out_fd[1], fileno(stdout)) == -1) {
+                throw runtime_error("dup2 failed");
+            }
+            if (dup2(err_fd[1], fileno(stderr)) == -1) {
+                throw runtime_error("dup2 failed");
+            }
+
+            char** argv = split(cmd);
+            execvp(argv[0], argv);
+
+            // If execvp() returns, an error have occured.
+            throw runtime_error("execvp failed: " + string(strerror(errno)) + ": " + argv[0]);
         }
 
         // parent
-        close(out_fd[1]);
-        close(err_fd[1]);
-        FILE* out = fdopen(out_fd[0], "r"); // TODO: error
-        if (out == NULL) {
-            cout << "Debug: cannot fdopen";
+        if(close(out_fd[1]) == -1) {
+                throw runtime_error("close failed");
         }
-        FILE* err = fdopen(err_fd[0], "r"); // TODO: error
+        if(close(err_fd[1]) == -1) {
+                throw runtime_error("close failed");
+        }
+        FILE* out = fdopen(out_fd[0], "r");
+        if (out == NULL) {
+            throw runtime_error("fdopen failed");
+        }
+        FILE* err = fdopen(err_fd[0], "r");
         if (err == NULL) {
-            cout << "Debug: cannot fdopen";
+            throw runtime_error("fdopen failed");
         }
 
         int c;
@@ -341,10 +349,15 @@ class Command
         waitpid(pid, &status, 0);
         if (WIFEXITED(status)) {
             result->exit_code = WEXITSTATUS(status) ;
+        } else if (WIFSIGNALED(status)) {
+            int sig = WTERMSIG(status);
+            throw runtime_error("abnormal termination, signal number = " + to_string(sig));
+        } else if (WIFSTOPPED(status)) {
+            int sig = WSTOPSIG(status);
+            throw runtime_error("child stopped, signal number = " + to_string(sig));
         } else {
-            cout << "Debug: status: " << status;
-            exit(1);
-            // TODO: error
+            // TODO
+            throw runtime_error("must not be here");
         }
 
         return result;

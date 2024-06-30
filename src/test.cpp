@@ -261,11 +261,10 @@ static void test_util()
 {
     test_Path();
     test_Command();
-    // test_Command_exception(); TODO
-    return;
-    test_Command_async();
-    test_Command_async2();
-    // test_Command_async_exception(); TODO
+    // test_Command_exception(); 
+    // test_Command_async();
+    // test_Command_async2();
+    // test_Command_async_exception();
     test_Crayon();
     test_Options();
 }
