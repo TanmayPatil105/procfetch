@@ -207,12 +207,12 @@ class Command
 
         char **argv = (char **)calloc(v.size() + 1, sizeof(char *)); // +1 for the terminating NULL pointer 
         if (argv == NULL) {
-            cout << "Debug: cannot calloc" << endl;
+            throw runtime_error("calloc failed");
         }
         char **p = argv;
         for (string s : v) {
             if((*p = strdup(s.c_str())) == NULL) {
-                cout << "Debug: cannot strdup" << endl;
+                throw runtime_error("strdup failed");
             }
             p++;
         }
