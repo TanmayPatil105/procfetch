@@ -68,7 +68,7 @@ static void test_Command()
     expect(1, c->getExitCode(), "Exit code"s);
 
     c = Command::exec("./not-executable"s);
-    expect(1, c->getExitCode(), "Exit code"s);
+    expect(127, c->getExitCode(), "Exit code"s);
 }
 
 static void test_Command_exception()

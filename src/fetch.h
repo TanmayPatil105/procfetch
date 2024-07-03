@@ -316,6 +316,10 @@ class Command
             execvp(argv[0], argv);
 
             // If execvp() returns, an error have occured.
+            if (errno == ENOENT) {
+                exit(127);
+            }
+            // Throw an exception, if an other error occurs.
             throw runtime_error("execvp failed: " + string(strerror(errno)) + ": " + argv[0]);
         }
 
