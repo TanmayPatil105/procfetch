@@ -61,14 +61,20 @@ static void test_Command()
     expect("Makefile\n"s, c->getOutput(), "getOutput()"s);
     expect(1, c->getOutputLines(), "getOutputLines()"s);
 
+    c = Command::exec("ls not-exist"s);
+    expect("ls: not-exist: No such file or directory\n"s, c->getErrorOutput(), "getErrorOutput()"s);
+
     c = Command::exec("true"s);
     expect(0, c->getExitCode(), "Exit code"s);
 
     c = Command::exec("false"s);
     expect(1, c->getExitCode(), "Exit code"s);
 
-    c = Command::exec("./not-executable"s);
+    c = Command::exec("./not-exist"s);
     expect(127, c->getExitCode(), "Exit code"s);
+
+    c = Command::exec("../README.md"s); // not executable
+    expect(126, c->getExitCode(), "Exit code"s);
 }
 
 static void test_Command_exception()
@@ -76,7 +82,8 @@ static void test_Command_exception()
     int flow = 0;
     try
     {
-        Command::exec("./not-executable"s);
+        auto c = Command::exec("./VERSION"s);
+        cout << "Debug: " << c->getErrorOutput() << endl;
     }
     catch (const runtime_error &e)
     {

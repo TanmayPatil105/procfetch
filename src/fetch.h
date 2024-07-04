@@ -180,6 +180,7 @@ class Command
   private:
     int exit_code;
     string output;
+    string error_output;
     int lines;
     static std::vector<std::thread> ths;
     static std::vector<std::runtime_error> exceptions;
@@ -316,11 +317,14 @@ class Command
             execvp(argv[0], argv);
 
             // If execvp() returns, an error have occured.
-            if (errno == ENOENT) {
+            switch (errno) {
+            case ENOENT:
                 exit(127);
+            case EACCES:
+                exit(126);
+            default:
+                throw runtime_error("execvp failed: " + string(strerror(errno)) + ": " + argv[0]);
             }
-            // Throw an exception, if an other error occurs.
-            throw runtime_error("execvp failed: " + string(strerror(errno)) + ": " + argv[0]);
         }
 
         // parent
@@ -349,6 +353,11 @@ class Command
             result->output += c;
         }
 
+        while ((c = fgetc(err)) != EOF)
+        {
+            result->error_output += c;
+        }
+
         int status;
         waitpid(pid, &status, 0);
         if (WIFEXITED(status)) {
@@ -373,6 +382,14 @@ class Command
     string getOutput()
     {
         return output;
+    }
+
+    /**
+     * @returns get contents written by the command to standard error output
+     */
+    string getErrorOutput()
+    {
+        return error_output;
     }
 
     /**
