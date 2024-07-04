@@ -83,7 +83,6 @@ static void test_Command_exception()
     try
     {
         auto c = Command::exec("./VERSION"s);
-        cout << "Debug: " << c->getErrorOutput() << endl;
     }
     catch (const runtime_error &e)
     {
@@ -266,12 +265,14 @@ static void test_Options()
  */
 static void test_util()
 {
+    bool skip = true;
+
     test_Path();
     test_Command();
-    // test_Command_exception(); 
-    // test_Command_async();
-    // test_Command_async2();
-    // test_Command_async_exception();
+    if (!skip) test_Command_exception(); 
+    test_Command_async();
+    test_Command_async2();
+    if (!skip) test_Command_async_exception();
     test_Crayon();
     test_Options();
 }
