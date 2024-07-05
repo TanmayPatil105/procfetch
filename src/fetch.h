@@ -401,7 +401,6 @@ class Command
         }
         else
         {
-            // TODO
             throw runtime_error("must not be here");
         }
 
