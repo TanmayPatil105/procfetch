@@ -76,7 +76,10 @@ string getOS(string path)
  */
 string getHardwarePlatform()
 {
-    string s = Command::exec("uname -m"s)->getOutput();
+    auto cmd = Command::exec("uname -m"s);
+    string s = cmd->getOutput();
+    delete cmd;
+
     s = s.substr(0, s.find("\n"));
     return " " + s;
 }
@@ -277,7 +280,10 @@ string getRES(string path)
 string getTheme()
 {
     auto args = "gsettings get org.gnome.desktop.interface gtk-theme"s;
-    auto s = Command::exec(args)->getOutput();
+    auto cmd = Command::exec(args);
+    auto s = cmd->getOutput();
+    delete cmd;
+
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
@@ -287,7 +293,10 @@ string getTheme()
 string getIcons()
 {
     auto args = "gsettings get org.gnome.desktop.interface icon-theme"s;
-    auto s = Command::exec(args)->getOutput();
+    auto cmd = Command::exec(args);
+    auto s = cmd->getOutput();
+    delete cmd;
+
     return s.substr(1, s.find("\'", 1) - 1);
 }
 
@@ -342,7 +351,9 @@ int getCPUtemp(string path)
 vector<string> getGPU()
 {
     vector<string> gpu;
-    istringstream ss(Command::exec("lspci")->getOutput());
+    auto cmd = Command::exec("lspci");
+    istringstream ss(cmd->getOutput());
+    delete cmd;
     string s;
 
     while (std::getline(ss, s))
@@ -355,6 +366,7 @@ vector<string> getGPU()
             gpu.push_back(s.substr(start, end - start));
         }
     }
+
     return gpu;
 }
 
@@ -482,11 +494,10 @@ bool isCharging(string path)
 /**
  * @brief Utility to print battery perecentage bar
  */
-void printBar(string path, int battery)
+void printBar(string status_path, int battery)
 {
     auto red = Crayon{}.bright().red();
     auto green = Crayon{}.bright().green();
-    string status_path = path + "/status";
     string emoji = "\n🔋 ";
 
     if (isCharging(status_path))
@@ -526,6 +537,7 @@ void printBattery(string path)
 {
     string dir_path = ""s;
     string capacity_path;
+    string status_path;
 
     vector<Path> contents = Path::of(path).getDirectoryContents();
 
@@ -544,11 +556,12 @@ void printBattery(string path)
         return;
 
     capacity_path = dir_path + "/capacity";
+    status_path = dir_path + "/status";
     fstream fptr;
     fptr.open(capacity_path, ios::in);
     string percent;
     getline(fptr, percent);
-    printBar(capacity_path, stoi(percent));
+    printBar(status_path, stoi(percent));
 }
 
 /**
