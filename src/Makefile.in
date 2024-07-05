@@ -32,7 +32,7 @@ install: all
 uninstall:
 	- rm "$(BIN_DIR)/$(TARGET)"
 format:
-	$(FORMATTER) $(SRCS) $(TEST_TARGET) *.h
+	$(FORMATTER) $(SRCS) $(TEST_SRCS) *.h
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LIBS) $(LDFLAGS)
