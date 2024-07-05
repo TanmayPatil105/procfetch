@@ -82,7 +82,7 @@ static void test_Command_exception()
     int flow = 0;
     try
     {
-        auto c = Command::exec("./VERSION"s);
+        Command::exec("./VERSION"s);
     }
     catch (const runtime_error &e)
     {
