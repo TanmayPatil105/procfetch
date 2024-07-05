@@ -63,10 +63,12 @@ static void test_Command()
     expect("Makefile\n"s, c->getOutput(), "getOutput()"s);
     expect(1, c->getOutputLines(), "getOutputLines()"s);
 
-    if (!skip) {
+    if (!skip)
+    {
         // skip for error messages depend on the environment
         c = Command::exec("ls not-exist"s);
-        expect("ls: not-exist: No such file or directory\n"s, c->getErrorOutput(), "getErrorOutput()"s);
+        expect("ls: not-exist: No such file or directory\n"s,
+               c->getErrorOutput(), "getErrorOutput()"s);
     }
 
     c = Command::exec("true"s);
@@ -272,10 +274,12 @@ static void test_util()
 {
     test_Path();
     test_Command();
-    if (!skip) test_Command_exception(); // I don't do it right
+    if (!skip)
+        test_Command_exception(); // I don't do it right
     test_Command_async();
     test_Command_async2();
-    if (!skip) test_Command_async_exception(); // I don't do it right
+    if (!skip)
+        test_Command_async_exception(); // I don't do it right
     test_Crayon();
     test_Options();
 }

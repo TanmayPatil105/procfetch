@@ -5,10 +5,6 @@
 
 #include "color.h"
 #include "config.h"
-//#include <stdio.h>
-#include <string.h>
-#include <sys/errno.h>
-#include <sys/wait.h>
 #include <algorithm>
 #include <cctype>
 #include <cerrno>
@@ -20,7 +16,10 @@
 #include <mutex>
 #include <ostream>
 #include <stdexcept>
+#include <string.h>
 #include <string>
+#include <sys/errno.h>
+#include <sys/wait.h>
 #include <thread>
 #include <unistd.h>
 #include <vector>
@@ -192,12 +191,15 @@ class Command
         lines = 0;
     }
 
-    static char** split(string cmd) {
+    static char **split(string cmd)
+    {
         vector<string> v;
 
         string token;
-        for(char c : cmd) {
-            if (c == ' ') {
+        for (char c : cmd)
+        {
+            if (c == ' ')
+            {
                 v.push_back(token);
                 token = "";
                 continue;
@@ -206,13 +208,18 @@ class Command
         }
         v.push_back(token);
 
-        char **argv = (char **)calloc(v.size() + 1, sizeof(char *)); // +1 for the terminating NULL pointer 
-        if (argv == NULL) {
+        char **argv = (char **)calloc(
+            v.size() + 1,
+            sizeof(char *)); // +1 for the terminating NULL pointer
+        if (argv == NULL)
+        {
             throw runtime_error("calloc failed");
         }
         char **p = argv;
-        for (string s : v) {
-            if((*p = strdup(s.c_str())) == NULL) {
+        for (string s : v)
+        {
+            if ((*p = strdup(s.c_str())) == NULL)
+            {
                 throw runtime_error("strdup failed");
             }
             p++;
@@ -290,56 +297,71 @@ class Command
         int out_fd[2], err_fd[2];
         pid_t pid;
 
-        if(pipe(out_fd) == -1) {
+        if (pipe(out_fd) == -1)
+        {
             throw runtime_error("pipe failed");
         }
-        if(pipe(err_fd) == -1) {
+        if (pipe(err_fd) == -1)
+        {
             throw runtime_error("pipe failed");
         }
 
-        if ((pid = fork()) < 0) {
+        if ((pid = fork()) < 0)
+        {
             throw runtime_error("fork faliled");
-        } else if (pid == 0) { // child
-            if(close(out_fd[0]) == -1) {
+        }
+        else if (pid == 0)
+        { // child
+            if (close(out_fd[0]) == -1)
+            {
                 throw runtime_error("close failed");
             }
-            if(close(err_fd[0]) == -1) {
+            if (close(err_fd[0]) == -1)
+            {
                 throw runtime_error("close failed");
             }
-            if (dup2(out_fd[1], fileno(stdout)) == -1) {
+            if (dup2(out_fd[1], fileno(stdout)) == -1)
+            {
                 throw runtime_error("dup2 failed");
             }
-            if (dup2(err_fd[1], fileno(stderr)) == -1) {
+            if (dup2(err_fd[1], fileno(stderr)) == -1)
+            {
                 throw runtime_error("dup2 failed");
             }
 
-            char** argv = split(cmd);
+            char **argv = split(cmd);
             execvp(argv[0], argv);
 
             // If execvp() returns, an error have occured.
-            switch (errno) {
+            switch (errno)
+            {
             case ENOENT:
                 exit(127);
             case EACCES:
                 exit(126);
             default:
-                throw runtime_error("execvp failed: " + string(strerror(errno)) + ": " + argv[0]);
+                throw runtime_error("execvp failed: " +
+                                    string(strerror(errno)) + ": " + argv[0]);
             }
         }
 
         // parent
-        if(close(out_fd[1]) == -1) {
-                throw runtime_error("close failed");
+        if (close(out_fd[1]) == -1)
+        {
+            throw runtime_error("close failed");
         }
-        if(close(err_fd[1]) == -1) {
-                throw runtime_error("close failed");
+        if (close(err_fd[1]) == -1)
+        {
+            throw runtime_error("close failed");
         }
-        FILE* out = fdopen(out_fd[0], "r");
-        if (out == NULL) {
+        FILE *out = fdopen(out_fd[0], "r");
+        if (out == NULL)
+        {
             throw runtime_error("fdopen failed");
         }
-        FILE* err = fdopen(err_fd[0], "r");
-        if (err == NULL) {
+        FILE *err = fdopen(err_fd[0], "r");
+        if (err == NULL)
+        {
             throw runtime_error("fdopen failed");
         }
 
@@ -360,15 +382,24 @@ class Command
 
         int status;
         waitpid(pid, &status, 0);
-        if (WIFEXITED(status)) {
-            result->exit_code = WEXITSTATUS(status) ;
-        } else if (WIFSIGNALED(status)) {
+        if (WIFEXITED(status))
+        {
+            result->exit_code = WEXITSTATUS(status);
+        }
+        else if (WIFSIGNALED(status))
+        {
             int sig = WTERMSIG(status);
-            throw runtime_error("abnormal termination, signal number = " + to_string(sig));
-        } else if (WIFSTOPPED(status)) {
+            throw runtime_error("abnormal termination, signal number = " +
+                                to_string(sig));
+        }
+        else if (WIFSTOPPED(status))
+        {
             int sig = WSTOPSIG(status);
-            throw runtime_error("child stopped, signal number = " + to_string(sig));
-        } else {
+            throw runtime_error("child stopped, signal number = " +
+                                to_string(sig));
+        }
+        else
+        {
             // TODO
             throw runtime_error("must not be here");
         }

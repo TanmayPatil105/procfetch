@@ -345,10 +345,10 @@ vector<string> getGPU()
     istringstream ss(Command::exec("lspci")->getOutput());
     string s;
 
-    while(std::getline(ss, s)) {
-        if (s.find("VGA") != string::npos ||
-            s.find("3D") != string::npos ||
-            s.find("Display") != string::npos )
+    while (std::getline(ss, s))
+    {
+        if (s.find("VGA") != string::npos || s.find("3D") != string::npos ||
+            s.find("Display") != string::npos)
         {
             auto start = s.find(": ") + 2;
             auto end = s.find(" (");
