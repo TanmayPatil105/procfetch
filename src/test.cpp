@@ -59,20 +59,11 @@ static void test_fetch()
 
 static void test_Command()
 {
-    auto c = Command::exec("ls Makefile"s);
-    expect("Makefile\n"s, c->getOutput(), "getOutput()"s);
-    expect(1, c->getOutputLines(), "getOutputLines()"s);
-
-    if (!skip)
-    {
-        // skip for error messages depend on the environment
-        c = Command::exec("ls not-exist"s);
-        expect("ls: not-exist: No such file or directory\n"s,
-               c->getErrorOutput(), "getErrorOutput()"s);
-    }
-
-    c = Command::exec("true"s);
+    auto c = Command::exec("../test/seafood.sh"s);
     expect(0, c->getExitCode(), "Exit code"s);
+    expect("wakame\n"s, c->getOutput(), "getOutput()"s);
+    expect(1, c->getOutputLines(), "getOutputLines()"s);
+    expect("akamoku\n"s, c->getErrorOutput(), "getErrorOutput()"s);
 
     c = Command::exec("false"s);
     expect(1, c->getExitCode(), "Exit code"s);
@@ -275,11 +266,11 @@ static void test_util()
     test_Path();
     test_Command();
     if (!skip)
-        test_Command_exception(); // I don't do it right
+        test_Command_exception(); // I don't know how to do this
     test_Command_async();
     test_Command_async2();
     if (!skip)
-        test_Command_async_exception(); // I don't do it right
+        test_Command_async_exception(); // I don't know how to do this
     test_Crayon();
     test_Options();
 }
