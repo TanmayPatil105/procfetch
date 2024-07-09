@@ -334,6 +334,7 @@ class Command
             execvp(argv[0], argv);
 
             // If execvp() returns, an error have occured.
+            // As the process terminates immediately, it does not free the dynamically allocated memory tied to the argv.
             switch (errno)
             {
             case ENOENT:
