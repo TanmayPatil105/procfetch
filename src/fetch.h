@@ -382,6 +382,16 @@ class Command
             result->error_output += c;
         }
 
+        if (fclose(out) == EOF)
+        {
+            throw runtime_error("fclose failed: " + string(strerror(errno)));
+        }
+
+        if (fclose(err) == EOF)
+        {
+            throw runtime_error("fclose failed: " + string(strerror(errno)));
+        }
+
         int status;
         waitpid(pid, &status, 0);
         if (WIFEXITED(status))
