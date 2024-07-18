@@ -199,20 +199,15 @@ class Command
         istringstream ss{cmd};
         for (string arg{}; getline(ss, arg, ' '); )
         {
-            if (arg == "")
-                continue;
-            v.push_back(arg);
+            if (arg != "")
+                v.push_back(arg);
         }
 
         char **argv = new char*[v.size() + 1]; // +1 for the terminating NULL pointer
         char **p = argv;
-        for (string s : v)
+        for (auto &s : v)
         {
-            if ((*p = strdup(s.c_str())) == NULL)
-            {
-                throw runtime_error("strdup failed");
-            }
-            p++;
+            *p++ = std::strcpy(new char[s.length() + 1], s.c_str());
         }
         *p = (char *)0; // terminated by a NULL pointer
 
