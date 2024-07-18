@@ -396,7 +396,7 @@ string getPackages()
     {
         Command::exec_async("snap list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
+            if (c->getOutputLines() > 1)
                 pkgs.push_back(rec{"snap"s, c->getOutputLines()});
         });
     }
@@ -412,7 +412,7 @@ string getPackages()
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
+            if (c->getOutputLines() > 1)
                 pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
         });
     }
