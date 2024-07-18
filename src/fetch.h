@@ -194,20 +194,15 @@ class Command
 
     static char **split(string cmd)
     {
-        vector<string> v;
+        vector<string> v = {};
 
-        string token;
-        for (char c : cmd)
+        istringstream ss{cmd};
+        for (string arg{}; getline(ss, arg, ' '); )
         {
-            if (c == ' ')
-            {
-                v.push_back(token);
-                token = "";
+            if (arg == "")
                 continue;
-            }
-            token += c;
+            v.push_back(arg);
         }
-        v.push_back(token);
 
         char **argv = (char **)calloc(
             v.size() + 1,
