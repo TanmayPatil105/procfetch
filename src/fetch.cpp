@@ -351,20 +351,19 @@ int getCPUtemp(string path)
 vector<string> getGPU()
 {
     vector<string> gpu;
-    auto cmd = Command::exec("lspci | grep -E  \"VGA|3D|Display\"");
-    string igpu = cmd->getOutput();
+    auto cmd = Command::exec("lspci");
+    istringstream ss(cmd->getOutput());
     delete cmd;
-    int temp = 0, k = 0;
+    string s;
 
-    for (size_t i = 0; i < igpu.size(); i++)
+    while (std::getline(ss, s))
     {
-        if (igpu[i] == '\n')
+        if (s.find("VGA") != string::npos || s.find("3D") != string::npos ||
+            s.find("Display") != string::npos)
         {
-            gpu.push_back(igpu.substr(temp, i - temp));
-            gpu[k] = gpu[k].substr(gpu[k].find(": ") + 2);
-            gpu[k] = gpu[k].substr(0, gpu[k].find(" ("));
-            temp = i + 1;
-            k++;
+            auto start = s.find(": ") + 2;
+            auto end = s.find(" (");
+            gpu.push_back(s.substr(start, end - start));
         }
     }
 
