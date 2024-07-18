@@ -204,13 +204,7 @@ class Command
             v.push_back(arg);
         }
 
-        char **argv = (char **)calloc(
-            v.size() + 1,
-            sizeof(char *)); // +1 for the terminating NULL pointer
-        if (argv == NULL)
-        {
-            throw runtime_error("calloc failed");
-        }
+        char **argv = new char*[v.size() + 1]; // +1 for the terminating NULL pointer
         char **p = argv;
         for (string s : v)
         {
