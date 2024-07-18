@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cerrno>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <functional>
