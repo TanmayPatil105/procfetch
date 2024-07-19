@@ -362,7 +362,7 @@ vector<string> getGPU()
             s.find("Display") != string::npos)
         {
             auto start = s.find(": ") + 2;
-            auto end = s.find(" (");
+            auto end = s.find(" (", start);
             gpu.push_back(s.substr(start, end - start));
         }
     }
