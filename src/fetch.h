@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cerrno>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <functional>
@@ -194,36 +195,20 @@ class Command
 
     static char **split(string cmd)
     {
-        vector<string> v;
+        vector<string> v = {};
 
-        string token;
-        for (char c : cmd)
+        istringstream ss{cmd};
+        for (string arg{}; getline(ss, arg, ' '); )
         {
-            if (c == ' ')
-            {
-                v.push_back(token);
-                token = "";
-                continue;
-            }
-            token += c;
+            if (arg != "")
+                v.push_back(arg);
         }
-        v.push_back(token);
 
-        char **argv = (char **)calloc(
-            v.size() + 1,
-            sizeof(char *)); // +1 for the terminating NULL pointer
-        if (argv == NULL)
-        {
-            throw runtime_error("calloc failed");
-        }
+        char **argv = new char*[v.size() + 1]; // +1 for the terminating NULL pointer
         char **p = argv;
-        for (string s : v)
+        for (auto &s : v)
         {
-            if ((*p = strdup(s.c_str())) == NULL)
-            {
-                throw runtime_error("strdup failed");
-            }
-            p++;
+            *p++ = std::strcpy(new char[s.length() + 1], s.c_str());
         }
         *p = (char *)0; // terminated by a NULL pointer
 

@@ -65,6 +65,9 @@ static void test_Command()
     expect(1, c->getOutputLines(), "getOutputLines()"s);
     expect("akamoku\n"s, c->getErrorOutput(), "getErrorOutput()"s);
 
+    c = Command::exec("ls ../README.md"s);
+    expect("../README.md\n"s, c->getOutput(), "argc = 2"s);
+
     c = Command::exec("false"s);
     expect(1, c->getExitCode(), "Exit code"s);
 
