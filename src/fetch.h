@@ -193,26 +193,14 @@ class Command
         lines = 0;
     }
 
-    static char **split(string cmd)
+    static void split(vector<char *const> &v, string cmd)
     {
-        vector<string> v = {};
-
         istringstream ss{cmd};
         for (string arg{}; getline(ss, arg, ' '); )
-        {
             if (arg != "")
-                v.push_back(arg);
-        }
+                v.push_back(strdup(arg.c_str()));
 
-        char **argv = new char*[v.size() + 1]; // +1 for the terminating NULL pointer
-        char **p = argv;
-        for (auto &s : v)
-        {
-            *p++ = std::strcpy(new char[s.length() + 1], s.c_str());
-        }
-        *p = (char *)0; // terminated by a NULL pointer
-
-        return argv;
+        v.push_back((char *)0);
     }
 
   public:
@@ -316,7 +304,9 @@ class Command
                 throw runtime_error("dup2 failed");
             }
 
-            char **argv = split(cmd);
+            vector<char *const>v{};
+            split(v, cmd);
+            auto argv = v.data();
             execvp(argv[0], argv);
 
             // If execvp() returns, an error have occured.
