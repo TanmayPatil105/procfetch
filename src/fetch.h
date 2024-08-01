@@ -193,7 +193,7 @@ class Command
         lines = 0;
     }
 
-    static void split(vector<char *const> &v, string cmd)
+    static void split(vector<char *> &v, string cmd)
     {
         istringstream ss{cmd};
         for (string arg{}; getline(ss, arg, ' '); )
@@ -304,7 +304,7 @@ class Command
                 throw runtime_error("dup2 failed");
             }
 
-            vector<char *const>v{};
+            vector<char *>v{};
             split(v, cmd);
             auto argv = v.data();
             execvp(argv[0], argv);
