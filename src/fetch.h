@@ -176,7 +176,7 @@ class Path
 class Command
 {
   public:
-    typedef std::function<void(Command *)> func_type;
+    typedef std::function<void(Command)> func_type;
 
   private:
     int exit_code;
@@ -238,7 +238,6 @@ class Command
             {
                 auto result = exec(cmd);
                 func(result);
-                delete result;
             }
             catch (const runtime_error &e)
             {
@@ -266,9 +265,9 @@ class Command
      * @returns Command object for getting the results.
      * @throws runtime_error failed to popen(3)
      */
-    static Command *exec(const string &cmd)
+    static Command exec(const string &cmd)
     {
-        auto result = new Command();
+        auto result = Command{};
         int out_fd[2], err_fd[2];
         pid_t pid;
 
@@ -348,14 +347,14 @@ class Command
         {
             if (c == '\n')
             {
-                result->lines += 1;
+                result.lines += 1;
             }
-            result->output += c;
+            result.output += c;
         }
 
         while ((c = fgetc(err)) != EOF)
         {
-            result->error_output += c;
+            result.error_output += c;
         }
 
         if (fclose(out) == EOF)
@@ -372,7 +371,7 @@ class Command
         waitpid(pid, &status, 0);
         if (WIFEXITED(status))
         {
-            result->exit_code = WEXITSTATUS(status);
+            result.exit_code = WEXITSTATUS(status);
         }
         else if (WIFSIGNALED(status))
         {
