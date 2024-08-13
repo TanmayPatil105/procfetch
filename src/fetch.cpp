@@ -77,8 +77,7 @@ string getOS(string path)
 string getHardwarePlatform()
 {
     auto cmd = Command::exec("uname -m"s);
-    string s = cmd->getOutput();
-    delete cmd;
+    string s = cmd.getOutput();
 
     s = s.substr(0, s.find("\n"));
     return " " + s;
@@ -281,8 +280,7 @@ string getTheme()
 {
     auto args = "gsettings get org.gnome.desktop.interface gtk-theme"s;
     auto cmd = Command::exec(args);
-    auto s = cmd->getOutput();
-    delete cmd;
+    auto s = cmd.getOutput();
 
     return s.substr(1, s.find("\'", 1) - 1);
 }
@@ -294,8 +292,7 @@ string getIcons()
 {
     auto args = "gsettings get org.gnome.desktop.interface icon-theme"s;
     auto cmd = Command::exec(args);
-    auto s = cmd->getOutput();
-    delete cmd;
+    auto s = cmd.getOutput();
 
     return s.substr(1, s.find("\'", 1) - 1);
 }
@@ -352,8 +349,7 @@ vector<string> getGPU()
 {
     vector<string> gpu;
     auto cmd = Command::exec("lspci");
-    istringstream ss(cmd->getOutput());
-    delete cmd;
+    istringstream ss(cmd.getOutput());
     string s;
 
     while (std::getline(ss, s))
@@ -387,40 +383,40 @@ string getPackages()
     {
         Command::exec_async("dpkg -l"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 5)
-                pkgs.push_back(rec{"dpkg"s, c->getOutputLines() - 5});
+            if (c.getOutputLines() > 5)
+                pkgs.push_back(rec{"dpkg"s, c.getOutputLines() - 5});
         });
     }
     if (Path::of("/bin/snap"s).isExecutable())
     {
         Command::exec_async("snap list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 1)
-                pkgs.push_back(rec{"snap"s, c->getOutputLines()});
+            if (c.getOutputLines() > 1)
+                pkgs.push_back(rec{"snap"s, c.getOutputLines()});
         });
     }
     if (Path::of("/bin/pacman"s).isExecutable())
     {
         Command::exec_async("pacman -Q"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
-                pkgs.push_back(rec{"pacman"s, c->getOutputLines()});
+            if (c.getOutputLines() > 0)
+                pkgs.push_back(rec{"pacman"s, c.getOutputLines()});
         });
     }
     if (Path::of("/bin/flatpak"s).isExecutable())
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 1)
-                pkgs.push_back(rec{"flatpak"s, c->getOutputLines()});
+            if (c.getOutputLines() > 1)
+                pkgs.push_back(rec{"flatpak"s, c.getOutputLines()});
         });
     }
     if (Path::of("/var/lib/rpm"s).isExecutable())
     {
         Command::exec_async("rpm -qa"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
-                pkgs.push_back(rec{"rpm"s, c->getOutputLines()});
+            if (c.getOutputLines() > 0)
+                pkgs.push_back(rec{"rpm"s, c.getOutputLines()});
         });
     }
     if (Path::of("/bin/emerge"s).isExecutable()) // gentoo
@@ -431,16 +427,16 @@ string getPackages()
     {
         Command::exec_async("flatpak list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
-                pkgs.push_back(rec{"xbps"s, c->getOutputLines()});
+            if (c.getOutputLines() > 0)
+                pkgs.push_back(rec{"xbps"s, c.getOutputLines()});
         });
     }
     if (Path::of("/bin/zypper"s).isExecutable()) // opensuse
     {
         Command::exec_async("zypper se --installed-only"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
-                pkgs.push_back(rec{"zypper"s, c->getOutputLines()});
+            if (c.getOutputLines() > 0)
+                pkgs.push_back(rec{"zypper"s, c.getOutputLines()});
         });
     }
 
@@ -449,9 +445,9 @@ string getPackages()
     {
         Command::exec_async(cmd, "list"s, [&](auto c) {
             std::lock_guard<std::mutex> lock(mtx);
-            if (c->getOutputLines() > 0)
+            if (c.getOutputLines() > 0)
                 pkgs.push_back(
-                    rec{cmd.getFilename().toString(), c->getOutputLines()});
+                    rec{cmd.getFilename().toString(), c.getOutputLines()});
         });
     }
 

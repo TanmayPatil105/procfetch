@@ -60,22 +60,22 @@ static void test_fetch()
 static void test_Command()
 {
     auto c = Command::exec("../test/seafood.sh"s);
-    expect(0, c->getExitCode(), "Exit code"s);
-    expect("wakame\n"s, c->getOutput(), "getOutput()"s);
-    expect(1, c->getOutputLines(), "getOutputLines()"s);
-    expect("akamoku\n"s, c->getErrorOutput(), "getErrorOutput()"s);
+    expect(0, c.getExitCode(), "Exit code"s);
+    expect("wakame\n"s, c.getOutput(), "getOutput()"s);
+    expect(1, c.getOutputLines(), "getOutputLines()"s);
+    expect("akamoku\n"s, c.getErrorOutput(), "getErrorOutput()"s);
 
     c = Command::exec("ls ../README.md"s);
-    expect("../README.md\n"s, c->getOutput(), "argc = 2"s);
+    expect("../README.md\n"s, c.getOutput(), "argc = 2"s);
 
     c = Command::exec("false"s);
-    expect(1, c->getExitCode(), "Exit code"s);
+    expect(1, c.getExitCode(), "Exit code"s);
 
     c = Command::exec("./not-exist"s);
-    expect(127, c->getExitCode(), "Exit code"s);
+    expect(127, c.getExitCode(), "Exit code"s);
 
     c = Command::exec("../README.md"s); // not executable
-    expect(126, c->getExitCode(), "Exit code"s);
+    expect(126, c.getExitCode(), "Exit code"s);
 }
 
 static void test_Command_exception()
@@ -98,12 +98,12 @@ static void test_Command_async()
     int lines;
     int status[2];
     Command::exec_async("ls Makefile"s, [&](auto c) {
-        out = c->getOutput();
-        lines = c->getOutputLines();
+        out = c.getOutput();
+        lines = c.getOutputLines();
     });
-    Command::exec_async("true"s, [&](auto c) { status[0] = c->getExitCode(); });
+    Command::exec_async("true"s, [&](auto c) { status[0] = c.getExitCode(); });
     Command::exec_async("false"s,
-                        [&](auto c) { status[1] = c->getExitCode(); });
+                        [&](auto c) { status[1] = c.getExitCode(); });
 
     Command::wait();
 
@@ -120,8 +120,8 @@ static void test_Command_async2()
     auto cmd = Path::of("/bin/ls"s);
 
     Command::exec_async(cmd, "Makefile"s, [&](auto c) {
-        out = c->getOutput();
-        lines = c->getOutputLines();
+        out = c.getOutput();
+        lines = c.getOutputLines();
     });
     Command::wait();
 
@@ -134,7 +134,7 @@ static void test_Command_async_exception()
     int status = 0;
 
     Command::exec_async("./not-executable"s,
-                        [&](auto c) { status = c->getExitCode(); });
+                        [&](auto c) { status = c.getExitCode(); });
     Command::wait();
     auto size = Command::getExceptions().size();
 
