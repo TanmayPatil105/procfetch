@@ -196,10 +196,15 @@ class Command
     static void split(vector<char *> &v, string cmd)
     {
         istringstream ss{cmd};
-        for (string arg{}; getline(ss, arg, ' '); )
-            if (arg != "")
-                v.push_back(strdup(arg.c_str()));
+        for (string arg{}; getline(ss, arg, ' '); ) {
+            if (arg == "")
+                continue;
 
+            auto s = strdup(arg.c_str());
+            if (s == NULL)
+                throw runtime_error("strdup failed");
+            v.push_back(s);
+        }
         v.push_back((char *)0);
     }
 
